@@ -9,7 +9,7 @@ def load(filepath):
 
 def save(filepath):
     with open(filepath, "w") as f:
-        f.write(json.dumps(entries))
+        json.dump(entries, f)
 
 def get_entries():
     return entries

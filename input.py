@@ -15,7 +15,7 @@ class Input(tk.Frame):
 
         self.inputFont = tkFont.Font(
             self, 
-            family="Helvetica", 
+            family="Courier New", 
             size=INPUT_FONT_SIZE)
 
         self.create_widgets()

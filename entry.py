@@ -36,6 +36,7 @@ class Entry(tk.Frame):
             column=0, 
             padx=PADDING,
             pady=PADDING)
-            
+
+        # Grid_bbox gives dimensions of Entry
         self.update()
-        print(self.grid_bbox(column=0, row=1))
+        # print(self.grid_bbox(column=0, row=1))
