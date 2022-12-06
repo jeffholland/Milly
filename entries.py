@@ -1,7 +1,7 @@
 import tkinter as tk
 
 from constants import *
-from data import entries
+from data import get_entries
 from entry import Entry
 
 class Entries(tk.Frame):
@@ -37,19 +37,22 @@ class Entries(tk.Frame):
         self.container.bind("<Configure>", self.scroll_config)
 
         self.entries = []
+        self.entries_data = []
         
         self.refresh_entries()
 
     def refresh_entries(self):
+        self.entries_data = get_entries()
+
         for entry in self.entries:
             entry.grid_forget()
 
         self.entries.clear()
 
-        for count in range(len(entries)):
+        for count in range(len(self.entries_data)):
             self.entries.append(Entry(
-                date=entries[count]["date"],
-                text=entries[count]["text"],
+                date=self.entries_data[count]["date"],
+                text=self.entries_data[count]["text"],
                 width=(WIDTH - (PADDING * 6)),
                 height=ENTRY_HEIGHT,
                 bg="white",

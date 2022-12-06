@@ -18,6 +18,13 @@ class Input(tk.Frame):
         self.master.refresh_entries()
         self.input.delete("1.0", "end")
 
+    def save(self):
+        save("data.json")
+
+    def load(self):
+        load("data.json")
+        self.master.refresh_entries()
+
     def create_widgets(self):
         self.input = tk.Text(
             self, 
@@ -25,8 +32,26 @@ class Input(tk.Frame):
             bg="grey")
         self.input.grid(row=0, column=0, padx=PADDING, pady=PADDING, rowspan=10)
 
-        self.submit_button = tk.Button(self, text="Submit", command=self.submit)
+        self.submit_button = tk.Button(
+            self, 
+            text="Submit", 
+            command=self.submit,
+            highlightbackground="black"
+        )
         self.submit_button.grid(row=0, column=1, padx=PADDING, pady=PADDING)
 
-        self.save_button = tk.Button(self, text="Save", command=save)
+        self.save_button = tk.Button(
+            self, 
+            text="Save", 
+            command=self.save,
+            highlightbackground="black"
+        )
         self.save_button.grid(row=1, column=1, padx=PADDING, pady=PADDING)
+
+        self.load_button = tk.Button(
+            self,
+            text="Load",
+            command=self.load,
+            highlightbackground="black"
+        )
+        self.load_button.grid(row=2, column=1, padx=PADDING, pady=PADDING)
