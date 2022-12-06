@@ -3,6 +3,7 @@ import tkinter.font as tkFont
 
 from constants import *
 from data import *
+from key import *
 
 class Input(tk.Frame):
     def __init__(self, width, height, bg, master=None):
@@ -21,6 +22,12 @@ class Input(tk.Frame):
         self.num_buttons = 4
 
         self.create_widgets()
+
+        # Event binding to methods of key object
+        self.key = Key(self)
+
+        self.input.bind('<KeyPress>', self.key.key_press)
+        self.input.bind('<KeyRelease>', self.key.key_release)
 
     def submit(self):
         add_entry(self.input.get("1.0", "end"))
