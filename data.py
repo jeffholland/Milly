@@ -11,6 +11,9 @@ def save(filepath):
     with open(filepath, "w") as f:
         json.dump(entries, f)
 
+def clear():
+    entries.clear()
+
 def get_entries():
     return entries
 
