@@ -4,13 +4,22 @@ import tkinter.font as tkFont
 from constants import *
 
 class Entry(tk.Frame):
-    def __init__(self, date, text, width, height, bg, master=None):
+    def __init__(self, date, time, text, width, height, bg, master=None):
 
         # TODO: make height dynamic according to length of text
         tk.Frame.__init__(self, master, width=width, height=height, bg=bg)
+
         self.date = date
+        self.time = time
         self.text = text
-        self.font = tkFont.Font(family='Helvetica', size=FONT_SIZE)
+
+        self.font = tkFont.Font(
+            family='Helvetica', 
+            size=FONT_SIZE)
+        self.font_bold = tkFont.Font(
+            family='Helvetica', 
+            size=FONT_SIZE, 
+            weight="bold")
 
         self.create_widgets()
 
@@ -18,10 +27,18 @@ class Entry(tk.Frame):
     def create_widgets(self):
         self.date_label = tk.Label(self, 
             text=self.date,
-            font=self.font)
+            font=self.font_bold)
         self.date_label.grid(
             row=0, 
             column=0, 
+            sticky=tk.W)
+
+        self.time_label = tk.Label(self, 
+            text=self.time,
+            font=self.font)
+        self.time_label.grid(
+            row=0, 
+            column=1, 
             sticky=tk.W)
 
         self.text_label = tk.Label(self, 

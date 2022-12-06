@@ -52,6 +52,7 @@ class Entries(tk.Frame):
         for count in range(len(self.entries_data)):
             self.entries.append(Entry(
                 date=self.entries_data[count]["date"],
+                time=self.entries_data[count]["time"],
                 text=self.entries_data[count]["text"],
                 width=(WIDTH - (PADDING * 6)),
                 height=ENTRY_HEIGHT,

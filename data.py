@@ -19,12 +19,13 @@ def get_entries():
 
 
 
-from datetime import date
+from datetime import date, datetime
 
 def add_entry(text):
     entries.append(
         {
             "date": str(date.today()),
+            "time": datetime.now().strftime("%I:%M %p"),
             "text": text
         }
     )
