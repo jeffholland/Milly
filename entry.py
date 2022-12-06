@@ -30,8 +30,12 @@ class Entry(tk.Frame):
             fg="black", 
             font=self.font,
             wraplength=720)
+
         self.text_label.grid(
             row=1, 
             column=0, 
             padx=PADDING,
             pady=PADDING)
+            
+        self.update()
+        print(self.grid_bbox(column=0, row=1))

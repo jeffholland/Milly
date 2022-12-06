@@ -1,1 +1,1 @@
-[{"date": "2022-12-05", "text": "Hello mgy name is lgemggilgyggylyggg\n"}, {"date": "2022-12-05", "text": "hjkjhhhjjki\n"}, {"date": "2022-12-05", "text": "dsjflkjfahl;sdakjfdslaf\n"}]
+[{"date": "2022-12-06", "text": "The next thing I would like to do is make the frames variable-height. I suspect this will involve checking the number of lines in each Label. Perhaps there is a way to get this information from the Label object. Hopefully I won't have to do math to find it out.\n"}]
