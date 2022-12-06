@@ -38,8 +38,8 @@ class Entry(tk.Frame):
             font=self.font)
         self.time_label.grid(
             row=0, 
-            column=1, 
-            sticky=tk.W)
+            column=2,
+            sticky=tk.E)
 
         self.text_label = tk.Label(self, 
             text=self.text,
@@ -52,7 +52,8 @@ class Entry(tk.Frame):
             row=1, 
             column=0, 
             padx=PADDING,
-            pady=PADDING)
+            pady=PADDING,
+            columnspan=3)
 
         # Grid_bbox gives dimensions of Entry
         self.update()
