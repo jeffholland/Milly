@@ -7,9 +7,35 @@ from entry import Entry
 class Entries(tk.Frame):
     def __init__(self, width, height, bg, master=None):
         tk.Frame.__init__(self, master, width=width, height=height, bg=bg)
+        self.width = width
+        self.height = height
         self.create_widgets()
 
+    def scroll_config(self, event=None):
+        self.canvas.configure(
+            scrollregion=self.canvas.bbox("all"),
+            width=self.width - (PADDING * 3),
+            height=self.height)
+
     def create_widgets(self):
+        self.canvas = tk.Canvas(self)
+        self.scroll_config()
+        self.container = tk.Frame(self.canvas)
+        self.scrollbar = tk.Scrollbar(self,
+            orient="vertical",
+            command=self.canvas.yview,
+            width=20)
+        self.canvas.configure(
+            yscrollcommand=self.scrollbar.set)
+
+        self.canvas.grid(row=0, column=0)
+        self.scrollbar.grid(row=0, column=1, sticky="ns")
+        self.canvas.create_window(
+            (0,0),
+            window=self.container,
+            anchor='nw')
+        self.container.bind("<Configure>", self.scroll_config)
+
         self.entries = []
         
         self.refresh_entries()
@@ -24,11 +50,15 @@ class Entries(tk.Frame):
             self.entries.append(Entry(
                 date=entries[count]["date"],
                 text=entries[count]["text"],
-                width=(WIDTH - (PADDING * 2)),
-                height=80,
+                width=(WIDTH - (PADDING * 6)),
+                height=ENTRY_HEIGHT,
                 bg="white",
-                master=self
+                master=self.container
             ))
             self.entries[count].grid_propagate(0)
-            self.entries[count].grid(row=count, column=0,
-                padx=PADDING, pady=PADDING)
+            self.entries[count].grid(
+                row=count, 
+                column=0,
+                padx=PADDING, 
+                pady=PADDING
+            )
