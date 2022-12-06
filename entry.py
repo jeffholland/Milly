@@ -17,7 +17,7 @@ class Entry(tk.Frame):
 
     def create_widgets(self):
         self.date_label = tk.Label(self, 
-            text=str(self.date),
+            text=self.date,
             font=self.font)
         self.date_label.grid(
             row=0, 

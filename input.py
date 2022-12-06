@@ -18,9 +18,6 @@ class Input(tk.Frame):
         self.master.refresh_entries()
         self.input.delete("1.0", "end")
 
-    def save(self):
-        print("this method will save current diary data to a JSON file")
-
     def create_widgets(self):
         self.input = tk.Text(
             self, 
@@ -31,5 +28,5 @@ class Input(tk.Frame):
         self.submit_button = tk.Button(self, text="Submit", command=self.submit)
         self.submit_button.grid(row=0, column=1, padx=PADDING, pady=PADDING)
 
-        self.save_button = tk.Button(self, text="Save", command=self.save)
+        self.save_button = tk.Button(self, text="Save", command=save)
         self.save_button.grid(row=1, column=1, padx=PADDING, pady=PADDING)
