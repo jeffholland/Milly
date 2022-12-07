@@ -1,3 +1,5 @@
-To run from the command line:
+To build:
+./build.sh
 
-./dist/main
+To run:
+./run.sh
