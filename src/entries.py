@@ -20,7 +20,7 @@ class Entries(tk.Frame):
     def scroll_config(self, event=None):
         self.canvas.configure(
             scrollregion=self.canvas.bbox("all"),
-            width=self.width - (PADDING * 3),
+            width=self.width - (PADDING * 2),
             height=self.height)
 
     def create_widgets(self):
@@ -34,8 +34,8 @@ class Entries(tk.Frame):
             command=self.canvas.yview,
             width=20,
             bg=BG_2,
-            highlightbackground=BG_1,
-            highlightcolor=HL_2)
+            highlightbackground=HL_1,
+            highlightcolor=HL_1)
         self.canvas.configure(
             yscrollcommand=self.scrollbar.set)
 
@@ -47,7 +47,10 @@ class Entries(tk.Frame):
             anchor='nw')
         self.container.bind("<Configure>", self.scroll_config)
 
+        # Contains the Entry objects
         self.entries = []
+
+        # Contains the array of dicts sourced from data.py
         self.entries_data = []
         
         self.refresh_entries()
