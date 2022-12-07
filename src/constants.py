@@ -14,15 +14,20 @@ FILEPATH = "json/data.json"
 
 # colors
 
-COLOR_SCHEME = 1
+COLOR_SCHEME = "teal"
 
-if COLOR_SCHEME == 1:
+if COLOR_SCHEME == "b&w":
     BG_1 = "black"
     BG_2 = "gray"
     HL_1 = "lightgray"
     HL_2 = "white"
-elif COLOR_SCHEME == 2:
+elif COLOR_SCHEME == "orange":
     BG_1 = "#7A432B"
     BG_2 = "#7A2906"
     HL_1 = "#FB8958"
     HL_2 = "#FA540C"
+elif COLOR_SCHEME == "teal":
+    BG_1 = "#005F61"
+    BG_2 = "#1D6061"
+    HL_1 = "#00DDE0"
+    HL_2 = "#35E3E6"
