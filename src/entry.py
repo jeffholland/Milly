@@ -7,11 +7,17 @@ class Entry(tk.Frame):
     def __init__(self, date, time, text, width, height, bg, master=None):
 
         # TODO: make height dynamic according to length of text
-        tk.Frame.__init__(self, master, width=width, height=height, bg=bg)
+        tk.Frame.__init__(
+            self, 
+            master, 
+            width=width, 
+            height=height, 
+            bg=bg)
 
         self.date = date
         self.time = time
         self.text = text
+        self.bg = bg
 
         self.font = tkFont.Font(
             family='Helvetica', 
@@ -43,8 +49,8 @@ class Entry(tk.Frame):
 
         self.text_label = tk.Label(self, 
             text=self.text,
-            bg=HL_2, 
-            fg=BG_2, 
+            bg=self.bg, 
+            fg=HL_2, 
             font=self.font,
             wraplength=720)
 

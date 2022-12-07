@@ -50,9 +50,11 @@ class Input(tk.Frame):
             self, 
             height=INPUT_HEIGHT, 
             width=INPUT_WIDTH,
-            bg=HL_1,
-            fg=BG_2,
-            font=self.inputFont)
+            bg=BG_1,
+            fg=HL_1,
+            font=self.inputFont,
+            highlightbackground=HL_1,
+            highlightcolor=HL_2)
         self.input.grid(
             row=0, 
             column=0, 

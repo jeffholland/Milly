@@ -12,7 +12,17 @@ ENTRY_HEIGHT = 80
 
 FILEPATH = "json/data.json"
 
-BG_1 = "black"
-BG_2 = "gray"
-HL_1 = "lightgray"
-HL_2 = "white"
+# colors
+
+COLOR_SCHEME = 1
+
+if COLOR_SCHEME == 1:
+    BG_1 = "black"
+    BG_2 = "gray"
+    HL_1 = "lightgray"
+    HL_2 = "white"
+elif COLOR_SCHEME == 2:
+    BG_1 = "#7A432B"
+    BG_2 = "#7A2906"
+    HL_1 = "#FB8958"
+    HL_2 = "#FA540C"

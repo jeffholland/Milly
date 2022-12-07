@@ -6,9 +6,15 @@ from entry import Entry
 
 class Entries(tk.Frame):
     def __init__(self, width, height, bg, master=None):
-        tk.Frame.__init__(self, master, width=width, height=height, bg=bg)
+        tk.Frame.__init__(
+            self, 
+            master, 
+            width=width, 
+            height=height, 
+            bg=bg)
         self.width = width
         self.height = height
+        self.bg = bg
         self.create_widgets()
 
     def scroll_config(self, event=None):
@@ -18,13 +24,18 @@ class Entries(tk.Frame):
             height=self.height)
 
     def create_widgets(self):
-        self.canvas = tk.Canvas(self)
+        self.canvas = tk.Canvas(self, bg=self.bg)
         self.scroll_config()
-        self.container = tk.Frame(self.canvas)
+        self.container = tk.Frame(
+            self.canvas,
+            bg=self.bg)
         self.scrollbar = tk.Scrollbar(self,
             orient="vertical",
             command=self.canvas.yview,
-            width=20)
+            width=20,
+            bg=BG_2,
+            highlightbackground=BG_1,
+            highlightcolor=HL_2)
         self.canvas.configure(
             yscrollcommand=self.scrollbar.set)
 
@@ -56,7 +67,7 @@ class Entries(tk.Frame):
                 text=self.entries_data[count]["text"],
                 width=(WIDTH - (PADDING * 6)),
                 height=ENTRY_HEIGHT,
-                bg=HL_2,
+                bg=BG_2,
                 master=self.container
             ))
             self.entries[count].grid_propagate(0)
