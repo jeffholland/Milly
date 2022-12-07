@@ -43,8 +43,8 @@ class Entry(tk.Frame):
 
         self.text_label = tk.Label(self, 
             text=self.text,
-            bg="white", 
-            fg="black", 
+            bg=HL_2, 
+            fg=BG_2, 
             font=self.font,
             wraplength=720)
 

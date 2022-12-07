@@ -16,7 +16,7 @@ class Application(tk.Frame):
         self.top_frame = Entries(
             width=WIDTH, 
             height=self.top_frame_height,
-            bg="gray",
+            bg=BG_2,
             master=self)
         self.top_frame.grid_propagate(0)
         self.top_frame.grid(row=0, column=0)
@@ -26,7 +26,7 @@ class Application(tk.Frame):
         self.bottom_frame = Input(
             width=WIDTH,
             height=self.bottom_frame_height,
-            bg="black",
+            bg=BG_1,
             master=self
         )
         self.bottom_frame.grid_propagate(0)

@@ -56,7 +56,7 @@ class Entries(tk.Frame):
                 text=self.entries_data[count]["text"],
                 width=(WIDTH - (PADDING * 6)),
                 height=ENTRY_HEIGHT,
-                bg="white",
+                bg=HL_2,
                 master=self.container
             ))
             self.entries[count].grid_propagate(0)

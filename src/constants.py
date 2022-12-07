@@ -11,3 +11,8 @@ INPUT_WIDTH = 60
 ENTRY_HEIGHT = 80
 
 FILEPATH = "json/data.json"
+
+BG_1 = "black"
+BG_2 = "gray"
+HL_1 = "lightgray"
+HL_2 = "white"

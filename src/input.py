@@ -50,8 +50,8 @@ class Input(tk.Frame):
             self, 
             height=INPUT_HEIGHT, 
             width=INPUT_WIDTH,
-            bg="lightgrey",
-            fg="black",
+            bg=HL_1,
+            fg=BG_2,
             font=self.inputFont)
         self.input.grid(
             row=0, 
@@ -64,7 +64,7 @@ class Input(tk.Frame):
             self, 
             text="Submit", 
             command=self.submit,
-            highlightbackground="black")
+            highlightbackground=BG_2)
         self.submit_button.grid(
             row=0, 
             column=1, 
@@ -74,7 +74,7 @@ class Input(tk.Frame):
             self, 
             text="Save", 
             command=self.save,
-            highlightbackground="black")
+            highlightbackground=BG_2)
         self.save_button.grid(
             row=1, 
             column=1, 
@@ -84,7 +84,7 @@ class Input(tk.Frame):
             self,
             text="Load",
             command=self.load,
-            highlightbackground="black")
+            highlightbackground=BG_2)
         self.load_button.grid(
             row=2, 
             column=1, 
@@ -94,7 +94,7 @@ class Input(tk.Frame):
             self,
             text="Clear",
             command=self.clear,
-            highlightbackground="black")
+            highlightbackground=BG_2)
         self.clear_button.grid(
             row=3,
             column=1,
