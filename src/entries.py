@@ -33,9 +33,9 @@ class Entries(tk.Frame):
             orient="vertical",
             command=self.canvas.yview,
             width=20,
-            bg=BG_2,
-            highlightbackground=HL_1,
-            highlightcolor=HL_1)
+            bg=colors["BG2"],
+            highlightbackground=colors["HL1"],
+            highlightcolor=colors["HL1"])
         self.canvas.configure(
             yscrollcommand=self.scrollbar.set)
 
@@ -70,7 +70,7 @@ class Entries(tk.Frame):
                 text=self.entries_data[count]["text"],
                 width=(WIDTH - (PADDING * 6)),
                 height=ENTRY_HEIGHT,
-                bg=BG_2,
+                bg=colors["BG2"],
                 master=self.container
             ))
             self.entries[count].grid_propagate(0)

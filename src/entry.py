@@ -50,7 +50,7 @@ class Entry(tk.Frame):
         self.text_label = tk.Label(self, 
             text=self.text,
             bg=self.bg, 
-            fg=HL_2, 
+            fg=colors["HL2"], 
             font=self.font,
             wraplength=720)
 
