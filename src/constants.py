@@ -19,21 +19,23 @@ PADDING = 10
 
 # fonts
 
-FONT_SIZE = 14
+ENTRY_FONT_SIZE = 14
+ENTRY_FONT_FAMILY = "Helvetica"
 
-INPUT_FONT_SIZE = 18
+INPUT_FONT_SIZE = 20
+INPUT_FONT_FAMILY = "Times New Roman"
 
 
 
 # strings
 
-FILEPATH = "json/data.json"
+FILEPATH = "json/todo.json"
 
 
 
 # colors
 
-COLOR_SCHEME = "teal"
+COLOR_SCHEME = "b&w"
 
 COLOR_SCHEMES = {
     "b&w": {
@@ -53,6 +55,18 @@ COLOR_SCHEMES = {
         "BG2": "#1D6061",
         "HL1": "#00DDE0",
         "HL2": "#35E3E6"
+    },
+    "purplegreen": {
+        "BG1": "#760A8F",
+        "BG2": "#BE3BDB",
+        "HL1": "#98DB3C",
+        "HL2": "#BCFF5E"
+    },
+    "redblue": {
+        "BG1": "#E00D14",
+        "BG2": "#041E94",
+        "HL1": "#022BE0",
+        "HL2": "#E0BA19"
     }
 }
 
