@@ -4,6 +4,7 @@ import tkinter.font as tkFont
 from constants import *
 from data import *
 from key import *
+from input_path import *
 
 class Input(tk.Frame):
     def __init__(self, width, height, bg, master=None):
@@ -12,12 +13,14 @@ class Input(tk.Frame):
             master, 
             width=width, 
             height=height, 
-            bg=bg)
+            bg=bg
+        )
 
         self.inputFont = tkFont.Font(
             self, 
-            family="Courier New", 
-            size=INPUT_FONT_SIZE)
+            family=INPUT_FONT_FAMILY, 
+            size=INPUT_FONT_SIZE
+        )
 
         self.num_buttons = 4
 
@@ -38,7 +41,10 @@ class Input(tk.Frame):
         save(FILEPATH)
 
     def load(self):
-        load(FILEPATH)
+        self.input_path = InputPath(self)
+
+    def load_submit(self, filepath):
+        load(filepath)
         self.master.refresh_entries()
 
     def clear(self):
@@ -51,53 +57,63 @@ class Input(tk.Frame):
             height=INPUT_HEIGHT, 
             width=INPUT_WIDTH,
             bg=colors["BG1"],
-            fg=colors["HL1"],
+            fg=colors["HL2"],
             font=self.inputFont,
-            highlightbackground=colors["HL2"],
-            highlightcolor=colors["HL2"])
+            highlightbackground=colors["BG2"],
+            highlightcolor=colors["HL1"]
+        )
         self.input.grid(
             row=0, 
             column=0, 
             padx=PADDING, 
             pady=PADDING,
-            rowspan=self.num_buttons)
+            rowspan=self.num_buttons
+        )
 
         self.submit_button = tk.Button(
             self, 
             text="Submit", 
             command=self.submit,
-            highlightbackground=colors["BG2"])
+            highlightbackground=colors["BG2"]
+        )
         self.submit_button.grid(
             row=0, 
             column=1, 
-            padx=PADDING)
+            padx=PADDING
+        )
 
         self.save_button = tk.Button(
             self, 
             text="Save", 
             command=self.save,
-            highlightbackground=colors["BG2"])
+            highlightbackground=colors["BG2"]
+        )
         self.save_button.grid(
             row=1, 
             column=1, 
-            padx=PADDING)
+            padx=PADDING
+        )
 
         self.load_button = tk.Button(
             self,
             text="Load",
             command=self.load,
-            highlightbackground=colors["BG2"])
+            highlightbackground=colors["BG2"]
+        )
         self.load_button.grid(
             row=2, 
             column=1, 
-            padx=PADDING)
+            padx=PADDING
+        )
 
         self.clear_button = tk.Button(
             self,
             text="Clear",
             command=self.clear,
-            highlightbackground=colors["BG2"])
+            highlightbackground=colors["BG2"]
+        )
         self.clear_button.grid(
             row=3,
             column=1,
-            padx=PADDING)
+            padx=PADDING
+        )
