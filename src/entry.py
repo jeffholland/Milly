@@ -70,7 +70,7 @@ class Entry(tk.Frame):
             row=0, 
             column=2)
 
-        if len(self.text) < 50:
+        if len(self.text) < 40:
 
             self.text_label = tk.Label(
                 self, 

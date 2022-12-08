@@ -12,9 +12,7 @@ class InputPath(tk.Frame):
         self.mode = mode
 
         self.window = tk.Toplevel(master)
-
         self.window.title("Input filepath")
-
         self.window.geometry("200x50")
 
         self.create_widgets()

@@ -8,6 +8,8 @@ INPUT_WIDTH = 60
 
 ENTRY_HEIGHT = 80
 ENTRY_MIN_WIDTH = 32
+# The minimum number of characters needed for an entry to be "flexible"
+ENTRY_MIN_CHARS_FLEX = 40
 
 
 
