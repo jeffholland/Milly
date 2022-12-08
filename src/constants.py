@@ -27,12 +27,6 @@ INPUT_FONT_FAMILY = "Times New Roman"
 
 
 
-# strings
-
-FILEPATH = "json/todo.json"
-
-
-
 # colors
 
 COLOR_SCHEME = "b&w"

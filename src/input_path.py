@@ -5,8 +5,11 @@ from os import path
 from constants import *
 
 class InputPath(tk.Frame):
-    def __init__(self, master):
+    def __init__(self, master, mode):
         self.master = master
+
+        # Mode = "save" or "load"
+        self.mode = mode
 
         self.window = tk.Toplevel(master)
 
@@ -28,10 +31,13 @@ class InputPath(tk.Frame):
             if input_string[-5:] != ".json":
                 input_string = input_string + ".json"
 
-            if (path.isfile(input_string)):
-                self.master.load_submit(input_string)
-            else:
-                print("Could not open file: " + input_string)
+            if self.mode == "load":
+                if (path.isfile(input_string)):
+                    self.master.load_submit(input_string)
+                else:
+                    print("Could not load file: " + input_string)
+            if self.mode == "save":
+                self.master.save_submit(input_string)
 
     def create_widgets(self):
         self.entry = tk.Entry(self.window)

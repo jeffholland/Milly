@@ -38,10 +38,14 @@ class Input(tk.Frame):
         self.input.delete("1.0", "end")
 
     def save(self):
-        save(FILEPATH)
+        self.input_path = InputPath(self, "save")
+        # save(FILEPATH)
 
     def load(self):
-        self.input_path = InputPath(self)
+        self.input_path = InputPath(self, "load")
+
+    def save_submit(self, filepath):
+        save(filepath)
 
     def load_submit(self, filepath):
         load(filepath)
