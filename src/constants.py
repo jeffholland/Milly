@@ -31,42 +31,47 @@ INPUT_FONT_FAMILY = "Times New Roman"
 
 # colors
 
-COLOR_SCHEME = "b&w"
+COLOR_SCHEME_IDX = 4
 
-COLOR_SCHEMES = {
-    "b&w": {
+COLOR_SCHEMES = [
+    # b&w
+    {
         "BG1": "black",
         "BG2": "gray",
         "HL1": "lightgray",
         "HL2": "white"
     },
-    "orange": {
+    # orange
+    {
         "BG1": "#7A432B",
         "BG2": "#7A2906",
         "HL1": "#FB8958",
         "HL2": "#FA540C"
     },
-    "teal": {
+    # teal
+    {
         "BG1": "#005F61",
         "BG2": "#1D6061",
         "HL1": "#00DDE0",
         "HL2": "#35E3E6"
     },
-    "purplegreen": {
+    # purplegreen
+    {
         "BG1": "#760A8F",
         "BG2": "#BE3BDB",
         "HL1": "#98DB3C",
         "HL2": "#BCFF5E"
     },
-    "redblue": {
+    # redblue
+    {
         "BG1": "#E00D14",
         "BG2": "#041E94",
         "HL1": "#022BE0",
         "HL2": "#E0BA19"
     }
-}
+]
 
-colors = COLOR_SCHEMES[COLOR_SCHEME]
+colors = COLOR_SCHEMES[COLOR_SCHEME_IDX]
 
 # if COLOR_SCHEME == "b&w":
 #     BG_1 = "black"
