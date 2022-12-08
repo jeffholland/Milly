@@ -52,6 +52,7 @@ class SavePrompt(tk.Frame):
             padx=PADDING,
             pady=PADDING
         )
+        self.yes_button.focus_set()
 
         self.no_button = tk.Button(
             self.window,
