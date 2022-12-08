@@ -1,10 +1,14 @@
 import tkinter as tk
 import tkinter.font as tkFont
 
+from time import sleep
+from sys import exit
+
 from constants import *
 from data import *
 from key import *
 from input_path import *
+from save_prompt import *
 
 class Input(tk.Frame):
     def __init__(self, width, height, bg, master=None):
@@ -26,11 +30,24 @@ class Input(tk.Frame):
 
         self.create_widgets()
 
-        # Event binding to methods of key object
+        # Key object handles key press and release methods for Text widget
         self.key = Key(self)
 
+        # Key press and release bindings
         self.input.bind('<KeyPress>', self.key.key_press)
         self.input.bind('<KeyRelease>', self.key.key_release)
+
+        # Set up protocol event for window exit
+        self.master.master.protocol("WM_DELETE_WINDOW", self.destroy)
+        self.saved = False
+
+    def destroy(self, event=None):
+        if self.saved == False:
+            self.save_prompt = SavePrompt(self)
+            self.saved = True
+
+        else:
+            exit()
 
     def submit(self):
         add_entry(self.input.get("1.0", "end"))
@@ -39,7 +56,6 @@ class Input(tk.Frame):
 
     def save(self):
         self.input_path = InputPath(self, "save")
-        # save(FILEPATH)
 
     def load(self):
         self.input_path = InputPath(self, "load")
