@@ -2,10 +2,15 @@ import json
 
 entries = []
 
+last_filepath = ""
+
 def load(filepath):
     with open(filepath, 'r') as f:
         global entries
         entries = json.load(f)
+
+    global last_filepath
+    last_filepath = filepath
 
 def save(filepath):
     with open(filepath, "w") as f:
@@ -16,6 +21,9 @@ def clear():
 
 def get_entries():
     return entries
+
+def get_last_filepath():
+    return last_filepath
 
 
 

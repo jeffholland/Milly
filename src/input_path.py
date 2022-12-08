@@ -3,6 +3,7 @@ import tkinter as tk
 from os import path
 
 from constants import *
+from data import get_last_filepath
 
 class InputPath(tk.Frame):
     def __init__(self, master, mode):
@@ -47,10 +48,16 @@ class InputPath(tk.Frame):
 
 
     def create_widgets(self):
+        self.entry_var = tk.StringVar(self.master)
+
         self.entry = tk.Entry(
             self.window,
-            takefocus=1
+            takefocus=1,
+            textvariable=self.entry_var
         )
+
+        self.entry_var.set(get_last_filepath())
+
         self.entry.grid(row=0, column=0)
 
         self.entry.bind('<KeyPress>', self.key_press)
