@@ -39,8 +39,14 @@ class InputPath(tk.Frame):
             if self.mode == "save":
                 self.master.save_submit(input_string)
 
+            self.window.destroy()
+            self.window.update()
+
     def create_widgets(self):
-        self.entry = tk.Entry(self.window)
+        self.entry = tk.Entry(
+            self.window,
+            takefocus=1
+        )
         self.entry.grid(row=0, column=0)
 
         self.entry.bind('<KeyPress>', self.key_press)
