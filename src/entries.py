@@ -24,7 +24,8 @@ class Entries(tk.Frame):
         self.canvas.configure(
             scrollregion=self.canvas.bbox("all"),
             width=self.width - (PADDING * 2),
-            height=self.height)
+            height=self.height
+        )
 
     def create_widgets(self):
         self.canvas = tk.Canvas(self, bg=self.bg)
@@ -38,7 +39,9 @@ class Entries(tk.Frame):
             width=20,
             bg=colors["BG2"],
             highlightbackground=colors["HL1"],
-            highlightcolor=colors["HL1"])
+            highlightcolor=colors["HL1"],
+            takefocus=0
+        )
         self.canvas.configure(
             yscrollcommand=self.scrollbar.set)
 
@@ -58,6 +61,7 @@ class Entries(tk.Frame):
         )
 
         self.container.bind("<Configure>", self.scroll_config)
+        self.container.bind("<Motion>", self.scroll_config)
 
         # Contains the Entry objects
         self.entries = []

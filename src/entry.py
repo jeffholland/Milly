@@ -15,31 +15,37 @@ class Entry(tk.Frame):
             height=height, 
             bg=bg)
 
+        # Variables
+
         self.date = date
         self.time = time
         self.text = text
         self.bg = bg
         self.index = index
 
-        # Truncated width
-        if width < 200:
-            self.width = 200
-        else:
-            self.width = width
+        # Font
 
         self.font = tkFont.Font(
             family=ENTRY_FONT_FAMILY, 
-            size=ENTRY_FONT_SIZE)
+            size=ENTRY_FONT_SIZE
+        )
         self.font_bold = tkFont.Font(
             family=ENTRY_FONT_FAMILY, 
             size=ENTRY_FONT_SIZE, 
-            weight="bold")
+            weight="bold"
+        )
 
         self.create_widgets()
 
     def x_pressed(self):
         remove_entry(self.index)
         self.master.master.master.refresh_entries()
+
+    def up_pressed(self):
+        print("up")
+
+    def down_pressed(self):
+        print("down")
 
     def create_widgets(self):
         self.date_label = tk.Label(
@@ -57,10 +63,9 @@ class Entry(tk.Frame):
             font=self.font)
         self.time_label.grid(
             row=0, 
-            column=2,
-            sticky=tk.E)
+            column=2)
 
-        if len(self.text) < 25:
+        if len(self.text) < 50:
 
             self.text_label = tk.Label(
                 self, 
@@ -69,13 +74,15 @@ class Entry(tk.Frame):
                 fg=colors["HL2"], 
                 font=self.font,
                 wraplength=720,
-                width=20)
+                width=ENTRY_MIN_WIDTH
+            )
             self.text_label.grid(
                 row=1, 
                 column=0, 
                 padx=PADDING,
                 pady=PADDING,
-                columnspan=4)
+                columnspan=6
+            )
 
         else:
 
@@ -91,12 +98,41 @@ class Entry(tk.Frame):
                 column=0, 
                 padx=PADDING,
                 pady=PADDING,
-                columnspan=4)
+                columnspan=6)
 
 
         # Grid_bbox gives dimensions of Entry
         self.update()
         # print(self.grid_bbox(column=0, row=1))
+
+
+
+        # BUTTONS
+
+        self.upbutton = tk.Button(
+            self,
+            text="up",
+            highlightbackground=colors["BG2"],
+            width=1,
+            command=self.up_pressed
+        )
+        self.upbutton.grid(
+            row=0,
+            column=3
+        )
+
+        self.downbutton = tk.Button(
+            self,
+            text="down",
+            highlightbackground=colors["BG2"],
+            width=1,
+            command=self.down_pressed
+        )
+
+        self.downbutton.grid(
+            row=0,
+            column=4
+        )
 
         self.xbutton = tk.Button(
             self,
@@ -107,6 +143,6 @@ class Entry(tk.Frame):
         )
         self.xbutton.grid(
             row=0,
-            column=3,
-            sticky=tk.NE
+            column=5,
+            sticky=tk.E
         )
