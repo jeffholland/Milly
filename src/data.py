@@ -42,8 +42,6 @@ def remove_entry(index):
     entries.pop(index)
 
 def swap_entry(index1, index2):
-    print(f"{index1}, {index2}")
-
     tmp = entries[index1]
     entries[index1] = entries[index2]
     entries[index2] = tmp
