@@ -1,8 +1,9 @@
 import tkinter as tk
 import tkinter.font as tkFont
+from tkinter import ttk
 
 from constants import *
-from data import remove_entry
+from data import *
 
 class Entry(tk.Frame):
     def __init__(self, date, time, text, width, height, bg, index, master=None):
@@ -42,10 +43,14 @@ class Entry(tk.Frame):
         self.master.master.master.refresh_entries()
 
     def up_pressed(self):
-        print("up")
+        if self.index > 0:
+            swap_entry(self.index - 1, self.index)
+            self.master.master.master.refresh_entries()
 
     def down_pressed(self):
-        print("down")
+        if self.index < len(get_entries()) - 1:
+            swap_entry(self.index, self.index + 1)
+            self.master.master.master.refresh_entries()
 
     def create_widgets(self):
         self.date_label = tk.Label(
