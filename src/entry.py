@@ -28,11 +28,11 @@ class Entry(tk.Frame):
             self.width = width
 
         self.font = tkFont.Font(
-            family='Helvetica', 
-            size=FONT_SIZE)
+            family=ENTRY_FONT_FAMILY, 
+            size=ENTRY_FONT_SIZE)
         self.font_bold = tkFont.Font(
-            family='Helvetica', 
-            size=FONT_SIZE, 
+            family=ENTRY_FONT_FAMILY, 
+            size=ENTRY_FONT_SIZE, 
             weight="bold")
 
         self.create_widgets()
@@ -66,7 +66,7 @@ class Entry(tk.Frame):
                 self, 
                 text=self.text,
                 bg=self.bg, 
-                fg=colors["HL1"], 
+                fg=colors["HL2"], 
                 font=self.font,
                 wraplength=720,
                 width=20)
