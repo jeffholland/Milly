@@ -17,6 +17,12 @@ class Entries(tk.Frame):
         self.bg = bg
         self.create_widgets()
 
+        self.canvas.bind("<Button-2>", self.test)
+
+    def test(self, event):
+        for entry in self.entries:
+            print(entry.grid_bbox())
+
     def scroll_config(self, event=None):
         self.canvas.configure(
             scrollregion=self.canvas.bbox("all"),

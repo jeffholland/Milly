@@ -14,7 +14,7 @@ FILEPATH = "json/data.json"
 
 # colors
 
-COLOR_SCHEME = "rainbow"
+COLOR_SCHEME = "b&w"
 
 COLOR_SCHEMES = {
     "b&w": {
