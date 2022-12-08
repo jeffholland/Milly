@@ -50,3 +50,5 @@ class InputPath(tk.Frame):
         self.entry.grid(row=0, column=0)
 
         self.entry.bind('<KeyPress>', self.key_press)
+        
+        self.entry.focus_set()

@@ -73,6 +73,7 @@ class Input(tk.Frame):
             pady=PADDING,
             rowspan=self.num_buttons
         )
+        self.input.focus_set()
 
         self.submit_button = tk.Button(
             self, 
