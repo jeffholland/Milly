@@ -1,7 +1,7 @@
 import tkinter as tk
 
 from constants import *
-from data import get_entries
+from data import get_entries, remove_entry
 from entry import Entry
 
 class Entries(tk.Frame):
@@ -15,13 +15,10 @@ class Entries(tk.Frame):
         self.width = width
         self.height = height
         self.bg = bg
+        self.canvas_object_ids = []
+
         self.create_widgets()
 
-        self.canvas.bind("<Button-2>", self.test)
-
-    def test(self, event):
-        for entry in self.entries:
-            print(entry.grid_bbox())
 
     def scroll_config(self, event=None):
         self.canvas.configure(
@@ -46,11 +43,20 @@ class Entries(tk.Frame):
             yscrollcommand=self.scrollbar.set)
 
         self.canvas.grid(row=0, column=0)
-        self.scrollbar.grid(row=0, column=1, sticky="ns")
-        self.canvas.create_window(
-            (0,0),
-            window=self.container,
-            anchor='nw')
+        self.scrollbar.grid(
+            row=0, 
+            column=1, 
+            sticky="ns"
+        )
+
+        self.canvas_object_ids.append(
+            self.canvas.create_window(
+                (0,0),
+                window=self.container,
+                anchor='nw'
+            )
+        )
+
         self.container.bind("<Configure>", self.scroll_config)
 
         # Contains the Entry objects
@@ -77,7 +83,8 @@ class Entries(tk.Frame):
                 width=(WIDTH - (PADDING * 6)),
                 height=ENTRY_HEIGHT,
                 bg=colors["BG2"],
-                master=self.container
+                master=self.container,
+                index=count
             ))
             self.entries[count].grid_propagate(0)
             self.entries[count].grid(

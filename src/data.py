@@ -29,3 +29,6 @@ def add_entry(text):
             "text": text
         }
     )
+
+def remove_entry(index):
+    entries.pop(index)
