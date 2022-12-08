@@ -1,7 +1,6 @@
 import tkinter as tk
 import tkinter.font as tkFont
 
-from time import sleep
 from sys import exit
 
 from constants import *
@@ -39,29 +38,32 @@ class Input(tk.Frame):
 
         # Set up protocol event for window exit
         self.master.master.protocol("WM_DELETE_WINDOW", self.destroy)
-        self.saved = False
+
+        # Bool for exiting after save
+        self.exit_after_saving = False
 
     def destroy(self, event=None):
-        if self.saved == False:
-            self.save_prompt = SavePrompt(self)
-            self.saved = True
-
-        else:
-            exit()
+        self.save_prompt = SavePrompt(self)
 
     def submit(self):
         add_entry(self.input.get("1.0", "end"))
         self.master.refresh_entries()
         self.input.delete("1.0", "end")
 
-    def save(self):
+    def save(self, and_exit=False):
         self.input_path = InputPath(self, "save")
+
+        if and_exit:
+            self.exit_after_saving = True
 
     def load(self):
         self.input_path = InputPath(self, "load")
 
     def save_submit(self, filepath):
         save(filepath)
+
+        if self.exit_after_saving:
+            exit()
 
     def load_submit(self, filepath):
         load(filepath)

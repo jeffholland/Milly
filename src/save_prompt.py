@@ -1,5 +1,7 @@
 import tkinter as tk
 
+from sys import exit
+
 from constants import *
 
 class SavePrompt(tk.Frame):
@@ -8,9 +10,22 @@ class SavePrompt(tk.Frame):
 
         self.window = tk.Toplevel(master)
         self.window.title("Save prompt")
-        self.window.geometry("370x100")
+        self.window.geometry("250x100")
+        # self.window.geometry("370x100")
 
         self.create_widgets()
+
+    def yes_pressed(self):
+        self.master.save(and_exit=True)
+
+    def no_pressed(self):
+        exit()
+
+    def cancel_pressed(self):
+        self.window.destroy()
+
+    # def save_new_pressed(self):
+    #     print("save new")
 
     def create_widgets(self):
         self.label = tk.Label(
@@ -21,14 +36,15 @@ class SavePrompt(tk.Frame):
         self.label.grid(
             row=0,
             column=0,
-            columnspan=4,
+            columnspan=3,
             padx=PADDING,
             pady=PADDING
         )
 
         self.yes_button = tk.Button(
             self.window,
-            text="Yes"
+            text="Yes",
+            command=self.yes_pressed
         )
         self.yes_button.grid(
             row=1,
@@ -39,7 +55,8 @@ class SavePrompt(tk.Frame):
 
         self.no_button = tk.Button(
             self.window,
-            text="No"
+            text="No",
+            command=self.no_pressed
         )
         self.no_button.grid(
             row=1,
@@ -50,7 +67,8 @@ class SavePrompt(tk.Frame):
 
         self.cancel_button = tk.Button(
             self.window,
-            text="Cancel"
+            text="Cancel",
+            command=self.cancel_pressed
         )
         self.cancel_button.grid(
             row=1,
@@ -59,13 +77,14 @@ class SavePrompt(tk.Frame):
             pady=PADDING
         )
 
-        self.save_new_button = tk.Button(
-            self.window,
-            text="Save new"
-        )
-        self.save_new_button.grid(
-            row=1,
-            column=3,
-            padx=PADDING,
-            pady=PADDING
-        )
+        # self.save_new_button = tk.Button(
+        #     self.window,
+        #     text="Save new",
+        #     command=self.save_new_pressed
+        # )
+        # self.save_new_button.grid(
+        #     row=1,
+        #     column=3,
+        #     padx=PADDING,
+        #     pady=PADDING
+        # )
