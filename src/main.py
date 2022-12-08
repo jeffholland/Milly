@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from constants import *
+from constants import colors, HEIGHT, WIDTH
 from entries import Entries
 from input import Input
 
@@ -12,6 +12,8 @@ class Application(tk.Frame):
 
     def create_widgets(self):
         self.top_frame_height = (HEIGHT // 3) * 2
+
+        print(colors)
 
         self.top_frame = Entries(
             width=WIDTH, 

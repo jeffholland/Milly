@@ -21,6 +21,12 @@ class Entry(tk.Frame):
         self.bg = bg
         self.index = index
 
+        # Truncated width
+        if width < 200:
+            self.width = 200
+        else:
+            self.width = width
+
         self.font = tkFont.Font(
             family='Helvetica', 
             size=FONT_SIZE)
@@ -54,19 +60,39 @@ class Entry(tk.Frame):
             column=2,
             sticky=tk.E)
 
-        self.text_label = tk.Label(
-            self, 
-            text=self.text,
-            bg=self.bg, 
-            fg=colors["HL2"], 
-            font=self.font,
-            wraplength=720)
-        self.text_label.grid(
-            row=1, 
-            column=0, 
-            padx=PADDING,
-            pady=PADDING,
-            columnspan=4)
+        if len(self.text) < 25:
+
+            self.text_label = tk.Label(
+                self, 
+                text=self.text,
+                bg=self.bg, 
+                fg=colors["HL1"], 
+                font=self.font,
+                wraplength=720,
+                width=20)
+            self.text_label.grid(
+                row=1, 
+                column=0, 
+                padx=PADDING,
+                pady=PADDING,
+                columnspan=4)
+
+        else:
+
+            self.text_label = tk.Label(
+                self, 
+                text=self.text,
+                bg=self.bg, 
+                fg=colors["HL2"], 
+                font=self.font,
+                wraplength=720)
+            self.text_label.grid(
+                row=1, 
+                column=0, 
+                padx=PADDING,
+                pady=PADDING,
+                columnspan=4)
+
 
         # Grid_bbox gives dimensions of Entry
         self.update()

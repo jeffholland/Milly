@@ -1,20 +1,39 @@
+# dimensions
+
 WIDTH = 800
 HEIGHT = 960
-PADDING = 10
 
-FONT_SIZE = 14
-
-INPUT_FONT_SIZE = 18
 INPUT_HEIGHT = 7
 INPUT_WIDTH = 60
 
 ENTRY_HEIGHT = 80
+MIN_WIDTH = 100
+
+
+
+# format settings
+
+PADDING = 10
+
+
+
+# fonts
+
+FONT_SIZE = 14
+
+INPUT_FONT_SIZE = 18
+
+
+
+# strings
 
 FILEPATH = "json/data.json"
 
+
+
 # colors
 
-COLOR_SCHEME = "b&w"
+COLOR_SCHEME = "teal"
 
 COLOR_SCHEMES = {
     "b&w": {
