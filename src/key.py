@@ -20,6 +20,11 @@ class Key:
             self.master.submit()
             self.just_submitted = True
         
+        # Cmd+s to save
+        # Cmd+l to load
+        # Cmd+c to clear
+        # Cmd+delete to remove last entry
+
         if self.keys_pressed["cmd"] == True:
             if event.keysym == "s":
                 self.master.save()
@@ -27,6 +32,9 @@ class Key:
                 self.master.load()
             if event.keysym == "c":
                 self.master.clear()
+            if event.keysym == "BackSpace":
+                self.master.remove_last_entry()
+
 
     def key_release(self, event):
         if "Meta" in event.keysym:
