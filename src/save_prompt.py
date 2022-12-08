@@ -38,8 +38,7 @@ class SavePrompt(tk.Frame):
         self.label = tk.Label(
             self.window,
             text="Would you like to save changes?",
-            bg=colors["BG2"],
-            fg=colors["HL2"]
+            bg=colors["BG2"]
         )
         self.label.grid(
             row=0,
@@ -54,8 +53,7 @@ class SavePrompt(tk.Frame):
             text="Yes",
             command=self.yes_pressed,
             highlightbackground=colors["BG2"],
-            highlightcolor=colors["BG1"],
-            fg=colors["HL2"]
+            highlightcolor=colors["BG1"]
         )
         self.yes_button.grid(
             row=1,
@@ -70,8 +68,7 @@ class SavePrompt(tk.Frame):
             text="No",
             command=self.no_pressed,
             highlightbackground=colors["BG2"],
-            highlightcolor=colors["BG1"],
-            fg=colors["HL2"]
+            highlightcolor=colors["BG1"]
         )
         self.no_button.grid(
             row=1,
@@ -85,8 +82,7 @@ class SavePrompt(tk.Frame):
             text="Cancel",
             command=self.cancel_pressed,
             highlightbackground=colors["BG2"],
-            highlightcolor=colors["BG1"],
-            fg=colors["HL2"]
+            highlightcolor=colors["BG1"]
         )
         self.cancel_button.grid(
             row=1,
