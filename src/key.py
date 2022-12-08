@@ -2,16 +2,16 @@ class Key:
     def __init__(self, master):
         self.master = master
         self.keys_pressed = {
-            "Meta_L": False
+            "cmd": False
         }
         self.just_submitted = False
 
     def key_press(self, event):
 
-        if event.keysym == "Meta_L":
-            self.keys_pressed["Meta_L"] = True
+        if event.keysym == "Meta_L" or event.keysym == "Meta_R":
+            self.keys_pressed["cmd"] = True
         
-        if self.keys_pressed["Meta_L"] == True:
+        if self.keys_pressed["cmd"] == True:
             if event.keysym == "Return":
                 self.master.submit()
                 self.just_submitted = True
@@ -23,9 +23,8 @@ class Key:
                 self.master.clear()
 
     def key_release(self, event):
-        for key in self.keys_pressed.keys():
-            if key == event.keysym:
-                self.keys_pressed[key] = False
+        if event.keysym == "Meta_L" or event.keysym == "Meta_R":
+            self.keys_pressed["cmd"] = False
 
         if self.just_submitted == True:
             if event.keysym == "Return":

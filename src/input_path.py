@@ -18,8 +18,7 @@ class InputPath(tk.Frame):
         self.window.geometry("200x50")
 
         self.create_widgets()
-
-        # self.master.load_submit(FILEPATH)
+    
 
     def key_press(self, event):
         if (event.keysym == "Return"):
@@ -42,6 +41,13 @@ class InputPath(tk.Frame):
             self.window.destroy()
             self.window.update()
 
+
+    def key_release(self, event):
+        # Release command key while in other window
+        if event.keysym == "Meta_L" or event.keysym == "Meta_R":
+            self.master.key.keys_pressed["cmd"] = False
+
+
     def create_widgets(self):
         self.entry = tk.Entry(
             self.window,
@@ -50,5 +56,6 @@ class InputPath(tk.Frame):
         self.entry.grid(row=0, column=0)
 
         self.entry.bind('<KeyPress>', self.key_press)
-        
+        self.entry.bind('<KeyRelease>', self.key_release)
+
         self.entry.focus_set()
