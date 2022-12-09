@@ -1,4 +1,4 @@
-COLOR_SCHEME_IDX = 4
+COLOR_SCHEME_IDX = 0
 
 COLOR_SCHEMES = [
     # b&w

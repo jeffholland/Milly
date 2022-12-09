@@ -56,7 +56,7 @@ class InputPath(tk.Frame):
             textvariable=self.entry_var
         )
 
-        self.entry_var.set(get_last_filepath())
+        self.entry_var.set(get_last_filepath(short=True))
 
         self.entry.grid(row=0, column=0)
 

@@ -22,7 +22,10 @@ def clear():
 def get_entries():
     return entries
 
-def get_last_filepath():
+def get_last_filepath(short=False):
+    if short:
+        # strip "json/" and ".json"
+        return last_filepath[5:-5]
     return last_filepath
 
 
