@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from colors import colors
+from colors import *
 from constants import HEIGHT, WIDTH
 from entries import Entries
 from input import Input
@@ -35,6 +35,9 @@ class Application(tk.Frame):
 
     def refresh_entries(self):
         self.top_frame.refresh_entries()
+
+    def refresh_colors(self):
+        print("refresh colors")
         
 
 

@@ -1,3 +1,5 @@
+from colors import switch_color_scheme
+
 class Key:
     def __init__(self, master):
         self.master = master
@@ -34,6 +36,12 @@ class Key:
                 self.master.clear()
             if event.keysym == "BackSpace":
                 self.master.remove_last_entry()
+            if event.keysym == "Left":
+                switch_color_scheme("left")
+                self.master.master.refresh_colors()
+            if event.keysym == "Right":
+                switch_color_scheme("right")
+                self.master.master.refresh_colors()
 
 
     def key_release(self, event):

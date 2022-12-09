@@ -39,3 +39,21 @@ COLOR_SCHEMES = [
 ]
 
 colors = COLOR_SCHEMES[COLOR_SCHEME_IDX]
+
+def switch_color_scheme(dir="right"):
+    global colors
+    global COLOR_SCHEME_IDX
+
+    if (dir == "left"):
+        if COLOR_SCHEME_IDX <= 0:
+            COLOR_SCHEME_IDX = len(COLOR_SCHEMES) - 1
+        else:
+            COLOR_SCHEME_IDX -= 1
+    else:
+        if COLOR_SCHEME_IDX >= len(COLOR_SCHEMES) - 1:
+            COLOR_SCHEME_IDX = 0
+        else:
+            COLOR_SCHEME_IDX += 1
+    
+    colors = COLOR_SCHEMES[COLOR_SCHEME_IDX]
+    print(colors["BG2"])
