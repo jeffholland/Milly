@@ -43,6 +43,9 @@ class Application(tk.Frame):
 
         self.top_frame.configure(bg=self.colors["HL1"])
         self.bottom_frame.configure(bg=self.colors["BG2"])
+
+        self.top_frame.refresh_colors()
+        self.bottom_frame.refresh_colors()
         
 
 

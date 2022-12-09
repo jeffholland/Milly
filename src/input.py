@@ -42,6 +42,9 @@ class Input(tk.Frame):
         # Bool for exiting after save
         self.exit_after_saving = False
 
+    def refresh_colors(self):
+        print("Input refresh colors not set up yet")
+
     def destroy(self, event=None):
         self.save_prompt = SavePrompt(self)
 

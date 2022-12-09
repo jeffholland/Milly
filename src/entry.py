@@ -7,22 +7,20 @@ from constants import *
 from data import *
 
 class Entry(tk.Frame):
-    def __init__(self, date, time, text, width, height, bg, index, master=None):
+    def __init__(self, date, time, text, width, height, index, master=None):
 
         # TODO: make height dynamic according to length of text
         tk.Frame.__init__(
             self, 
             master, 
             width=width, 
-            height=height, 
-            bg=bg)
+            height=height)
 
         # Variables
 
         self.date = date
         self.time = time
         self.text = text
-        self.bg = bg
         self.index = index
 
         # Font
@@ -76,7 +74,7 @@ class Entry(tk.Frame):
             self.text_label = tk.Label(
                 self, 
                 text=self.text,
-                bg=self.bg, 
+                bg=colors["BG2"], 
                 fg=colors["HL2"], 
                 font=self.font,
                 wraplength=720,
@@ -95,7 +93,7 @@ class Entry(tk.Frame):
             self.text_label = tk.Label(
                 self, 
                 text=self.text,
-                bg=self.bg, 
+                bg=colors["BG2"], 
                 fg=colors["HL2"], 
                 font=self.font,
                 wraplength=720)

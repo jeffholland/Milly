@@ -1,7 +1,7 @@
 import tkinter as tk
 
 from constants import *
-from colors import colors
+from colors import get_colors
 from data import get_entries
 from entry import Entry
 
@@ -17,6 +17,22 @@ class Entries(tk.Frame):
         self.canvas_object_ids = []
 
         self.create_widgets()
+
+        self.refresh_colors()
+
+    def refresh_colors(self):
+        self.colors = get_colors()
+
+        self.canvas.configure(bg=self.colors["HL1"])
+
+        self.scrollbar.configure(
+            bg=self.colors["BG2"],
+            highlightbackground=self.colors["HL1"],
+            highlightcolor=self.colors["HL1"]
+        )
+
+        for entry in self.entries:
+            entry.configure(bg=self.colors["BG2"])
 
 
     def scroll_config(self, event=None):
@@ -35,9 +51,6 @@ class Entries(tk.Frame):
             orient="vertical",
             command=self.canvas.yview,
             width=20,
-            bg=colors["BG2"],
-            highlightbackground=colors["HL1"],
-            highlightcolor=colors["HL1"],
             takefocus=0
         )
         self.canvas.configure(
@@ -84,7 +97,6 @@ class Entries(tk.Frame):
                 text=self.entries_data[count]["text"],
                 width=(WIDTH - (PADDING * 6)),
                 height=ENTRY_HEIGHT,
-                bg=colors["BG2"],
                 master=self.container,
                 index=count
             ))
