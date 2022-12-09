@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import ttk
 
+from colors import colors
 from constants import *
 from data import *
 

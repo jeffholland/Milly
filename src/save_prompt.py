@@ -2,6 +2,7 @@ import tkinter as tk
 
 from sys import exit
 
+from colors import colors
 from constants import *
 
 class SavePrompt(tk.Frame):

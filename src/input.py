@@ -4,6 +4,7 @@ import tkinter.font as tkFont
 from sys import exit
 
 from constants import *
+from colors import colors
 from data import *
 from key import *
 from input_path import *

@@ -1,7 +1,8 @@
 import tkinter as tk
 
 from constants import *
-from data import get_entries, remove_entry
+from colors import colors
+from data import get_entries
 from entry import Entry
 
 class Entries(tk.Frame):
