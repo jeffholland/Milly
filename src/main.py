@@ -1,6 +1,7 @@
 import tkinter as tk
 
-from constants import colors, HEIGHT, WIDTH
+from colors import colors
+from constants import HEIGHT, WIDTH
 from entries import Entries
 from input import Input
 
