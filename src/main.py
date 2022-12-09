@@ -11,13 +11,14 @@ class Application(tk.Frame):
         self.grid(row=0, column=0)
         self.create_widgets()
 
+        self.refresh_colors()
+
     def create_widgets(self):
         self.top_frame_height = (HEIGHT // 3) * 2
 
         self.top_frame = Entries(
             width=WIDTH, 
             height=self.top_frame_height,
-            bg=colors["HL1"],
             master=self)
         self.top_frame.grid_propagate(0)
         self.top_frame.grid(row=0, column=0)
@@ -27,7 +28,6 @@ class Application(tk.Frame):
         self.bottom_frame = Input(
             width=WIDTH,
             height=self.bottom_frame_height,
-            bg=colors["BG2"],
             master=self
         )
         self.bottom_frame.grid_propagate(0)
@@ -38,6 +38,11 @@ class Application(tk.Frame):
 
     def refresh_colors(self):
         print("refresh colors")
+
+        self.colors = get_colors()
+
+        self.top_frame.configure(bg=self.colors["HL1"])
+        self.bottom_frame.configure(bg=self.colors["BG2"])
         
 
 

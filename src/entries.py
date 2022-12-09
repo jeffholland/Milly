@@ -6,16 +6,14 @@ from data import get_entries
 from entry import Entry
 
 class Entries(tk.Frame):
-    def __init__(self, width, height, bg, master=None):
+    def __init__(self, width, height, master=None):
         tk.Frame.__init__(
             self, 
             master, 
             width=width, 
-            height=height, 
-            bg=bg)
+            height=height)
         self.width = width
         self.height = height
-        self.bg = bg
         self.canvas_object_ids = []
 
         self.create_widgets()
@@ -29,11 +27,10 @@ class Entries(tk.Frame):
         )
 
     def create_widgets(self):
-        self.canvas = tk.Canvas(self, bg=self.bg)
+        self.canvas = tk.Canvas(self)
         self.scroll_config()
         self.container = tk.Frame(
-            self.canvas,
-            bg=self.bg)
+            self.canvas)
         self.scrollbar = tk.Scrollbar(self,
             orient="vertical",
             command=self.canvas.yview,

@@ -40,6 +40,11 @@ COLOR_SCHEMES = [
 
 colors = COLOR_SCHEMES[COLOR_SCHEME_IDX]
 
+def get_colors():
+    global colors
+    return colors
+
+
 def switch_color_scheme(dir="right"):
     global colors
     global COLOR_SCHEME_IDX

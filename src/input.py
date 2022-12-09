@@ -11,13 +11,12 @@ from input_path import *
 from save_prompt import *
 
 class Input(tk.Frame):
-    def __init__(self, width, height, bg, master=None):
+    def __init__(self, width, height, master=None):
         tk.Frame.__init__(
             self, 
             master, 
             width=width, 
-            height=height, 
-            bg=bg
+            height=height
         )
 
         self.inputFont = tkFont.Font(
