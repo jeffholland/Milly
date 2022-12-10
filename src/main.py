@@ -11,6 +11,7 @@ class Application(tk.Frame):
         self.grid(row=0, column=0)
         self.create_widgets()
 
+        load_colors()
         self.refresh_colors()
 
     def create_widgets(self):
@@ -37,8 +38,6 @@ class Application(tk.Frame):
         self.top_frame.refresh_entries()
 
     def refresh_colors(self):
-        print("refresh colors")
-
         self.colors = get_colors()
 
         self.top_frame.configure(bg=self.colors["HL1"])
