@@ -2,26 +2,26 @@ import tkinter as tk
 
 from sys import exit
 
-from colors import colors
+from colors import get_colors
 from constants import *
 
 class SavePrompt(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(
             self, 
-            master,
-            bg=colors["BG2"]
+            master
         )
 
         self.window = tk.Toplevel(
-            master,
-            bg=colors["BG2"]
+            master
         )
         self.window.title("Save prompt")
         self.window.geometry("250x100")
         # self.window.geometry("370x100")
 
         self.create_widgets()
+
+        self.refresh_colors()
 
     def yes_pressed(self):
         self.master.save(and_exit=True)
@@ -38,8 +38,7 @@ class SavePrompt(tk.Frame):
     def create_widgets(self):
         self.label = tk.Label(
             self.window,
-            text="Would you like to save changes?",
-            bg=colors["BG2"]
+            text="Would you like to save changes?"
         )
         self.label.grid(
             row=0,
@@ -52,9 +51,7 @@ class SavePrompt(tk.Frame):
         self.yes_button = tk.Button(
             self.window,
             text="Yes",
-            command=self.yes_pressed,
-            highlightbackground=colors["BG2"],
-            highlightcolor=colors["BG1"]
+            command=self.yes_pressed
         )
         self.yes_button.grid(
             row=1,
@@ -67,9 +64,7 @@ class SavePrompt(tk.Frame):
         self.no_button = tk.Button(
             self.window,
             text="No",
-            command=self.no_pressed,
-            highlightbackground=colors["BG2"],
-            highlightcolor=colors["BG1"]
+            command=self.no_pressed
         )
         self.no_button.grid(
             row=1,
@@ -81,9 +76,7 @@ class SavePrompt(tk.Frame):
         self.cancel_button = tk.Button(
             self.window,
             text="Cancel",
-            command=self.cancel_pressed,
-            highlightbackground=colors["BG2"],
-            highlightcolor=colors["BG1"]
+            command=self.cancel_pressed
         )
         self.cancel_button.grid(
             row=1,
@@ -103,3 +96,29 @@ class SavePrompt(tk.Frame):
         #     padx=PADDING,
         #     pady=PADDING
         # )
+
+    def refresh_colors(self):
+        self.colors = get_colors()
+
+        self.window.configure(
+            bg=self.colors["BG2"]
+        )
+
+        self.label.configure(
+            bg=self.colors["BG2"]
+        )
+        
+        self.yes_button.configure(
+            highlightbackground=self.colors["BG2"],
+            highlightcolor=self.colors["BG1"]
+        )
+
+        self.no_button.configure(
+            highlightbackground=self.colors["BG2"],
+            highlightcolor=self.colors["BG1"]
+        )
+
+        self.cancel_button.configure(
+            highlightbackground=self.colors["BG2"],
+            highlightcolor=self.colors["BG1"]
+        )

@@ -146,10 +146,10 @@ class Input(tk.Frame):
         self.colors = get_colors()
 
         self.input.configure(
-            bg=colors["BG1"],
-            fg=colors["HL2"],
-            highlightbackground=colors["BG2"],
-            highlightcolor=colors["HL1"]
+            bg=self.colors["BG1"],
+            fg=self.colors["HL2"],
+            highlightbackground=self.colors["BG2"],
+            highlightcolor=self.colors["HL1"]
         )
 
         self.submit_button.configure(
