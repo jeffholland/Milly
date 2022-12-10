@@ -8,7 +8,7 @@ COLOR_SCHEMES = []
 
 
 global colors
-with open("json/color_schemes/b&w.json", "r") as f:
+with open("json/color_schemes/_noir.json", "r") as f:
     colors = json.load(f)
 
 
