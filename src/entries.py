@@ -20,20 +20,6 @@ class Entries(tk.Frame):
 
         self.refresh_colors()
 
-    def refresh_colors(self):
-        self.colors = get_colors()
-
-        self.canvas.configure(bg=self.colors["HL1"])
-
-        self.scrollbar.configure(
-            bg=self.colors["BG2"],
-            highlightbackground=self.colors["HL1"],
-            highlightcolor=self.colors["HL1"]
-        )
-
-        for entry in self.entries:
-            entry.configure(bg=self.colors["BG2"])
-
 
     def scroll_config(self, event=None):
         self.canvas.configure(
@@ -81,6 +67,22 @@ class Entries(tk.Frame):
         self.entries_data = []
         
         self.refresh_entries()
+
+    def refresh_colors(self):
+        self.colors = get_colors()
+
+        self.canvas.configure(bg=self.colors["HL1"])
+
+        self.scrollbar.configure(
+            bg=self.colors["BG2"],
+            highlightbackground=self.colors["HL1"],
+            highlightcolor=self.colors["HL1"]
+        )
+
+        for entry in self.entries:
+            entry.refresh_colors()
+
+        self.container.configure(bg=self.colors["HL1"])
 
     def refresh_entries(self):
         self.entries_data = get_entries()

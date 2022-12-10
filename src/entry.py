@@ -1,8 +1,7 @@
 import tkinter as tk
 import tkinter.font as tkFont
-from tkinter import ttk
 
-from colors import colors
+from colors import get_colors
 from constants import *
 from data import *
 
@@ -14,7 +13,8 @@ class Entry(tk.Frame):
             self, 
             master, 
             width=width, 
-            height=height)
+            height=height
+        )
 
         # Variables
 
@@ -37,6 +37,9 @@ class Entry(tk.Frame):
 
         self.create_widgets()
 
+        self.refresh_colors()
+
+
     def x_pressed(self):
         remove_entry(self.index)
         self.master.master.master.refresh_entries()
@@ -50,6 +53,7 @@ class Entry(tk.Frame):
         if self.index < len(get_entries()) - 1:
             swap_entry(self.index, self.index + 1)
             self.master.master.master.refresh_entries()
+
 
     def create_widgets(self):
         self.date_label = tk.Label(
@@ -69,54 +73,31 @@ class Entry(tk.Frame):
             row=0, 
             column=2)
 
-        if len(self.text) < 40:
+        self.text_label = tk.Label(
+            self, 
+            text=self.text,
+            font=self.font,
+            wraplength=720)
 
-            self.text_label = tk.Label(
-                self, 
-                text=self.text,
-                bg=colors["BG2"], 
-                fg=colors["HL2"], 
-                font=self.font,
-                wraplength=720,
+        if len(self.text) < 40:
+            self.text_label.configure(
                 width=ENTRY_MIN_WIDTH
             )
-            self.text_label.grid(
-                row=1, 
-                column=0, 
-                padx=PADDING,
-                pady=PADDING,
-                columnspan=6
-            )
 
-        else:
+        self.text_label.grid(
+            row=1, 
+            column=0, 
+            padx=PADDING,
+            pady=PADDING,
+            columnspan=6)
 
-            self.text_label = tk.Label(
-                self, 
-                text=self.text,
-                bg=colors["BG2"], 
-                fg=colors["HL2"], 
-                font=self.font,
-                wraplength=720)
-            self.text_label.grid(
-                row=1, 
-                column=0, 
-                padx=PADDING,
-                pady=PADDING,
-                columnspan=6)
-
-
-        # Grid_bbox gives dimensions of Entry
         self.update()
-        # print(self.grid_bbox(column=0, row=1))
-
-
 
         # BUTTONS
 
         self.upbutton = tk.Button(
             self,
             text="up",
-            highlightbackground=colors["BG2"],
             width=1,
             command=self.up_pressed
         )
@@ -128,7 +109,6 @@ class Entry(tk.Frame):
         self.downbutton = tk.Button(
             self,
             text="down",
-            highlightbackground=colors["BG2"],
             width=1,
             command=self.down_pressed
         )
@@ -141,7 +121,6 @@ class Entry(tk.Frame):
         self.xbutton = tk.Button(
             self,
             text="x",
-            highlightbackground=colors["BG2"],
             width=1,
             command=self.x_pressed
         )
@@ -149,4 +128,25 @@ class Entry(tk.Frame):
             row=0,
             column=5,
             sticky=tk.E
+        )
+
+    def refresh_colors(self):
+        self.colors = get_colors()
+
+        self.configure(
+            bg=self.colors["BG2"]
+        )
+        self.text_label.configure(
+            bg=self.colors["BG2"], 
+            fg=self.colors["HL2"]
+        )
+
+        self.upbutton.configure(
+            highlightbackground=self.colors["BG2"]
+        )
+        self.downbutton.configure(
+            highlightbackground=self.colors["BG2"]
+        )
+        self.xbutton.configure(
+            highlightbackground=self.colors["BG2"]
         )

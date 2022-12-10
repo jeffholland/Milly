@@ -4,7 +4,7 @@ import tkinter.font as tkFont
 from sys import exit
 
 from constants import *
-from colors import colors
+from colors import get_colors
 from data import *
 from key import *
 from input_path import *
@@ -29,6 +29,8 @@ class Input(tk.Frame):
 
         self.create_widgets()
 
+        self.refresh_colors()
+
         # Key object handles key press and release methods for Text widget
         self.key = Key(self)
 
@@ -41,9 +43,6 @@ class Input(tk.Frame):
 
         # Bool for exiting after save
         self.exit_after_saving = False
-
-    def refresh_colors(self):
-        print("Input refresh colors not set up yet")
 
     def destroy(self, event=None):
         self.save_prompt = SavePrompt(self)
@@ -85,11 +84,7 @@ class Input(tk.Frame):
             self, 
             height=INPUT_HEIGHT, 
             width=INPUT_WIDTH,
-            bg=colors["BG1"],
-            fg=colors["HL2"],
-            font=self.inputFont,
-            highlightbackground=colors["BG2"],
-            highlightcolor=colors["HL1"]
+            font=self.inputFont
         )
         self.input.grid(
             row=0, 
@@ -103,8 +98,7 @@ class Input(tk.Frame):
         self.submit_button = tk.Button(
             self, 
             text="Submit", 
-            command=self.submit,
-            highlightbackground=colors["BG2"]
+            command=self.submit
         )
         self.submit_button.grid(
             row=0, 
@@ -115,8 +109,7 @@ class Input(tk.Frame):
         self.save_button = tk.Button(
             self, 
             text="Save", 
-            command=self.save,
-            highlightbackground=colors["BG2"]
+            command=self.save
         )
         self.save_button.grid(
             row=1, 
@@ -127,8 +120,7 @@ class Input(tk.Frame):
         self.load_button = tk.Button(
             self,
             text="Load",
-            command=self.load,
-            highlightbackground=colors["BG2"]
+            command=self.load
         )
         self.load_button.grid(
             row=2, 
@@ -139,11 +131,38 @@ class Input(tk.Frame):
         self.clear_button = tk.Button(
             self,
             text="Clear",
-            command=self.clear,
-            highlightbackground=colors["BG2"]
+            command=self.clear
         )
         self.clear_button.grid(
             row=3,
             column=1,
             padx=PADDING
+        )
+
+    def refresh_colors(self):
+        print("is this being called")
+
+        self.colors = get_colors()
+
+        self.input.configure(
+            bg=colors["BG1"],
+            fg=colors["HL2"],
+            highlightbackground=colors["BG2"],
+            highlightcolor=colors["HL1"]
+        )
+
+        self.submit_button.configure(
+            highlightbackground=self.colors["BG2"]
+        )
+
+        self.save_button.configure(
+            highlightbackground=self.colors["BG2"]
+        )
+
+        self.load_button.configure(
+            highlightbackground=self.colors["BG2"]
+        )
+
+        self.clear_button.configure(
+            highlightbackground=self.colors["BG2"]
         )
