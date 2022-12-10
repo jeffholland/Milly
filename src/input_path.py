@@ -2,6 +2,7 @@ import tkinter as tk
 
 from os import path
 
+from colors import get_colors
 from constants import *
 from data import get_last_filepath
 
@@ -12,11 +13,17 @@ class InputPath(tk.Frame):
         # Mode = "save" or "load"
         self.mode = mode
 
+        # Dimensions
+        self.width = 200
+        self.height = 50
+
         self.window = tk.Toplevel(master)
         self.window.title("Input filepath")
-        self.window.geometry("200x50")
+        self.window.geometry(f"{self.width}x{self.height}")
 
         self.create_widgets()
+
+        self.refresh_colors()
     
 
     def key_press(self, event):
@@ -64,3 +71,16 @@ class InputPath(tk.Frame):
         self.entry.bind('<KeyRelease>', self.key_release)
 
         self.entry.focus_set()
+
+    def refresh_colors(self):
+        self.colors = get_colors()
+
+        self.window.configure(
+            bg=self.colors["BG1"]
+        )
+
+        self.entry.configure(
+            bg=self.colors["BG2"],
+            highlightbackground=self.colors["HL1"],
+            highlightcolor=self.colors["HL2"]
+        )

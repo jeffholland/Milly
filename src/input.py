@@ -27,6 +27,9 @@ class Input(tk.Frame):
 
         self.num_buttons = 4
 
+        # Input path set to None by default
+        self.input_path = None
+
         self.create_widgets()
 
         self.refresh_colors()
@@ -140,8 +143,6 @@ class Input(tk.Frame):
         )
 
     def refresh_colors(self):
-        print("is this being called")
-
         self.colors = get_colors()
 
         self.input.configure(
@@ -166,3 +167,6 @@ class Input(tk.Frame):
         self.clear_button.configure(
             highlightbackground=self.colors["BG2"]
         )
+
+        if (self.input_path):
+            self.input_path.refresh_colors()
