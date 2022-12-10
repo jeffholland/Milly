@@ -7,7 +7,8 @@ COLOR_SCHEMES = [
     "orange",
     "teal",
     "purplegreen",
-    "redblue"
+    "redblue",
+    "pink"
 ]
 
 global colors

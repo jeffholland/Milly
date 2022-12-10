@@ -81,6 +81,7 @@ class InputPath(tk.Frame):
 
         self.entry.configure(
             bg=self.colors["BG2"],
+            fg=self.colors["HL2"],
             highlightbackground=self.colors["HL1"],
             highlightcolor=self.colors["HL2"]
         )

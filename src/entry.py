@@ -134,19 +134,19 @@ class Entry(tk.Frame):
         self.colors = get_colors()
 
         self.configure(
-            bg=self.colors["BG2"]
+            bg=self.colors["BG1"]
         )
         self.text_label.configure(
-            bg=self.colors["BG2"], 
+            bg=self.colors["BG1"], 
             fg=self.colors["HL2"]
         )
 
         self.upbutton.configure(
-            highlightbackground=self.colors["BG2"]
+            highlightbackground=self.colors["BG1"]
         )
         self.downbutton.configure(
-            highlightbackground=self.colors["BG2"]
+            highlightbackground=self.colors["BG1"]
         )
         self.xbutton.configure(
-            highlightbackground=self.colors["BG2"]
+            highlightbackground=self.colors["BG1"]
         )
