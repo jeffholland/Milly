@@ -28,6 +28,7 @@ def load_colors():
         global colors
         colors = json.load(f)
 
+
 def get_colors():
     global colors
     return colors
