@@ -105,20 +105,24 @@ class SavePrompt(tk.Frame):
         )
 
         self.label.configure(
-            bg=self.colors["BG2"]
+            bg=self.colors["BG2"],
+            fg=self.colors["HL2"],
         )
         
         self.yes_button.configure(
+            bg=self.colors["BG2"],
             highlightbackground=self.colors["BG2"],
-            highlightcolor=self.colors["BG1"]
+            highlightcolor=self.colors["HL2"]
         )
 
         self.no_button.configure(
+            bg=self.colors["BG2"],
             highlightbackground=self.colors["BG2"],
-            highlightcolor=self.colors["BG1"]
+            highlightcolor=self.colors["HL2"]
         )
 
         self.cancel_button.configure(
+            bg=self.colors["BG2"],
             highlightbackground=self.colors["BG2"],
-            highlightcolor=self.colors["BG1"]
+            highlightcolor=self.colors["HL2"]
         )

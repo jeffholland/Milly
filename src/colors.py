@@ -1,21 +1,25 @@
 import json
+from os import scandir
+
 
 COLOR_SCHEME_IDX = 0
 
-COLOR_SCHEMES = [
-    "b&w",
-    "orange",
-    "teal",
-    "purplegreen",
-    "redblue",
-    "pink"
-]
+COLOR_SCHEMES = []
+
 
 global colors
 with open("json/color_schemes/b&w.json", "r") as f:
     colors = json.load(f)
 
+
 def load_colors():
+    if (len(COLOR_SCHEMES) == 0):
+        with scandir("json/color_schemes/") as entries:
+            for entry in entries:
+                COLOR_SCHEMES.append(entry.name[:-5])
+    
+    COLOR_SCHEMES.sort()
+
     scheme_name = COLOR_SCHEMES[COLOR_SCHEME_IDX]
 
     filepath = f"json/color_schemes/{scheme_name}.json"
