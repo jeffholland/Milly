@@ -107,6 +107,5 @@ class Entries(tk.Frame):
                 row=count, 
                 column=0,
                 padx=PADDING, 
-                pady=PADDING,
-                sticky=tk.W
+                pady=PADDING
             )

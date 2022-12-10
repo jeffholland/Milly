@@ -12,7 +12,7 @@ class Entry(tk.Frame):
         tk.Frame.__init__(
             self, 
             master, 
-            width=width, 
+            width=width,
             height=height
         )
 
@@ -22,6 +22,13 @@ class Entry(tk.Frame):
         self.time = time
         self.text = text
         self.index = index
+
+        # Height varies based on length of text
+
+        if len(text) > 100:
+            new_height = height + ((len(text) - 100) // 6)
+            print(f"Text length: {len(text)}. Height: {new_height}")
+            self.configure(height=new_height)
 
         # Font
 
@@ -40,44 +47,36 @@ class Entry(tk.Frame):
         self.refresh_colors()
 
 
-    def x_pressed(self):
-        remove_entry(self.index)
-        self.master.master.master.refresh_entries()
-
-    def up_pressed(self):
-        if self.index > 0:
-            swap_entry(self.index - 1, self.index)
-            self.master.master.master.refresh_entries()
-
-    def down_pressed(self):
-        if self.index < len(get_entries()) - 1:
-            swap_entry(self.index, self.index + 1)
-            self.master.master.master.refresh_entries()
-
-
     def create_widgets(self):
         self.date_label = tk.Label(
             self, 
             text=self.date,
-            font=self.font_bold)
+            font=self.font_bold
+        )
         self.date_label.grid(
             row=0, 
             column=0, 
-            sticky=tk.W)
+            sticky=tk.W
+        )
 
         self.time_label = tk.Label(
             self, 
             text=self.time,
-            font=self.font)
+            font=self.font
+        )
         self.time_label.grid(
             row=0, 
-            column=2)
+            column=2
+        )
 
         self.text_label = tk.Label(
             self, 
             text=self.text,
             font=self.font,
-            wraplength=720)
+            wraplength=720,
+            anchor=tk.NW,
+            justify=tk.LEFT
+        )
 
         if len(self.text) < 40:
             self.text_label.configure(
@@ -89,7 +88,8 @@ class Entry(tk.Frame):
             column=0, 
             padx=PADDING,
             pady=PADDING,
-            columnspan=6)
+            columnspan=6
+        )
 
         self.update()
 
@@ -136,6 +136,17 @@ class Entry(tk.Frame):
         self.configure(
             bg=self.colors["BG1"]
         )
+
+        self.date_label.configure(
+            bg=self.colors["BG1"], 
+            fg=self.colors["HL2"]
+        )
+
+        self.time_label.configure(
+            bg=self.colors["BG1"], 
+            fg=self.colors["HL2"]
+        )
+
         self.text_label.configure(
             bg=self.colors["BG1"], 
             fg=self.colors["HL2"]
@@ -150,3 +161,19 @@ class Entry(tk.Frame):
         self.xbutton.configure(
             highlightbackground=self.colors["BG1"]
         )
+
+    # Handlers
+
+    def x_pressed(self):
+        remove_entry(self.index)
+        self.master.master.master.refresh_entries()
+
+    def up_pressed(self):
+        if self.index > 0:
+            swap_entry(self.index - 1, self.index)
+            self.master.master.master.refresh_entries()
+
+    def down_pressed(self):
+        if self.index < len(get_entries()) - 1:
+            swap_entry(self.index, self.index + 1)
+            self.master.master.master.refresh_entries()
