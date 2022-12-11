@@ -63,14 +63,15 @@ def change_detected():
 
 from datetime import date, datetime
 
+def create_entry(text):
+    return {
+        "date": str(date.today()),
+        "time": datetime.now().strftime("%I:%M %p"),
+        "text": text
+    }
+
 def add_entry(text):
-    entries.append(
-        {
-            "date": str(date.today()),
-            "time": datetime.now().strftime("%I:%M %p"),
-            "text": text
-        }
-    )
+    entries.append(create_entry(text))
 
 def remove_entry(index):
     entries.pop(index)
@@ -79,3 +80,6 @@ def swap_entry(index1, index2):
     tmp = entries[index1]
     entries[index1] = entries[index2]
     entries[index2] = tmp
+
+def insert_entry(index, text):
+    entries.insert(index, create_entry(text))
