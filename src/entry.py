@@ -149,12 +149,21 @@ class Entry(tk.Frame):
         )
         self.buttons.append(self.x_button)
 
-        # Edit box only visible when "edit" button pressed
+        # Widgets that only show when "edit" button pressed
 
         self.edit_box = tk.Text(
             self,
-            width=100
+            width=100,
+            height=4
         )
+
+        self.save_button = tk.Button(
+            self,
+            text="save",
+            width=1,
+            command=self.edit_save
+        )
+        self.buttons.append(self.save_button)
 
     def refresh_colors(self):
         self.colors = get_colors()
@@ -183,6 +192,11 @@ class Entry(tk.Frame):
 
     def edit_pressed(self):
         self.text_label.grid_remove()
+        self.edit_button.grid_remove()
+        self.up_button.grid_remove()
+        self.down_button.grid_remove()
+        self.x_button.grid_remove()
+
         self.edit_box.grid(
             row=1, 
             column=0, 
@@ -194,7 +208,46 @@ class Entry(tk.Frame):
             "1.0", 
             self.text_label_var.get()
         )
+        self.edit_box.delete("end - 1 chars")
         self.edit_box.focus_set()
+
+        self.save_button.grid(
+            row=0,
+            column=3
+        )
+
+    def edit_save(self):
+        self.text_label_var.set(
+            self.edit_box.get("1.0", "end")
+        )
+        self.edit_box.delete("1.0", "end")
+
+        self.edit_box.grid_remove()
+        self.save_button.grid_remove()
+
+        self.text_label.grid(
+            row=1, 
+            column=0, 
+            padx=PADDING,
+            pady=PADDING,
+            columnspan=100
+        )
+        self.edit_button.grid(
+            row=0,
+            column=3
+        )
+        self.up_button.grid(
+            row=0,
+            column=4
+        )
+        self.down_button.grid(
+            row=0,
+            column=5
+        )
+        self.x_button.grid(
+            row=0,
+            column=6
+        )
 
     def x_pressed(self):
         remove_entry(self.index)
