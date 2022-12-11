@@ -59,8 +59,7 @@ class Entry(tk.Frame):
         )
         self.date_label.grid(
             row=0, 
-            column=0, 
-            sticky=tk.W
+            column=0
         )
         self.labels.append(self.date_label)
 
@@ -75,14 +74,16 @@ class Entry(tk.Frame):
         )
         self.labels.append(self.time_label)
 
+        self.text_label_var = tk.StringVar(self)
         self.text_label = tk.Label(
             self, 
-            text=self.text,
             font=self.font,
             wraplength=720,
             anchor=tk.NW,
-            justify=tk.LEFT
+            justify=tk.LEFT,
+            textvariable=self.text_label_var
         )
+        self.text_label_var.set(self.text)
         if len(self.text) < 40:
             self.text_label.configure(
                 width=ENTRY_MIN_WIDTH
@@ -100,6 +101,18 @@ class Entry(tk.Frame):
 
         # BUTTONS
 
+        self.edit_button = tk.Button(
+            self,
+            text="edit",
+            width=1,
+            command=self.edit_pressed
+        )
+        self.edit_button.grid(
+            row=0,
+            column=3
+        )
+        self.buttons.append(self.edit_button)
+
         self.up_button = tk.Button(
             self,
             text="up",
@@ -108,7 +121,7 @@ class Entry(tk.Frame):
         )
         self.up_button.grid(
             row=0,
-            column=3
+            column=4
         )
         self.buttons.append(self.up_button)
 
@@ -120,7 +133,7 @@ class Entry(tk.Frame):
         )
         self.down_button.grid(
             row=0,
-            column=4
+            column=5
         )
         self.buttons.append(self.down_button)
 
@@ -132,10 +145,16 @@ class Entry(tk.Frame):
         )
         self.x_button.grid(
             row=0,
-            column=5,
-            sticky=tk.E
+            column=6
         )
         self.buttons.append(self.x_button)
+
+        # Edit box only visible when "edit" button pressed
+
+        self.edit_box = tk.Text(
+            self,
+            width=100
+        )
 
     def refresh_colors(self):
         self.colors = get_colors()
@@ -155,7 +174,27 @@ class Entry(tk.Frame):
                 highlightbackground=self.colors["BG1"]
             )
 
+        self.edit_box.configure(
+            bg=self.colors["BG1"],
+            fg=self.colors["HL2"]
+        )
+
     # Handlers
+
+    def edit_pressed(self):
+        self.text_label.grid_remove()
+        self.edit_box.grid(
+            row=1, 
+            column=0, 
+            padx=PADDING,
+            pady=PADDING,
+            columnspan=100
+        )
+        self.edit_box.insert(
+            "1.0", 
+            self.text_label_var.get()
+        )
+        self.edit_box.focus_set()
 
     def x_pressed(self):
         remove_entry(self.index)
