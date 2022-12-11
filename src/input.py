@@ -90,7 +90,8 @@ class Input(tk.Frame):
             self, 
             height=INPUT_HEIGHT, 
             width=INPUT_WIDTH,
-            font=self.inputFont
+            font=self.inputFont,
+            wrap=tk.WORD
         )
         self.input.grid(
             row=0, 
