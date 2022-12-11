@@ -42,7 +42,6 @@ def change_detected():
 
     with f:
         if entries == json.load(f):
-            print("File read, no change detected")
             return False
     
     return True
