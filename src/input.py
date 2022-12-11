@@ -48,7 +48,10 @@ class Input(tk.Frame):
         self.exit_after_saving = False
 
     def destroy(self, event=None):
-        self.save_prompt = SavePrompt(self)
+        if change_detected():
+            self.save_prompt = SavePrompt(self)
+        else:
+            exit()
 
     def submit(self):
         add_entry(self.input.get("1.0", "end"))

@@ -16,6 +16,8 @@ def save(filepath):
     with open(filepath, "w") as f:
         json.dump(entries, f)
 
+    last_filepath = filepath
+
 def clear():
     entries.clear()
 
@@ -28,7 +30,25 @@ def get_last_filepath(short=False):
         return last_filepath[5:-5]
     return last_filepath
 
+def change_detected():
+    if len(last_filepath) == 0:
+        return False
 
+    try:
+        f = open(last_filepath)
+    except OSError:
+        print("Filepath could not be read")
+        return False
+
+    with f:
+        if entries == json.load(f):
+            print("File read, no change detected")
+            return False
+    
+    return True
+
+
+# Entry functions
 
 from datetime import date, datetime
 
