@@ -6,9 +6,11 @@ from sys import exit
 from constants import *
 from colors import get_colors
 from data import *
-from key import *
-from input_path import *
-from save_prompt import *
+from key import Key
+from input_path import InputPath
+from insert_prompt import InsertPrompt
+from save_prompt import SavePrompt
+
 
 class Input(tk.Frame):
     def __init__(self, width, height, master=None):
@@ -61,7 +63,7 @@ class Input(tk.Frame):
         self.input.delete("1.0", "end")
 
     def insert(self):
-        print("insert")
+        self.insert_prompt = InsertPrompt(self)
 
     def save(self, and_exit=False):
         self.input_path = InputPath(self, "save")
