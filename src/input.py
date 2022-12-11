@@ -78,17 +78,17 @@ class Input(tk.Frame):
         self.input_path = InputPath(self, "load")
 
     def save_submit(self, filepath):
-        save(filepath)
+        save_entries(filepath)
 
         if self.exit_after_saving:
             exit()
 
     def load_submit(self, filepath):
-        load(filepath)
+        load_entries(filepath)
         self.master.refresh_entries()
 
     def clear(self):
-        clear()
+        clear_entries()
         self.master.refresh_entries()
 
     def remove_last_entry(self):

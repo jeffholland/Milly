@@ -4,7 +4,7 @@ entries = []
 
 last_filepath = ""
 
-def load(filepath):
+def load_entries(filepath):
     try:
         f = open(filepath, "r")
     except OSError:
@@ -17,14 +17,14 @@ def load(filepath):
     global last_filepath
     last_filepath = filepath
 
-def save(filepath):
+def save_entries(filepath):
     with open(filepath, "w") as f:
         json.dump(entries, f)
 
     global last_filepath
     last_filepath = filepath
 
-def clear():
+def clear_entries():
     entries.clear()
 
 def get_entries():
