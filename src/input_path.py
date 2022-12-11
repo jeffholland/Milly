@@ -71,6 +71,7 @@ class InputPath(tk.Frame):
         self.entry.bind('<KeyRelease>', self.key_release)
 
         self.entry.focus_set()
+        self.entry.select_range(start=0, end=tk.END)
 
     def refresh_colors(self):
         self.colors = get_colors()
