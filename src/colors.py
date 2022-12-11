@@ -1,11 +1,12 @@
 import json
 from os import scandir
 
+# pick your starting color scheme here
+# they are sorted alphabetically
 
-COLOR_SCHEME_IDX = 0
+COLOR_SCHEME_IDX = 5
 
 COLOR_SCHEMES = []
-
 
 global colors
 with open("json/color_schemes/_noir.json", "r") as f:
