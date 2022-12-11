@@ -42,7 +42,7 @@ class Entry(tk.Frame):
             weight="bold"
         )
 
-        # Arrays for easy configuring of multiple widgets
+        # Arrays for easy configuring of all widgets
         self.labels = []
         self.buttons = []
 
@@ -100,42 +100,42 @@ class Entry(tk.Frame):
 
         # BUTTONS
 
-        self.upbutton = tk.Button(
+        self.up_button = tk.Button(
             self,
             text="up",
             width=1,
             command=self.up_pressed
         )
-        self.upbutton.grid(
+        self.up_button.grid(
             row=0,
             column=3
         )
-        self.buttons.append(self.upbutton)
+        self.buttons.append(self.up_button)
 
-        self.downbutton = tk.Button(
+        self.down_button = tk.Button(
             self,
             text="down",
             width=1,
             command=self.down_pressed
         )
-        self.downbutton.grid(
+        self.down_button.grid(
             row=0,
             column=4
         )
-        self.buttons.append(self.downbutton)
+        self.buttons.append(self.down_button)
 
-        self.xbutton = tk.Button(
+        self.x_button = tk.Button(
             self,
             text="x",
             width=1,
             command=self.x_pressed
         )
-        self.xbutton.grid(
+        self.x_button.grid(
             row=0,
             column=5,
             sticky=tk.E
         )
-        self.buttons.append(self.xbutton)
+        self.buttons.append(self.x_button)
 
     def refresh_colors(self):
         self.colors = get_colors()
