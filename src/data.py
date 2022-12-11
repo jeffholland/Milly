@@ -16,6 +16,7 @@ def save(filepath):
     with open(filepath, "w") as f:
         json.dump(entries, f)
 
+    global last_filepath
     last_filepath = filepath
 
 def clear():
@@ -31,6 +32,12 @@ def get_last_filepath(short=False):
     return last_filepath
 
 def change_detected():
+    # No entries means no changes
+    if len(entries) == 0:
+        return True
+
+    # Entries and no last filepath 
+    # means something changed
     if len(last_filepath) == 0:
         return False
 
