@@ -63,7 +63,10 @@ class Input(tk.Frame):
         self.input.delete("1.0", "end")
 
     def insert(self):
-        self.insert_prompt = InsertPrompt(self)
+        if len(get_entries()) == 0:
+            self.submit()
+        else:
+            self.insert_prompt = InsertPrompt(self)
 
     def save(self, and_exit=False):
         self.input_path = InputPath(self, "save")

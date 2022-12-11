@@ -6,6 +6,7 @@ class InsertPrompt(tk.Frame):
     def __init__(self, master):
         self.master = master
         self.window = tk.Toplevel(master)
+        self.window.resizable(False, False)
 
         self.max_val = len(get_entries())
 
