@@ -4,32 +4,6 @@ entries = []
 
 last_filepath = ""
 
-def load_entries(filepath):
-    try:
-        f = open(filepath, "r")
-    except OSError:
-        print("Load Error: filepath could not be read")
-
-    with f:
-        global entries
-        entries = json.load(f)
-
-    global last_filepath
-    last_filepath = filepath
-
-def save_entries(filepath):
-    with open(filepath, "w") as f:
-        json.dump(entries, f)
-
-    global last_filepath
-    last_filepath = filepath
-
-def clear_entries():
-    entries.clear()
-
-def get_entries():
-    return entries
-
 def get_last_filepath(short=False):
     if short:
         # strip "json/" and ".json"
@@ -62,6 +36,32 @@ def change_detected():
 # Entry functions
 
 from datetime import date, datetime
+
+def load_entries(filepath):
+    try:
+        f = open(filepath, "r")
+    except OSError:
+        print("Load Error: filepath could not be read")
+
+    with f:
+        global entries
+        entries = json.load(f)
+
+    global last_filepath
+    last_filepath = filepath
+
+def save_entries(filepath):
+    with open(filepath, "w") as f:
+        json.dump(entries, f)
+
+    global last_filepath
+    last_filepath = filepath
+
+def clear_entries():
+    entries.clear()
+
+def get_entries():
+    return entries
 
 def create_entry(text):
     return {
