@@ -22,6 +22,7 @@ class Entry(tk.Frame):
         self.time = time
         self.text = text
         self.index = index
+        self.width = width
 
         # Height varies based on length of text
 
@@ -91,7 +92,7 @@ class Entry(tk.Frame):
             column=0, 
             padx=PADDING,
             pady=PADDING,
-            columnspan=6
+            columnspan=100
         )
         self.labels.append(self.text_label)
 
