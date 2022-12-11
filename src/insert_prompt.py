@@ -29,6 +29,7 @@ class InsertPrompt(tk.Frame):
                 int(self.spinbox.get()), 
                 self.master.input.get("1.0", "end")
             )
+            self.master.input.delete("1.0", "end")
             self.master.master.refresh_entries()
 
             self.window.destroy()
