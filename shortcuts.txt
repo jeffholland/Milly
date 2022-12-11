@@ -1,8 +1,4 @@
-I'm a big fan of keyboard shortcuts, 
-and I keep adding them to the program because it's easy and fun.
-
-
-Here is a list of all of them.
+All keyboard shortcuts
 
 
 return                 submit entry
