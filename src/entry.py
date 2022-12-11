@@ -249,6 +249,8 @@ class Entry(tk.Frame):
             column=6
         )
 
+        self.master.master.master.master.bottom_frame.input.focus_set()
+
     def x_pressed(self):
         remove_entry(self.index)
         self.master.master.master.refresh_entries()
