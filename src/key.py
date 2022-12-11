@@ -26,7 +26,8 @@ class Key:
         # Cmd+s to save
         # Cmd+l to load
         # Cmd+c to clear
-        # Cmd+delete to remove last entry
+        # Cmd+backspace to remove first entry
+        # Cmd+shift+backspace to remove last entry
 
         if self.keys_pressed["cmd"] == True:
             if event.keysym == "i":
@@ -38,7 +39,10 @@ class Key:
             if event.keysym == "c":
                 self.master.clear()
             if event.keysym == "BackSpace":
-                self.master.remove_last_entry()
+                if self.keys_pressed["shift"] == True:
+                    self.master.remove_last_entry()
+                else:
+                    self.master.remove_first_entry()
             if event.keysym == "Left":
                 switch_color_scheme("left")
                 self.master.master.refresh_colors()

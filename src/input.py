@@ -91,6 +91,10 @@ class Input(tk.Frame):
         clear_entries()
         self.master.refresh_entries()
 
+    def remove_first_entry(self):
+        remove_entry(0)
+        self.master.refresh_entries()
+
     def remove_last_entry(self):
         remove_entry(len(get_entries()) - 1)
         self.master.refresh_entries()
