@@ -17,18 +17,12 @@ class Key:
         if "Shift" in event.keysym:
             self.keys_pressed["shift"] = True
 
-        # Return to submit, shift+return for newline
+        # see shortcuts.txt for a list of all shortcuts
+
         if event.keysym == "Return" and self.keys_pressed["shift"] == False:
             self.master.submit()
             self.just_submitted = True
         
-        # Cmd+i to insert
-        # Cmd+s to save
-        # Cmd+l to load
-        # Cmd+c to clear
-        # Cmd+backspace to remove first entry
-        # Cmd+shift+backspace to remove last entry
-
         if self.keys_pressed["cmd"] == True:
             if event.keysym == "i":
                 self.master.insert()

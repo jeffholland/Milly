@@ -1,0 +1,15 @@
+I'm a big fan of keyboard shortcuts, 
+and I keep adding them to the program because it's easy and fun.
+
+
+Here is a list of all of them.
+
+
+return                 submit entry
+shift+return           new line of text
+cmd+i                  insert entry
+cmd+s                  save
+cmd+l                  load
+cmd+c                  clear
+cmd+backspace          delete top entry
+cmd+shift+backspace    delete bottom entry
