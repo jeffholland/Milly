@@ -19,3 +19,9 @@ class InsertPrompt(tk.Frame):
             to_=len(get_entries())
         )
         self.spinbox.grid(row=0, column=0)
+        self.spinbox.focus_set()
+        
+        self.spinbox.bind("<KeyPress>", self.key_pressed)
+
+    def key_pressed(self, event):
+        print(event.keysym)
