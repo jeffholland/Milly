@@ -27,7 +27,6 @@ class Entry(tk.Frame):
 
         if len(text) > 100:
             new_height = height + ((len(text) - 100) // 6)
-            print(f"Text length: {len(text)}. Height: {new_height}")
             self.configure(height=new_height)
 
         # Font
