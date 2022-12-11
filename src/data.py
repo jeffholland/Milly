@@ -5,7 +5,12 @@ entries = []
 last_filepath = ""
 
 def load(filepath):
-    with open(filepath, 'r') as f:
+    try:
+        f = open(filepath, "r")
+    except OSError:
+        print("Load Error: filepath could not be read")
+
+    with f:
         global entries
         entries = json.load(f)
 
@@ -44,7 +49,7 @@ def change_detected():
     try:
         f = open(last_filepath)
     except OSError:
-        print("Filepath could not be read")
+        print("Change detection error: Filepath could not be read")
         return False
 
     with f:
