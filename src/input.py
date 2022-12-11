@@ -25,7 +25,9 @@ class Input(tk.Frame):
             size=INPUT_FONT_SIZE
         )
 
-        self.num_buttons = 4
+        # Button array to efficiently configure all buttons
+        self.buttons = []
+        self.num_buttons = 5
 
         # Input path set to None by default
         self.input_path = None
@@ -57,6 +59,9 @@ class Input(tk.Frame):
         add_entry(self.input.get("1.0", "end"))
         self.master.refresh_entries()
         self.input.delete("1.0", "end")
+
+    def insert(self):
+        print("insert")
 
     def save(self, and_exit=False):
         self.input_path = InputPath(self, "save")
@@ -112,6 +117,19 @@ class Input(tk.Frame):
             column=1, 
             padx=PADDING
         )
+        self.buttons.append(self.submit_button)
+
+        self.insert_button = tk.Button(
+            self,
+            text="Insert",
+            command=self.insert
+        )
+        self.insert_button.grid(
+            row=1,
+            column=1,
+            padx=PADDING
+        )
+        self.buttons.append(self.insert_button)
 
         self.save_button = tk.Button(
             self, 
@@ -119,10 +137,11 @@ class Input(tk.Frame):
             command=self.save
         )
         self.save_button.grid(
-            row=1, 
+            row=2, 
             column=1, 
             padx=PADDING
         )
+        self.buttons.append(self.save_button)
 
         self.load_button = tk.Button(
             self,
@@ -130,10 +149,11 @@ class Input(tk.Frame):
             command=self.load
         )
         self.load_button.grid(
-            row=2, 
+            row=3, 
             column=1, 
             padx=PADDING
         )
+        self.buttons.append(self.load_button)
 
         self.clear_button = tk.Button(
             self,
@@ -141,10 +161,11 @@ class Input(tk.Frame):
             command=self.clear
         )
         self.clear_button.grid(
-            row=3,
+            row=4,
             column=1,
             padx=PADDING
         )
+        self.buttons.append(self.clear_button)
 
     def refresh_colors(self):
         self.colors = get_colors()
@@ -156,21 +177,10 @@ class Input(tk.Frame):
             highlightcolor=self.colors["HL1"]
         )
 
-        self.submit_button.configure(
-            highlightbackground=self.colors["BG2"]
-        )
-
-        self.save_button.configure(
-            highlightbackground=self.colors["BG2"]
-        )
-
-        self.load_button.configure(
-            highlightbackground=self.colors["BG2"]
-        )
-
-        self.clear_button.configure(
-            highlightbackground=self.colors["BG2"]
-        )
+        for button in self.buttons:
+            button.configure(
+                highlightbackground=self.colors["BG2"]
+            )
 
         if (self.input_path):
             self.input_path.refresh_colors()

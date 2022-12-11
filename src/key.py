@@ -22,12 +22,15 @@ class Key:
             self.master.submit()
             self.just_submitted = True
         
+        # Cmd+i to insert
         # Cmd+s to save
         # Cmd+l to load
         # Cmd+c to clear
         # Cmd+delete to remove last entry
 
         if self.keys_pressed["cmd"] == True:
+            if event.keysym == "i":
+                self.master.insert()
             if event.keysym == "s":
                 self.master.save()
             if event.keysym == "l":
