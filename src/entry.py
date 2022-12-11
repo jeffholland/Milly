@@ -41,6 +41,10 @@ class Entry(tk.Frame):
             weight="bold"
         )
 
+        # Arrays for easy configuring of multiple widgets
+        self.labels = []
+        self.buttons = []
+
         self.create_widgets()
 
         self.refresh_colors()
@@ -57,6 +61,7 @@ class Entry(tk.Frame):
             column=0, 
             sticky=tk.W
         )
+        self.labels.append(self.date_label)
 
         self.time_label = tk.Label(
             self, 
@@ -67,6 +72,7 @@ class Entry(tk.Frame):
             row=0, 
             column=2
         )
+        self.labels.append(self.time_label)
 
         self.text_label = tk.Label(
             self, 
@@ -76,12 +82,10 @@ class Entry(tk.Frame):
             anchor=tk.NW,
             justify=tk.LEFT
         )
-
         if len(self.text) < 40:
             self.text_label.configure(
                 width=ENTRY_MIN_WIDTH
             )
-
         self.text_label.grid(
             row=1, 
             column=0, 
@@ -89,6 +93,7 @@ class Entry(tk.Frame):
             pady=PADDING,
             columnspan=6
         )
+        self.labels.append(self.text_label)
 
         self.update()
 
@@ -104,6 +109,7 @@ class Entry(tk.Frame):
             row=0,
             column=3
         )
+        self.buttons.append(self.upbutton)
 
         self.downbutton = tk.Button(
             self,
@@ -111,11 +117,11 @@ class Entry(tk.Frame):
             width=1,
             command=self.down_pressed
         )
-
         self.downbutton.grid(
             row=0,
             column=4
         )
+        self.buttons.append(self.downbutton)
 
         self.xbutton = tk.Button(
             self,
@@ -128,6 +134,7 @@ class Entry(tk.Frame):
             column=5,
             sticky=tk.E
         )
+        self.buttons.append(self.xbutton)
 
     def refresh_colors(self):
         self.colors = get_colors()
@@ -136,30 +143,16 @@ class Entry(tk.Frame):
             bg=self.colors["BG1"]
         )
 
-        self.date_label.configure(
-            bg=self.colors["BG1"], 
-            fg=self.colors["HL2"]
-        )
+        for label in self.labels:
+            label.configure(
+                bg=self.colors["BG1"], 
+                fg=self.colors["HL2"]
+            )
 
-        self.time_label.configure(
-            bg=self.colors["BG1"], 
-            fg=self.colors["HL2"]
-        )
-
-        self.text_label.configure(
-            bg=self.colors["BG1"], 
-            fg=self.colors["HL2"]
-        )
-
-        self.upbutton.configure(
-            highlightbackground=self.colors["BG1"]
-        )
-        self.downbutton.configure(
-            highlightbackground=self.colors["BG1"]
-        )
-        self.xbutton.configure(
-            highlightbackground=self.colors["BG1"]
-        )
+        for button in self.buttons:
+            button.configure(
+                highlightbackground=self.colors["BG1"]
+            )
 
     # Handlers
 
