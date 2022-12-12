@@ -176,6 +176,18 @@ class Input(tk.Frame):
         )
         self.buttons.append(self.clear_button)
 
+        self.settings_button = tk.Button(
+            self,
+            text="Settings",
+            command=self.master.show_settings
+        )
+        self.settings_button.grid(
+            row=0,
+            column=2,
+            padx=PADDING
+        )
+        self.buttons.append(self.settings_button)
+
         for button in self.buttons:
             button.configure(
                 width=3
