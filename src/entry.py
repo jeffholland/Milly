@@ -143,6 +143,18 @@ class Entry(tk.Frame):
         )
         self.buttons.append(self.down_button)
 
+        self.copy_button = tk.Button(
+            self,
+            text="copy",
+            width=2,
+            command=self.copy_pressed
+        )
+        self.copy_button.grid(
+            row=0,
+            column=6
+        )
+        self.buttons.append(self.copy_button)
+
         self.x_button = tk.Button(
             self,
             text="x",
@@ -151,9 +163,11 @@ class Entry(tk.Frame):
         )
         self.x_button.grid(
             row=0,
-            column=6
+            column=7
         )
         self.buttons.append(self.x_button)
+
+
 
         # Widgets that only show when "edit" button pressed
 
@@ -239,8 +253,6 @@ class Entry(tk.Frame):
         if "Meta" in event.keysym:
             self.cmd_pressed = False
 
-
-
     def edit_save(self):
         self.text_label_var.set(
             self.edit_box.get("1.0", "end")
@@ -278,7 +290,7 @@ class Entry(tk.Frame):
 
 
 
-    # Other handlers
+    # Other button handlers
 
     def x_pressed(self):
         remove_entry(self.index)
@@ -293,6 +305,10 @@ class Entry(tk.Frame):
         if self.index < len(get_entries()) - 1:
             swap_entry(self.index, self.index + 1)
             self.master.master.master.refresh_entries()
+
+    def copy_pressed(self):
+        self.clipboard_clear()
+        self.clipboard_append(self.text)
 
     # Edit selection mode - from pressing cmd+e
     def edit_selected(self, selected):
