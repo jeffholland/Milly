@@ -268,3 +268,14 @@ class Entry(tk.Frame):
         if self.index < len(get_entries()) - 1:
             swap_entry(self.index, self.index + 1)
             self.master.master.master.refresh_entries()
+
+    # Edit selection mode - from pressing cmd+e
+    def edit_selected(self, selected):
+        if selected:
+            self.edit_button.configure(
+                highlightbackground=self.colors["HL2"]
+            )
+        else:
+            self.edit_button.configure(
+                highlightbackground=self.colors["BG1"]
+            )

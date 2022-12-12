@@ -63,6 +63,9 @@ def clear_entries():
 def get_entries():
     return entries
 
+def get_num_entries():
+    return len(entries)
+
 def create_entry(text):
     return {
         "date": str(date.today()),
