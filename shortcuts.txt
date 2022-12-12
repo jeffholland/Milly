@@ -1,4 +1,4 @@
-All keyboard shortcuts usable in the Text widget:
+All keyboard shortcuts usable in the main Text widget:
 
 
 return                 submit entry
@@ -10,6 +10,13 @@ cmd+c                  clear
 cmd+backspace          delete top entry
 cmd+shift+backspace    delete bottom entry
 cmd+e                  enter edit selection mode
+
+
+
+All keyboard shortcuts usable in the Edit Mode text widget:
+
+
+cmd+s                  save edit
 
 
 EDIT SELECTION MODE
