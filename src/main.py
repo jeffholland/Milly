@@ -58,6 +58,12 @@ class Application(tk.Frame):
         self.bottom_frame.grid_remove()
 
         self.settings_frame.grid(row=0, column=0)
+
+    def hide_settings(self):
+        self.settings_frame.grid_remove()
+
+        self.top_frame.grid()
+        self.bottom_frame.grid()
         
 
 

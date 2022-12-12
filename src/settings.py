@@ -61,7 +61,7 @@ class Settings(tk.Frame):
         )
         self.save_button.grid(
             row=10,
-            column=1
+            column=0
         )
         self.buttons.append(self.save_button)
 
@@ -72,9 +72,20 @@ class Settings(tk.Frame):
         )
         self.load_button.grid(
             row=10,
-            column=0
+            column=1
         )
         self.buttons.append(self.load_button)
+
+        self.back_button = tk.Button(
+            self,
+            text="Back",
+            command=self.back
+        )
+        self.back_button.grid(
+            row=10,
+            column=2
+        )
+        self.buttons.append(self.back_button)
 
     def refresh_colors(self):
         self.colors = get_colors()
@@ -119,3 +130,6 @@ class Settings(tk.Frame):
 
     def default_color_scheme_changed(self, event):
         self.settings_data["default_color_scheme"] = self.default_color_scheme_var.get()
+
+    def back(self):
+        self.master.hide_settings()
