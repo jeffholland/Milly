@@ -9,8 +9,7 @@ COLOR_SCHEME_IDX = 6
 COLOR_SCHEMES = []
 
 global colors
-with open("json/color_schemes/_noir.json", "r") as f:
-    colors = json.load(f)
+colors = []
 
 
 def load_colors():
@@ -57,10 +56,13 @@ def switch_color_scheme(dir="right"):
     
     load_colors()
 
-def set_color_scheme(index):
+def set_color_scheme(name):
     global COLOR_SCHEME_IDX
+    global COLOR_SCHEMES
+
+    index = COLOR_SCHEMES.index(name)
     
     if index >= 0 and index < len(COLOR_SCHEMES):
         COLOR_SCHEME_IDX = index
 
-    load_colors()
+        load_colors()

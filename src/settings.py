@@ -15,16 +15,12 @@ class Settings(tk.Frame):
             height=height
         )
 
-        self.colors = get_colors()
-
         self.labels = []
         self.buttons = []
 
-        self.settings_data = {
-            "default_color_scheme": "navy"
-        }
-
         self.create_widgets()
+
+        self.load_settings()
 
     def create_widgets(self):
         self.default_color_scheme_label = tk.Label(
@@ -116,6 +112,8 @@ class Settings(tk.Frame):
         self.default_color_scheme_var.set(
             self.settings_data["default_color_scheme"]
         )
+        set_color_scheme(self.settings_data["default_color_scheme"])
+        self.refresh_colors()
 
     # Handlers
 
