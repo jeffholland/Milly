@@ -23,12 +23,13 @@ class Entry(tk.Frame):
         self.text = text
         self.index = index
         self.width = width
+        self.height = height
 
         # Height varies based on length of text
 
         if len(text) > 100:
-            new_height = height + ((len(text) - 100) // 6)
-            self.configure(height=new_height)
+            self.height = height + ((len(text) - 100) // 6)
+            self.configure(height=self.height)
 
         # Font
 
@@ -154,7 +155,7 @@ class Entry(tk.Frame):
         self.edit_box = tk.Text(
             self,
             width=100,
-            height=4
+            height=(self.height // 20)
         )
 
         self.save_button = tk.Button(

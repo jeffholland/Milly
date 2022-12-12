@@ -4,7 +4,7 @@ from os import scandir
 # pick your starting color scheme here
 # they are sorted alphabetically
 
-COLOR_SCHEME_IDX = 5
+COLOR_SCHEME_IDX = 6
 
 COLOR_SCHEMES = []
 
