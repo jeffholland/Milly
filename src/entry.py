@@ -1,6 +1,8 @@
 import tkinter as tk
 import tkinter.font as tkFont
 
+from math import floor
+
 from colors import get_colors
 from constants import *
 from data import *
@@ -28,7 +30,8 @@ class Entry(tk.Frame):
         # Height varies based on length of text
 
         if len(text) > 100:
-            self.height = height + ((len(text) - 100) // 6)
+            self.height = height + (floor((len(text) - 100) / 5.5))
+
             self.configure(height=self.height)
 
         # Font
@@ -155,7 +158,7 @@ class Entry(tk.Frame):
         self.edit_box = tk.Text(
             self,
             width=100,
-            height=(self.height // 20)
+            height=(self.height // 30)
         )
 
         self.save_button = tk.Button(
