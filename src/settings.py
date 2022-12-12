@@ -22,6 +22,12 @@ class Settings(tk.Frame):
 
         self.load_settings()
 
+        self.bind_all("<KeyPress>", self.key_pressed)
+
+    def key_pressed(self, event):
+        if event.keysym == "Escape":
+            self.back()
+
     def create_widgets(self):
         self.default_color_scheme_label = tk.Label(
             self,
@@ -105,6 +111,18 @@ class Settings(tk.Frame):
                 highlightbackground=self.colors["BG2"]
             )
 
+    def refresh_settings(self):
+        self.default_color_scheme_var.set(
+            self.settings_data["default_color_scheme"]
+        )
+        set_color_scheme(self.settings_data["default_color_scheme"])
+        self.refresh_colors()
+
+    # Handlers
+
+    def default_color_scheme_changed(self, event):
+        self.settings_data["default_color_scheme"] = self.default_color_scheme_var.get()
+
     def save_settings(self):
         with open("json/settings.json", "w") as f:
             json.dump(self.settings_data, f)
@@ -119,17 +137,6 @@ class Settings(tk.Frame):
             self.settings_data = json.load(f)
             self.refresh_settings()
 
-    def refresh_settings(self):
-        self.default_color_scheme_var.set(
-            self.settings_data["default_color_scheme"]
-        )
-        set_color_scheme(self.settings_data["default_color_scheme"])
-        self.refresh_colors()
-
-    # Handlers
-
-    def default_color_scheme_changed(self, event):
-        self.settings_data["default_color_scheme"] = self.default_color_scheme_var.get()
-
     def back(self):
+        # self.unbind_all("<KeyPress>")
         self.master.hide_settings()
