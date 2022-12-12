@@ -27,6 +27,8 @@ class Entry(tk.Frame):
         self.width = width
         self.height = height
 
+        self.cmd_pressed = False
+
         # Height varies based on length of text
 
         if len(text) > 100:
@@ -192,7 +194,10 @@ class Entry(tk.Frame):
             fg=self.colors["HL2"]
         )
 
-    # Handlers
+
+
+
+    # Edit handlers
 
     def edit_pressed(self):
         self.text_label.grid_remove()
@@ -214,11 +219,27 @@ class Entry(tk.Frame):
         )
         self.edit_box.delete("end - 1 chars")
         self.edit_box.focus_set()
+        self.edit_box.bind("<KeyPress>", self.edit_box_key_pressed)
+        self.edit_box.bind("<KeyRelease>", self.edit_box_key_released)
 
         self.save_button.grid(
             row=0,
             column=3
         )
+
+    def edit_box_key_pressed(self, event):
+        if "Meta" in event.keysym:
+            self.cmd_pressed = True
+
+        if self.cmd_pressed:
+            if "s" in event.keysym:
+                self.edit_save()
+
+    def edit_box_key_released(self, event):
+        if "Meta" in event.keysym:
+            self.cmd_pressed = False
+
+
 
     def edit_save(self):
         self.text_label_var.set(
@@ -254,6 +275,10 @@ class Entry(tk.Frame):
         )
 
         self.master.master.master.master.bottom_frame.input.focus_set()
+
+
+
+    # Other handlers
 
     def x_pressed(self):
         remove_entry(self.index)
