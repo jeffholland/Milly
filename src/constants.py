@@ -7,7 +7,11 @@ MODE = "normal"
 # MODE = "fullscreen"
 
 INPUT_HEIGHT = 7
-INPUT_WIDTH = 60
+
+if MODE == "fullscreen":
+    INPUT_WIDTH = 130
+else:
+    INPUT_WIDTH = 60
 
 ENTRY_HEIGHT = 80
 ENTRY_MIN_WIDTH = 32
