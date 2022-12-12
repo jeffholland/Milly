@@ -4,14 +4,16 @@ from colors import *
 from constants import HEIGHT, WIDTH
 from entries import Entries
 from input import Input
+from settings import Settings
 
 class Application(tk.Frame):
     def __init__(self, master=None):
         tk.Frame.__init__(self, master)
         self.grid(row=0, column=0)
-        self.create_widgets()
 
         load_colors()
+        
+        self.create_widgets()
         self.refresh_colors()
 
     def create_widgets(self):
@@ -34,6 +36,9 @@ class Application(tk.Frame):
         self.bottom_frame.grid_propagate(0)
         self.bottom_frame.grid(row=1, column=0)
 
+        self.settings_frame = Settings(self, width=WIDTH, height=HEIGHT)
+        self.settings_frame.grid_propagate(0)
+
     def refresh_entries(self):
         self.top_frame.refresh_entries()
 
@@ -42,9 +47,17 @@ class Application(tk.Frame):
 
         self.top_frame.configure(bg=self.colors["HL1"])
         self.bottom_frame.configure(bg=self.colors["BG2"])
+        self.settings_frame.configure(bg=self.colors["BG1"])
 
         self.top_frame.refresh_colors()
         self.bottom_frame.refresh_colors()
+        self.settings_frame.refresh_colors()
+
+    def show_settings(self):
+        self.top_frame.grid_remove()
+        self.bottom_frame.grid_remove()
+
+        self.settings_frame.grid(row=0, column=0)
         
 
 

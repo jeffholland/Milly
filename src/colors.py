@@ -35,6 +35,11 @@ def get_colors():
     return colors
 
 
+def get_color_schemes():
+    global COLOR_SCHEMES
+    return COLOR_SCHEMES
+
+
 def switch_color_scheme(dir="right"):
     global colors
     global COLOR_SCHEME_IDX
@@ -50,4 +55,12 @@ def switch_color_scheme(dir="right"):
         else:
             COLOR_SCHEME_IDX += 1
     
+    load_colors()
+
+def set_color_scheme(index):
+    global COLOR_SCHEME_IDX
+    
+    if index >= 0 and index < len(COLOR_SCHEMES):
+        COLOR_SCHEME_IDX = index
+
     load_colors()

@@ -26,6 +26,8 @@ class Key:
             self.master.submit()
             self.just_submitted = True
         
+        # cmd key pressed
+
         if self.keys_pressed["cmd"] == True:
             if event.keysym == "i":
                 self.master.insert()
@@ -51,6 +53,8 @@ class Key:
                     # Enter or exit edit selection mode
                     self.edit_selection_mode = not self.edit_selection_mode
                     self.master.master.top_frame.entries[self.edit_selection_index].edit_selected(self.edit_selection_mode)
+            if event.keysym == "comma":
+                self.master.master.show_settings()
             
         # Edit selection mode
         
