@@ -176,6 +176,11 @@ class Input(tk.Frame):
         )
         self.buttons.append(self.clear_button)
 
+        for button in self.buttons:
+            button.configure(
+                width=3
+            )
+
     def refresh_colors(self):
         self.colors = get_colors()
 
