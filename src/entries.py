@@ -24,15 +24,12 @@ class Entries(tk.Frame):
     def scroll_config(self, event=None):
         self.canvas.configure(
             scrollregion=self.canvas.bbox("all"),
-            width=self.width - (PADDING * 2),
+            width=self.width - 25,
             height=self.height
         )
 
     def create_widgets(self):
         self.canvas = tk.Canvas(self)
-        self.scroll_config()
-        self.container = tk.Frame(
-            self.canvas)
         self.scrollbar = tk.Scrollbar(self,
             orient="vertical",
             command=self.canvas.yview,
@@ -40,9 +37,13 @@ class Entries(tk.Frame):
             takefocus=0
         )
         self.canvas.configure(
-            yscrollcommand=self.scrollbar.set)
-
+            yscrollcommand=self.scrollbar.set
+        )
+        self.container = tk.Frame(
+            self.canvas
+        )
         self.canvas.grid(row=0, column=0)
+        self.scroll_config()
         self.scrollbar.grid(
             row=0, 
             column=1, 
