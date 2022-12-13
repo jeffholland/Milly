@@ -13,12 +13,12 @@ def get_last_filepath(short=False):
 def change_detected():
     # No entries means no changes
     if len(entries) == 0:
-        return True
+        return False
 
     # Entries and no last filepath 
     # means something changed
     if len(last_filepath) == 0:
-        return False
+        return True
 
     try:
         f = open(last_filepath)
