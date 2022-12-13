@@ -215,10 +215,8 @@ class Entry(tk.Frame):
 
     def edit_pressed(self):
         self.text_label.grid_remove()
-        self.edit_button.grid_remove()
-        self.up_button.grid_remove()
-        self.down_button.grid_remove()
-        self.x_button.grid_remove()
+        for button in self.buttons:
+            button.grid_remove()
 
         self.edit_box.grid(
             row=1, 
@@ -269,22 +267,14 @@ class Entry(tk.Frame):
             pady=PADDING,
             columnspan=100
         )
-        self.edit_button.grid(
-            row=0,
-            column=3
-        )
-        self.up_button.grid(
-            row=0,
-            column=4
-        )
-        self.down_button.grid(
-            row=0,
-            column=5
-        )
-        self.x_button.grid(
-            row=0,
-            column=6
-        )
+
+        count = 3
+        for button in self.buttons:
+            button.grid(
+                row=0,
+                column=count
+            )
+            count += 1
 
         self.master.master.master.master.bottom_frame.input.focus_set()
 
