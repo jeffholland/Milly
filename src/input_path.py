@@ -76,9 +76,13 @@ class InputPath(tk.Frame):
     def refresh_colors(self):
         self.colors = get_colors()
 
-        self.window.configure(
-            bg=self.colors["BG1"]
-        )
+        try:
+            self.window.configure(
+                bg=self.colors["BG1"]
+            )
+        except tk.TclError:
+            print("Caught TclError in input_path.py")
+            return
 
         self.entry.configure(
             bg=self.colors["BG2"],

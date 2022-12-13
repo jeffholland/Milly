@@ -75,6 +75,9 @@ class Application(tk.Frame):
 
         self.top_frame.grid()
         self.bottom_frame.grid()
+        self.bottom_frame.input.focus_set()
+
+        self.refresh_colors()
         
 
 
