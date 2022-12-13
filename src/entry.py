@@ -10,7 +10,6 @@ from data import *
 class Entry(tk.Frame):
     def __init__(self, date, time, text, width, height, index, master=None):
 
-        # TODO: make height dynamic according to length of text
         tk.Frame.__init__(
             self, 
             master, 
@@ -29,7 +28,7 @@ class Entry(tk.Frame):
 
         self.cmd_pressed = False
 
-        # Height varies based on length of text
+        # Variable height
 
         if len(text) > 100:
             self.height = height + (floor((len(text) - 100) / 5.5))
@@ -48,13 +47,15 @@ class Entry(tk.Frame):
             weight="bold"
         )
 
-        # Arrays for easy configuring of all widgets
+        # Arrays for easy widget configuration
+
         self.labels = []
         self.buttons = []
 
         self.create_widgets()
 
         self.refresh_colors()
+
 
 
     def create_widgets(self):
@@ -103,9 +104,9 @@ class Entry(tk.Frame):
         )
         self.labels.append(self.text_label)
 
-        self.update()
 
-        # BUTTONS
+
+        # Buttons
 
         self.edit_button = tk.Button(
             self,
@@ -185,6 +186,8 @@ class Entry(tk.Frame):
         )
         self.buttons.append(self.save_button)
 
+
+
     def refresh_colors(self):
         self.colors = get_colors()
 
@@ -209,9 +212,7 @@ class Entry(tk.Frame):
         )
 
 
-
-
-    # Edit handlers
+    # Button handlers
 
     def edit_pressed(self):
         self.text_label.grid_remove()
@@ -225,12 +226,11 @@ class Entry(tk.Frame):
             pady=PADDING,
             columnspan=100
         )
-        self.edit_box.insert(
-            "1.0", 
-            self.text_label_var.get()
-        )
-        self.edit_box.delete("end - 1 chars")
+
+        self.edit_box.insert("1.0", self.text_label_var.get())
+        self.edit_box.delete("end - 1 chars") # remove newline
         self.edit_box.focus_set()
+
         self.edit_box.bind("<KeyPress>", self.edit_box_key_pressed)
         self.edit_box.bind("<KeyRelease>", self.edit_box_key_released)
 
@@ -238,6 +238,28 @@ class Entry(tk.Frame):
             row=0,
             column=3
         )
+
+    def x_pressed(self):
+        remove_entry(self.index)
+        self.master.master.master.refresh_entries()
+
+    def up_pressed(self):
+        if self.index > 0:
+            swap_entry(self.index - 1, self.index)
+            self.master.master.master.refresh_entries()
+
+    def down_pressed(self):
+        if self.index < len(get_entries()) - 1:
+            swap_entry(self.index, self.index + 1)
+            self.master.master.master.refresh_entries()
+
+    def copy_pressed(self):
+        self.clipboard_clear()
+        self.clipboard_append(self.text)
+
+
+
+    # Edit box key handlers
 
     def edit_box_key_pressed(self, event):
         if "Meta" in event.keysym:
@@ -250,6 +272,8 @@ class Entry(tk.Frame):
     def edit_box_key_released(self, event):
         if "Meta" in event.keysym:
             self.cmd_pressed = False
+
+    # Edit mode save button handler
 
     def edit_save(self):
         self.text_label_var.set(
@@ -280,27 +304,8 @@ class Entry(tk.Frame):
 
 
 
-    # Other button handlers
-
-    def x_pressed(self):
-        remove_entry(self.index)
-        self.master.master.master.refresh_entries()
-
-    def up_pressed(self):
-        if self.index > 0:
-            swap_entry(self.index - 1, self.index)
-            self.master.master.master.refresh_entries()
-
-    def down_pressed(self):
-        if self.index < len(get_entries()) - 1:
-            swap_entry(self.index, self.index + 1)
-            self.master.master.master.refresh_entries()
-
-    def copy_pressed(self):
-        self.clipboard_clear()
-        self.clipboard_append(self.text)
-
     # Edit selection mode - from pressing cmd+e
+
     def edit_selected(self, selected):
         if selected:
             self.edit_button.configure(
