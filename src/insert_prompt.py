@@ -20,6 +20,7 @@ class InsertPrompt(tk.Frame):
         )
         self.spinbox.grid(row=0, column=0)
         self.spinbox.focus_set()
+        self.spinbox.selection('to', tk.END)
 
         self.spinbox.bind("<KeyPress>", self.key_pressed)
 
