@@ -280,14 +280,24 @@ class Entry(tk.Frame):
     # Edit mode save button handler
 
     def edit_save(self):
-        self.text_label_var.set(
-            self.edit_box.get("1.0", "end")
-        )
+        # Change internally stored text
+        self.text = self.edit_box.get("1.0", "end")
+
+        # Change text label
+        self.text_label_var.set(self.text)
+        
+        # Empty the edit box
         self.edit_box.delete("1.0", "end")
 
+        # Save to the array in data.py
+        remove_entry(self.index)
+        insert_entry(self.index, self.text)
+
+        # Remove edit box and save button
         self.edit_box.grid_remove()
         self.save_button.grid_remove()
 
+        # Re-grid the usual Entry widgets
         self.text_label.grid(
             row=1, 
             column=0, 
