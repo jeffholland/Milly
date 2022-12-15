@@ -1,3 +1,7 @@
+# debug mode on/off
+
+DEBUG = True
+
 # dimensions
 
 WIDTH = 800
