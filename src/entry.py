@@ -26,7 +26,10 @@ class Entry(tk.Frame):
         self.width = width
         self.height = height
 
-        self.cmd_pressed = False
+        self.keys_pressed = {
+            "cmd": False,
+            "shift": False
+        }
 
         # Variable height
 
@@ -260,15 +263,19 @@ class Entry(tk.Frame):
 
     def edit_box_key_pressed(self, event):
         if "Meta" in event.keysym:
-            self.cmd_pressed = True
+            self.keys_pressed["cmd"] = True
+        if "Shift" in event.keysym:
+            self.keys_pressed["shift"] = True
 
-        if self.cmd_pressed:
-            if "s" in event.keysym:
-                self.edit_save()
+        if ("Return" in event.keysym 
+            and self.keys_pressed["shift"] == False):
+            self.edit_save()
 
     def edit_box_key_released(self, event):
         if "Meta" in event.keysym:
-            self.cmd_pressed = False
+            self.keys_pressed["cmd"] = False
+        if "Shift" in event.keysym:
+            self.keys_pressed["shift"] = False
 
     # Edit mode save button handler
 

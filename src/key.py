@@ -79,6 +79,7 @@ class Key:
             if event.keysym == "Return":
                 # Execute selected entry's edit mode
                 self.master.master.top_frame.entries[self.edit_selection_index].edit_pressed()
+                self.edit_selection_mode = False
 
 
 
