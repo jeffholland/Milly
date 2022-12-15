@@ -68,7 +68,7 @@ def get_num_entries():
 
 def create_entry(text):
     return {
-        "date": str(date.today()),
+        "date": date.strftime(date.today(), "%A") + " " + str(date.today()),
         "time": datetime.now().strftime("%I:%M %p"),
         "text": text
     }
