@@ -32,6 +32,8 @@ class Input(tk.Frame):
         self.num_buttons = 5
 
         # Input path set to None by default
+        # (warning: always set it back to None after closing it)
+        
         self.input_path = None
 
         self.create_widgets()
@@ -209,7 +211,15 @@ class Input(tk.Frame):
             )
 
         if (self.input_path):
-            try:
-                self.input_path.refresh_colors()
-            except:
-                print("avoided a situation")
+
+            # BEWARE: The following line will crash the program
+            # if the input_path window has been destroyed.
+            # Therefore, always set self.input_path to None 
+            # to avoid this line of code if the window 
+            # has been destroyed! 
+
+            # Ideally we would try/except our way out of this,
+            # but that didn't seem to work. So always set it
+            # to None, or face consequences.
+
+            self.input_path.refresh_colors()

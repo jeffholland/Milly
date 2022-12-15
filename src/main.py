@@ -62,9 +62,7 @@ class Application(tk.Frame):
 
         self.top_frame.refresh_colors()
         self.bottom_frame.refresh_colors()
-        print("check 1")
         self.settings_frame.refresh_colors()
-        print("check 2")
 
     def show_settings(self):
         self.top_frame.grid_remove()

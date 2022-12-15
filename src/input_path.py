@@ -45,7 +45,7 @@ class InputPath(tk.Frame):
             if self.mode == "save":
                 self.master.save_submit(input_string)
 
-            self.window.destroy()
+            self.window.withdraw()
             self.window.update()
 
 
