@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 from os import path
 
@@ -40,7 +41,7 @@ class InputPath(tk.Frame):
                 if (path.isfile(input_string)):
                     self.master.load_submit(input_string)
                 else:
-                    print("Could not load file: " + input_string)
+                    messagebox.showinfo("Path is not a file", "Could not load filepath: " + input_string)
             if self.mode == "save":
                 self.master.save_submit(input_string)
 
@@ -81,7 +82,8 @@ class InputPath(tk.Frame):
                 bg=self.colors["BG1"]
             )
         except tk.TclError:
-            print("Caught TclError in input_path.py")
+            if DEBUG:
+                messagebox.showinfo("TclError", "Known Bug: Attempt to configure window before destroying it.")
             return
 
         self.entry.configure(
