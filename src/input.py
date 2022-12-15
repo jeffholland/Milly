@@ -209,4 +209,7 @@ class Input(tk.Frame):
             )
 
         if (self.input_path):
-            self.input_path.refresh_colors()
+            try:
+                self.input_path.refresh_colors()
+            except:
+                print("avoided a situation")

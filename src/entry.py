@@ -88,13 +88,10 @@ class Entry(tk.Frame):
             wraplength=720,
             anchor=tk.NW,
             justify=tk.LEFT,
+            width=100,
             textvariable=self.text_label_var
         )
         self.text_label_var.set(self.text)
-        if len(self.text) < 40:
-            self.text_label.configure(
-                width=ENTRY_MIN_WIDTH
-            )
         self.text_label.grid(
             row=1, 
             column=0, 
