@@ -47,6 +47,7 @@ class InputPath(tk.Frame):
 
             self.window.withdraw()
             self.window.update()
+            self.master.winfo_toplevel().deiconify()
 
 
     def key_release(self, event):
