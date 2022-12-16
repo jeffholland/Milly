@@ -1,4 +1,3 @@
-from colors import switch_color_scheme
 from data import get_num_entries
 
 class Key:
@@ -43,10 +42,10 @@ class Key:
                 else:
                     self.master.remove_first_entry()
             if event.keysym == "Left":
-                switch_color_scheme("left")
+                self.master.master.colors_obj.switch_color_scheme("left")
                 self.master.master.refresh_colors()
             if event.keysym == "Right":
-                switch_color_scheme("right")
+                self.master.master.colors_obj.switch_color_scheme("right")
                 self.master.master.refresh_colors()
             if event.keysym.lower() == "e":
                 if get_num_entries() > 0:

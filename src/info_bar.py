@@ -1,6 +1,5 @@
 import tkinter as tk
 
-from colors import get_current_color_scheme
 from constants import *
 
 # Tool for debugging and general info viewing.
@@ -41,4 +40,5 @@ class InfoBar(tk.Frame):
 
 
     def set_color_scheme(self):
-        self.cs_var.set(get_current_color_scheme())
+        self.cs_var.set(
+            self.master.colors_obj.get_current_color_scheme())

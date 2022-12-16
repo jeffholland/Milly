@@ -3,7 +3,6 @@ import tkinter.font as tkFont
 
 from math import floor
 
-from colors import get_colors
 from constants import *
 from data import *
 
@@ -189,7 +188,7 @@ class Entry(tk.Frame):
 
 
     def refresh_colors(self):
-        self.colors = get_colors()
+        self.colors = self.master.master.master.master.colors_obj.get_colors()
 
         self.configure(
             bg=self.colors["BG1"]

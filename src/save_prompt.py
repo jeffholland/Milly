@@ -2,7 +2,6 @@ import tkinter as tk
 
 from sys import exit
 
-from colors import get_colors
 from constants import *
 
 class SavePrompt(tk.Frame):
@@ -98,7 +97,7 @@ class SavePrompt(tk.Frame):
         # )
 
     def refresh_colors(self):
-        self.colors = get_colors()
+        self.colors = self.master.colors_obj.get_colors()
 
         self.window.configure(
             bg=self.colors["BG2"]

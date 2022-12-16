@@ -1,7 +1,6 @@
 import tkinter as tk
 
 from constants import *
-from colors import get_colors
 from data import get_entries
 from entry import Entry
 
@@ -70,7 +69,7 @@ class Entries(tk.Frame):
         self.refresh_entries()
 
     def refresh_colors(self):
-        self.colors = get_colors()
+        self.colors = self.master.colors_obj.get_colors()
 
         self.canvas.configure(bg=self.colors["HL1"])
 

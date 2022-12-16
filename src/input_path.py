@@ -3,7 +3,6 @@ from tkinter import messagebox
 
 from os import path
 
-from colors import get_colors
 from constants import *
 from data import get_last_filepath
 
@@ -90,7 +89,7 @@ class InputPath(tk.Frame):
         self.buttons.append(self.ok_button)
 
     def refresh_colors(self):
-        self.colors = get_colors()
+        self.colors = self.master.master.colors_obj.get_colors()
 
         try:
             self.window.configure(

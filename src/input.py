@@ -4,7 +4,6 @@ import tkinter.font as tkFont
 from sys import exit
 
 from constants import *
-from colors import get_colors
 from data import *
 from key import Key
 from input_path import InputPath
@@ -196,7 +195,7 @@ class Input(tk.Frame):
             )
 
     def refresh_colors(self):
-        self.colors = get_colors()
+        self.colors = self.master.colors_obj.get_colors()
 
         self.input.configure(
             bg=self.colors["BG1"],
@@ -211,15 +210,4 @@ class Input(tk.Frame):
             )
 
         if (self.input_path):
-
-            # BEWARE: The following line will crash the program
-            # if the input_path window has been destroyed.
-            # Therefore, always set self.input_path to None 
-            # to avoid this line of code if the window 
-            # has been destroyed! 
-
-            # Ideally we would try/except our way out of this,
-            # but that didn't seem to work. So always set it
-            # to None, or face consequences.
-
             self.input_path.refresh_colors()

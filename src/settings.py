@@ -6,7 +6,6 @@ import json
 import re
 
 from constants import *
-from colors import *
 
 class Settings(tk.Frame):
     def __init__(self, master, width, height):
@@ -65,7 +64,7 @@ class Settings(tk.Frame):
         self.dcs_selector = ttk.Combobox(
             self,
             textvariable=self.dcs_var,
-            values=get_color_schemes(),
+            values=self.master.colors_obj.get_color_schemes(),
             state="readonly"
         )
         self.dcs_selector.grid(
@@ -170,7 +169,7 @@ class Settings(tk.Frame):
         self.buttons.append(self.back_button)
 
     def refresh_colors(self):
-        self.colors = get_colors()
+        self.colors = self.master.colors_obj.get_colors()
         
         self.configure(
             bg=self.colors["BG1"]
@@ -202,9 +201,12 @@ class Settings(tk.Frame):
         self.dcs_var.set(
             self.settings_data["default_color_scheme"]
         )
-        self.dcs_selector["values"] = get_color_schemes()
+        self.dcs_selector["values"] = (
+            self.master.colors_obj.get_color_schemes())
 
-        set_color_scheme(self.settings_data["default_color_scheme"])
+        self.master.colors_obj.set_color_scheme(
+            self.settings_data["default_color_scheme"])
+            
         self.refresh_colors()
 
     # Handlers
@@ -250,7 +252,7 @@ class Settings(tk.Frame):
         scheme = self.ncs_validate_input()
 
         if scheme:
-            new_color_scheme(scheme, 
+            self.master.colors_obj.new_color_scheme(scheme, 
                 name=self.ncs_name_entry.get())
 
         self.settings_data["default_color_scheme"] = self.ncs_name_entry.get()

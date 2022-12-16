@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from colors import *
+from colors import Colors
 from constants import HEIGHT, WIDTH, MODE
 from entries import Entries
 from info_bar import InfoBar
@@ -19,7 +19,8 @@ class Application(tk.Frame):
             self.width = WIDTH
             self.height = HEIGHT
 
-        load_colors()
+        self.colors_obj = Colors(self)
+        self.colors_obj.load_colors()
 
         self.show_info_bar = False
         self.info_bar = None
@@ -72,7 +73,7 @@ class Application(tk.Frame):
         self.top_frame.refresh_entries()
 
     def refresh_colors(self):
-        self.colors = get_colors()
+        self.colors = self.colors_obj.get_colors()
 
         self.top_frame.configure(bg=self.colors["HL1"])
         self.bottom_frame.configure(bg=self.colors["BG2"])
