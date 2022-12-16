@@ -22,11 +22,26 @@ class Settings(tk.Frame):
 
         self.load_settings()
 
+        self.cmd_pressed = False
         self.bind_all("<KeyPress>", self.key_pressed)
+        self.bind_all("<KeyRelease>", self.key_released)
 
     def key_pressed(self, event):
+        if "Meta" in event.keysym:
+            self.cmd_pressed = True
+
         if event.keysym == "Escape":
             self.back()
+
+        if self.cmd_pressed:
+            if event.keysym.lower() == "s":
+                self.save_settings()
+            if event.keysym.lower() == "l":
+                self.load_settings()
+
+    def key_released(self, event):
+        if "Meta" in event.keysym:
+            self.cmd_pressed = False
 
     def create_widgets(self):
         self.default_color_scheme_label = tk.Label(
@@ -126,6 +141,7 @@ class Settings(tk.Frame):
     def save_settings(self):
         with open("json/settings.json", "w") as f:
             json.dump(self.settings_data, f)
+        self.load_settings()
 
     def load_settings(self):
         try:
