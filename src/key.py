@@ -29,13 +29,13 @@ class Key:
         # cmd key pressed
 
         if self.keys_pressed["cmd"] == True:
-            if event.keysym == "i":
+            if event.keysym.lower() == "i":
                 self.master.insert()
-            if event.keysym == "s":
+            if event.keysym.lower() == "s":
                 self.master.save()
-            if event.keysym == "l":
+            if event.keysym.lower() == "l":
                 self.master.load()
-            if event.keysym == "c":
+            if event.keysym.lower() == "c":
                 self.master.clear()
             if event.keysym == "BackSpace":
                 if self.keys_pressed["shift"] == True:
@@ -48,7 +48,7 @@ class Key:
             if event.keysym == "Right":
                 switch_color_scheme("right")
                 self.master.master.refresh_colors()
-            if event.keysym == "e":
+            if event.keysym.lower() == "e":
                 if get_num_entries() > 0:
                     # Enter or exit edit selection mode
                     self.edit_selection_mode = not self.edit_selection_mode
