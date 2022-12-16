@@ -70,8 +70,8 @@ def set_color_scheme(name):
 
         load_colors()
 
-def new_color_scheme(scheme):
-    filepath = f"json/color_schemes/new_scheme.json"
+def new_color_scheme(scheme, name="new_scheme"):
+    filepath = f"json/color_schemes/{name}.json"
 
     with open(filepath, "w") as f:
         json.dump(scheme, f)

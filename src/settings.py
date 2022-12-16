@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 
 import json
 import re
@@ -110,6 +111,29 @@ class Settings(tk.Frame):
                 pady=PADDING
             )
 
+        self.ncs_name_label = tk.Label(
+            self,
+            text="Name:"
+        )
+        self.ncs_name_label.grid(
+            row=1, 
+            column=5,
+            padx=PADDING,
+            pady=PADDING
+        )
+        self.labels.append(self.ncs_name_label)
+
+        self.ncs_name_entry = tk.Entry(
+            self,
+            width=10
+        )
+        self.ncs_name_entry.grid(
+            row=1, 
+            column=6,
+            padx=PADDING,
+            pady=PADDING
+        )
+
         # Main buttons
 
         self.save_button = tk.Button(
@@ -169,6 +193,11 @@ class Settings(tk.Frame):
                 fg=self.colors["BG1"]
             )
 
+        self.ncs_name_entry.configure(
+            bg=self.colors["HL1"],
+            fg=self.colors["BG1"]
+        )
+
     def refresh_settings(self):
         self.dcs_var.set(
             self.settings_data["default_color_scheme"]
@@ -182,11 +211,17 @@ class Settings(tk.Frame):
         self.settings_data["default_color_scheme"] = self.dcs_var.get()
 
     def save_settings(self):
-
-        self.ncs_submit()
+        # Submit new color scheme if all boxes non-empty
+        submit = True
+        for entry in self.ncs_entries:
+            if len(entry.get()) < 6:
+                submit = False
+        if submit:
+            self.ncs_submit()
 
         with open("json/settings.json", "w") as f:
             json.dump(self.settings_data, f)
+
         self.load_settings()
 
     def load_settings(self):
@@ -200,7 +235,6 @@ class Settings(tk.Frame):
             self.refresh_settings()
 
     def back(self):
-        # self.unbind_all("<KeyPress>")
         self.master.hide_settings()
 
     
@@ -210,7 +244,8 @@ class Settings(tk.Frame):
         scheme = self.ncs_validate_input()
 
         if scheme:
-            new_color_scheme(scheme)
+            new_color_scheme(scheme, 
+                name=self.ncs_name_entry.get())
 
     def ncs_validate_input(self):
         hexes = []
@@ -221,14 +256,19 @@ class Settings(tk.Frame):
 
             # Use Regex to see if all strings are valid hex code
             if len(hex) == 7:
+                # print(f"len is 7: {hex}")
                 match = re.search(r'^#(?:[0-9a-fA-F]{3}){1,2}$', hex)
             elif len(hex) == 6:
+                # print(f"len is 6: {hex}")
                 match = re.search(r'^(?:[0-9a-fA-F]{3}){1,2}$', hex)
 
             if match:
+                # Add hash code if not already present
+                if (hex[0] != "#"):
+                    hex = "#" + hex
                 hexes.append(hex)
             else:
-                print("Hex code invalid, input rejected")
+                messagebox.showinfo("Hex code invalid", "One or more hex codes invalid. Input rejected")
                 return None
 
         return {
