@@ -173,24 +173,24 @@ class Settings(tk.Frame):
         self.colors = get_colors()
         
         self.configure(
-            bg=self.colors["BG2"]
+            bg=self.colors["BG1"]
         )
 
         for label in self.labels:
             label.configure(
-                bg=self.colors["BG2"],
+                bg=self.colors["BG1"],
                 fg=self.colors["HL2"]
             )
 
         for button in self.buttons:
             button.configure(
-                highlightbackground=self.colors["BG2"]
+                highlightbackground=self.colors["BG1"]
             )
 
         for entry in self.ncs_entries:
             entry.configure(
-                bg=self.colors["HL1"],
-                fg=self.colors["BG1"]
+                bg=self.colors["BG2"],
+                fg=self.colors["HL2"]
             )
 
         self.ncs_name_entry.configure(
