@@ -12,8 +12,12 @@ global colors
 colors = []
 
 
-def load_colors():
-    if (len(COLOR_SCHEMES) == 0):
+def load_colors(total_refresh=False):
+    if (len(COLOR_SCHEMES) == 0 or total_refresh):
+
+        if total_refresh:
+            COLOR_SCHEMES.clear()
+
         with scandir("json/color_schemes/") as entries:
             for entry in entries:
                 COLOR_SCHEMES.append(entry.name[:-5])
@@ -35,6 +39,7 @@ def get_colors():
 
 
 def get_color_schemes():
+    load_colors(total_refresh=True)
     return COLOR_SCHEMES
 
 

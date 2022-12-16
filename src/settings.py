@@ -202,6 +202,8 @@ class Settings(tk.Frame):
         self.dcs_var.set(
             self.settings_data["default_color_scheme"]
         )
+        self.dcs_selector["values"] = get_color_schemes()
+
         set_color_scheme(self.settings_data["default_color_scheme"])
         self.refresh_colors()
 
