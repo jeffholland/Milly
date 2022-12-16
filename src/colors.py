@@ -69,3 +69,9 @@ def set_color_scheme(name):
         COLOR_SCHEME_IDX = index
 
         load_colors()
+
+def new_color_scheme(scheme):
+    filepath = f"json/color_schemes/new_scheme.json"
+
+    with open(filepath, "w") as f:
+        json.dump(scheme, f)

@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 import json
+import re
 
 from constants import *
 from colors import *
@@ -44,36 +45,72 @@ class Settings(tk.Frame):
             self.cmd_pressed = False
 
     def create_widgets(self):
-        self.default_color_scheme_label = tk.Label(
+
+        # dcs = default color scheme
+
+        self.dcs_label = tk.Label(
             self,
             text="Default color scheme: "
         )
-        self.default_color_scheme_label.grid(
+        self.dcs_label.grid(
             row=0,
             column=0,
             padx=PADDING,
             pady=PADDING
         )
-        self.labels.append(self.default_color_scheme_label)
+        self.labels.append(self.dcs_label)
 
-        self.default_color_scheme_var = tk.StringVar(self)
-        self.default_color_scheme_selector = ttk.Combobox(
+        self.dcs_var = tk.StringVar(self)
+        self.dcs_selector = ttk.Combobox(
             self,
-            textvariable=self.default_color_scheme_var,
+            textvariable=self.dcs_var,
             values=get_color_schemes(),
             state="readonly"
         )
-        self.default_color_scheme_selector.grid(
+        self.dcs_selector.grid(
             row=0,
             column=1,
             padx=PADDING,
-            pady=PADDING
+            pady=PADDING,
+            columnspan=3
         )
-        self.default_color_scheme_var.set("navy")
-        self.default_color_scheme_selector.bind(
+        self.dcs_var.set("navy")
+        self.dcs_selector.bind(
             "<<ComboboxSelected>>", 
             self.default_color_scheme_changed
         )
+
+
+        # ncs = new color scheme
+
+        self.ncs_label = tk.Label(
+            self,
+            text="New color scheme:"
+        )
+        self.ncs_label.grid(
+            row=1,
+            column=0,
+            padx=PADDING,
+            pady=PADDING
+        )
+        self.labels.append(self.ncs_label)
+
+        self.ncs_entries = []
+        for i in range(4):
+            self.ncs_entries.append(
+                tk.Entry(
+                    self,
+                    width=6
+                )
+            )
+            self.ncs_entries[i].grid(
+                row=1,
+                column=1+i,
+                padx=PADDING,
+                pady=PADDING
+            )
+
+        # Main buttons
 
         self.save_button = tk.Button(
             self,
@@ -126,8 +163,14 @@ class Settings(tk.Frame):
                 highlightbackground=self.colors["BG2"]
             )
 
+        for entry in self.ncs_entries:
+            entry.configure(
+                bg=self.colors["HL1"],
+                fg=self.colors["BG1"]
+            )
+
     def refresh_settings(self):
-        self.default_color_scheme_var.set(
+        self.dcs_var.set(
             self.settings_data["default_color_scheme"]
         )
         set_color_scheme(self.settings_data["default_color_scheme"])
@@ -136,9 +179,12 @@ class Settings(tk.Frame):
     # Handlers
 
     def default_color_scheme_changed(self, event):
-        self.settings_data["default_color_scheme"] = self.default_color_scheme_var.get()
+        self.settings_data["default_color_scheme"] = self.dcs_var.get()
 
     def save_settings(self):
+
+        self.ncs_submit()
+
         with open("json/settings.json", "w") as f:
             json.dump(self.settings_data, f)
         self.load_settings()
@@ -156,3 +202,38 @@ class Settings(tk.Frame):
     def back(self):
         # self.unbind_all("<KeyPress>")
         self.master.hide_settings()
+
+    
+    # New color scheme functions
+
+    def ncs_submit(self):
+        scheme = self.ncs_validate_input()
+
+        if scheme:
+            new_color_scheme(scheme)
+
+    def ncs_validate_input(self):
+        hexes = []
+
+        for entry in self.ncs_entries:
+            hex = entry.get()
+            match = None
+
+            # Use Regex to see if all strings are valid hex code
+            if len(hex) == 7:
+                match = re.search(r'^#(?:[0-9a-fA-F]{3}){1,2}$', hex)
+            elif len(hex) == 6:
+                match = re.search(r'^(?:[0-9a-fA-F]{3}){1,2}$', hex)
+
+            if match:
+                hexes.append(hex)
+            else:
+                print("Hex code invalid, input rejected")
+                return None
+
+        return {
+            "BG1": hexes[0],
+            "BG2": hexes[1],
+            "HL1": hexes[2],
+            "HL2": hexes[3]
+        }
