@@ -132,6 +132,7 @@ class Settings(tk.Frame):
             padx=PADDING,
             pady=PADDING
         )
+        self.ncs_name_entry.bind("<KeyPress>", self.ncs_name_key_pressed)
 
         # Main buttons
 
@@ -237,6 +238,10 @@ class Settings(tk.Frame):
 
     def back(self):
         self.master.hide_settings()
+
+    def ncs_name_key_pressed(self, event):
+        if event.keysym == "Return":
+            self.save_settings()
 
     
     # New color scheme functions
