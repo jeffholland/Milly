@@ -75,7 +75,6 @@ class Settings(tk.Frame):
             pady=PADDING,
             columnspan=3
         )
-        self.dcs_var.set("navy")
         self.dcs_selector.bind(
             "<<ComboboxSelected>>", 
             self.default_color_scheme_changed
@@ -248,6 +247,13 @@ class Settings(tk.Frame):
         if scheme:
             new_color_scheme(scheme, 
                 name=self.ncs_name_entry.get())
+
+        self.settings_data["default_color_scheme"] = self.ncs_name_entry.get()
+        self.refresh_settings()
+
+        for entry in self.ncs_entries:
+            entry.delete(0, tk.END)
+        self.ncs_name_entry.delete(0, tk.END)
 
     def ncs_validate_input(self):
         hexes = []
