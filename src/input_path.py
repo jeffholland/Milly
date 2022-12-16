@@ -15,12 +15,10 @@ class InputPath(tk.Frame):
         self.mode = mode
 
         # Dimensions
-        self.width = 200
-        self.height = 50
+        self.width = 220
+        self.height = 80
 
-        self.window = tk.Toplevel(master)
-        self.window.title("Input filepath")
-        self.window.geometry(f"{self.width}x{self.height}")
+        self.buttons = []
 
         self.create_widgets()
 
@@ -29,26 +27,7 @@ class InputPath(tk.Frame):
 
     def key_press(self, event):
         if (event.keysym == "Return"):
-            input_string = self.entry.get()
-
-            if input_string[:5] != "json/":
-                input_string = "json/" + input_string
-
-            if input_string[-5:] != ".json":
-                input_string = input_string + ".json"
-
-            if self.mode == "load":
-                if (path.isfile(input_string)):
-                    self.master.load_submit(input_string)
-                else:
-                    messagebox.showinfo("Path is not a file", "Could not load filepath: " + input_string)
-            if self.mode == "save":
-                self.master.save_submit(input_string)
-
-            self.window.withdraw()
-            self.window.update()
-            self.master.winfo_toplevel().deiconify()
-
+            self.submit()
 
     def key_release(self, event):
         # Release command key while in other window
@@ -57,6 +36,12 @@ class InputPath(tk.Frame):
 
 
     def create_widgets(self):
+
+        self.window = tk.Toplevel(self.master)
+        self.window.title("Input filepath")
+        self.window.geometry(f"{self.width}x{self.height}")
+        self.window.overrideredirect(True)
+
         self.entry_var = tk.StringVar(self.master)
 
         self.entry = tk.Entry(
@@ -64,16 +49,45 @@ class InputPath(tk.Frame):
             takefocus=1,
             textvariable=self.entry_var
         )
+        self.entry.grid(
+            row=0, 
+            column=0,
+            columnspan=2,
+            padx=PADDING,
+            pady=PADDING
+        )
 
         self.entry_var.set(get_last_filepath(short=True))
-
-        self.entry.grid(row=0, column=0)
 
         self.entry.bind('<KeyPress>', self.key_press)
         self.entry.bind('<KeyRelease>', self.key_release)
 
         self.entry.focus_set()
         self.entry.select_range(start=0, end=tk.END)
+
+        self.cancel_button = tk.Button(
+            self.window,
+            text="Cancel",
+            width=2,
+            command=self.cancel
+        )
+        self.cancel_button.grid(
+            row=1,
+            column=0
+        )
+        self.buttons.append(self.cancel_button)
+
+        self.ok_button = tk.Button(
+            self.window,
+            text="Ok",
+            width=1,
+            command=self.submit
+        )
+        self.ok_button.grid(
+            row=1,
+            column=1
+        )
+        self.buttons.append(self.ok_button)
 
     def refresh_colors(self):
         self.colors = get_colors()
@@ -84,7 +98,7 @@ class InputPath(tk.Frame):
             )
         except tk.TclError:
             if DEBUG:
-                messagebox.showinfo("TclError", "Known Bug: Attempt to configure window before destroying it.")
+                messagebox.showinfo("TclError", "Known Bug: Attempt to configure window after destroying it.")
             return
 
         self.entry.configure(
@@ -93,3 +107,33 @@ class InputPath(tk.Frame):
             highlightbackground=self.colors["HL1"],
             highlightcolor=self.colors["HL2"]
         )
+
+        for button in self.buttons:
+            button.configure(
+                highlightbackground=self.colors["BG1"]
+            )
+
+    def submit(self):
+        input_string = self.entry.get()
+
+        if input_string[:5] != "json/":
+            input_string = "json/" + input_string
+
+        if input_string[-5:] != ".json":
+            input_string = input_string + ".json"
+
+        if self.mode == "load":
+            if (path.isfile(input_string)):
+                self.master.load_submit(input_string)
+            else:
+                messagebox.showinfo("Path is not a file", "Could not load filepath: " + input_string)
+        if self.mode == "save":
+            self.master.save_submit(input_string)
+
+        self.cancel()
+
+    def cancel(self):
+        self.window.withdraw()
+        self.window.update()
+        self.master.winfo_toplevel().deiconify()
+        self.master.input.focus_set()
