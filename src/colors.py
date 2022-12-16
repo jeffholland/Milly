@@ -35,8 +35,11 @@ def get_colors():
 
 
 def get_color_schemes():
-    global COLOR_SCHEMES
     return COLOR_SCHEMES
+
+
+def get_current_color_scheme():
+    return COLOR_SCHEMES[COLOR_SCHEME_IDX]
 
 
 def switch_color_scheme(dir="right"):
