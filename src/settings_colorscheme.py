@@ -108,6 +108,10 @@ class ColorSchemeSettings(tk.Frame):
     def refresh_colors(self):
         self.colors = self.master.master.colors_obj.get_colors()
 
+        self.configure(
+            bg=self.colors["BG1"]
+        )
+
         self.dcs_var.set(
             self.master.settings_data["default_color_scheme"]
         )
