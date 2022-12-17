@@ -97,7 +97,7 @@ class SavePrompt(tk.Frame):
         # )
 
     def refresh_colors(self):
-        self.colors = self.master.colors_obj.get_colors()
+        self.colors = self.master.master.colors_obj.get_colors()
 
         self.window.configure(
             bg=self.colors["BG2"]
