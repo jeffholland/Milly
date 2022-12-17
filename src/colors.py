@@ -33,6 +33,7 @@ class Colors:
 
 
     def get_colors(self):
+        print(self.colors["BG1"])
         return self.colors
 
 

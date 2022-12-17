@@ -103,6 +103,7 @@ class Settings(tk.Frame):
         self.buttons.append(self.back_button)
 
     def refresh_colors(self):
+        print("Calling from Settings:")
         self.colors = self.master.colors_obj.get_colors()
         
         self.configure(
