@@ -7,8 +7,8 @@ DEBUG = True
 WIDTH = 800
 HEIGHT = 960
 
-# MODE = "normal"
-MODE = "fullscreen"
+MODE = "normal"
+# MODE = "fullscreen"
 
 INPUT_HEIGHT = 7
 
@@ -18,10 +18,6 @@ else:
     INPUT_WIDTH = 50
 
 ENTRY_HEIGHT = 80
-ENTRY_MIN_WIDTH = 32
-# The minimum number of characters needed for an entry to be "flexible"
-ENTRY_MIN_CHARS_FLEX = 40
-
 
 
 # format settings
