@@ -167,8 +167,8 @@ class ColorSchemeSettings(tk.Frame):
                 name=self.ncs_name_entry.get()
             )
 
-        self.settings_data["default_color_scheme"] = self.ncs_name_entry.get()
-        self.refresh_settings()
+        self.master.settings_data["default_color_scheme"] = self.ncs_name_entry.get()
+        self.master.refresh_settings()
 
         for entry in self.ncs_entries:
             entry.delete(0, tk.END)
@@ -206,4 +206,4 @@ class ColorSchemeSettings(tk.Frame):
 
     def ncs_name_key_pressed(self, event):
         if event.keysym == "Return":
-            self.save_settings()
+            self.master.save_settings()
