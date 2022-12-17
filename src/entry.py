@@ -330,6 +330,10 @@ class Entry(tk.Frame):
 
         count = 3
         for button in self.buttons:
+            # Don't re-grid the save button
+            if button.cget("text") == "save":
+                continue
+
             button.grid(
                 row=0,
                 column=count
