@@ -18,10 +18,13 @@ class Settings(tk.Frame):
         self.buttons = []
         
         self.settings_data = None
+        self.color_scheme_settings = None
 
         self.load_settings()
 
         self.create_widgets()
+
+        self.refresh_colors()
 
         self.cmd_pressed = False
         self.bind_all("<KeyPress>", self.key_pressed)
@@ -103,6 +106,9 @@ class Settings(tk.Frame):
 
     def refresh_colors(self):
         self.colors = self.master.colors_obj.get_colors()
+
+        if self.color_scheme_settings:
+            self.color_scheme_settings.refresh_colors()
         
         self.configure(
             bg=self.colors["BG1"]
@@ -133,11 +139,11 @@ class Settings(tk.Frame):
         with open("json/settings.json", "w") as f:
             json.dump(self.settings_data, f)
 
-        self.load_settings()
-
         # Check for new color scheme data entered
         # save it if detected.
         self.color_scheme_settings.ncs_check()
+
+        self.load_settings()
 
     def load_settings(self):
         try:
@@ -147,6 +153,7 @@ class Settings(tk.Frame):
 
         with f:
             self.settings_data = json.load(f)
+            self.master.colors_obj.set_color_scheme(self.settings_data["default_color_scheme"])
             self.refresh_settings()
 
     def back(self):
