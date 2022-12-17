@@ -7,15 +7,15 @@ DEBUG = True
 WIDTH = 800
 HEIGHT = 960
 
-MODE = "normal"
-# MODE = "fullscreen"
+# MODE = "normal"
+MODE = "fullscreen"
 
 INPUT_HEIGHT = 7
 
 if MODE == "fullscreen":
-    INPUT_WIDTH = 130
+    INPUT_WIDTH = 110
 else:
-    INPUT_WIDTH = 60
+    INPUT_WIDTH = 50
 
 ENTRY_HEIGHT = 80
 ENTRY_MIN_WIDTH = 32
@@ -35,5 +35,5 @@ PADDING = 10
 ENTRY_FONT_SIZE = 14
 ENTRY_FONT_FAMILY = "Helvetica"
 
-INPUT_FONT_SIZE = 17
-INPUT_FONT_FAMILY = "Helvetica"
+INPUT_FONT_SIZE = 18
+INPUT_FONT_FAMILY = "American Typewriter"
