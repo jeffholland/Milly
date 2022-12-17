@@ -13,9 +13,9 @@ MODE = "normal"
 INPUT_HEIGHT = 7
 
 if MODE == "fullscreen":
-    INPUT_WIDTH = 110
+    INPUT_WIDTH = 130
 else:
-    INPUT_WIDTH = 50
+    INPUT_WIDTH = 60
 
 ENTRY_HEIGHT = 80
 
@@ -31,5 +31,5 @@ PADDING = 10
 ENTRY_FONT_SIZE = 14
 ENTRY_FONT_FAMILY = "Helvetica"
 
-INPUT_FONT_SIZE = 18
-INPUT_FONT_FAMILY = "American Typewriter"
+INPUT_FONT_SIZE = 17
+INPUT_FONT_FAMILY = "Helvetica"
