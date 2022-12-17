@@ -90,7 +90,7 @@ class Key:
 
 
     def key_release(self, event):
-        if "Meta" in event.keysym:
+        if self.cmd_key in event.keysym:
             self.keys_pressed["cmd"] = False
         if "Shift" in event.keysym:
             self.keys_pressed["shift"] = False

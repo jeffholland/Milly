@@ -30,14 +30,16 @@ class InputPath(tk.Frame):
 
     def key_release(self, event):
         # Release command key while in other window
-        if event.keysym == "Meta_L" or event.keysym == "Meta_R":
-            self.master.key.keys_pressed["cmd"] = False
+        if PLATFORM == "Windows":
+            if "Control" in event.keysym:
+                self.master.key.keys_pressed["cmd"] = False
+        else:
+            if "Meta" in event.keysym:
+                self.master.key.keys_pressed["cmd"] = False
 
 
     def create_widgets(self):
-
         self.window = tk.Toplevel(self.master)
-        self.window.title("Input filepath")
         self.window.geometry(f"{self.width}x{self.height}")
         self.window.overrideredirect(True)
 
@@ -67,7 +69,6 @@ class InputPath(tk.Frame):
         self.cancel_button = tk.Button(
             self.window,
             text="Cancel",
-            width=2,
             command=self.cancel
         )
         self.cancel_button.grid(
@@ -79,7 +80,6 @@ class InputPath(tk.Frame):
         self.ok_button = tk.Button(
             self.window,
             text="Ok",
-            width=1,
             command=self.submit
         )
         self.ok_button.grid(
@@ -87,6 +87,13 @@ class InputPath(tk.Frame):
             column=1
         )
         self.buttons.append(self.ok_button)
+
+        if PLATFORM == "Windows":
+            self.ok_button.configure(width=2)
+            self.cancel_button.configure(width=5)
+        else:
+            self.ok_button.configure(width=1)
+            self.cancel_button.configure(width=2)
 
     def refresh_colors(self):
         self.colors = self.master.master.colors_obj.get_colors()
