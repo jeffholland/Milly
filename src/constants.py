@@ -1,3 +1,7 @@
+import platform
+
+PLATFORM = platform.system()
+
 # debug mode on/off
 
 DEBUG = True
@@ -9,13 +13,6 @@ HEIGHT = 960
 
 MODE = "normal"
 # MODE = "fullscreen"
-
-INPUT_HEIGHT = 7
-
-if MODE == "fullscreen":
-    INPUT_WIDTH = 130
-else:
-    INPUT_WIDTH = 60
 
 ENTRY_HEIGHT = 80
 

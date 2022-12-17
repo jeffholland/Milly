@@ -20,6 +20,18 @@ class Input(tk.Frame):
             height=height
         )
 
+        # Input (Text widget) details
+
+        self.input_height = 7
+
+        if MODE == "fullscreen":
+            self.input_width = 130
+        else:
+            if PLATFORM == "Windows":
+                self.input_width = 48
+            else:
+                self.input_width = 60
+
         self.inputFont = tkFont.Font(
             self, 
             family=INPUT_FONT_FAMILY, 
@@ -103,8 +115,8 @@ class Input(tk.Frame):
     def create_widgets(self):
         self.input = tk.Text(
             self, 
-            height=INPUT_HEIGHT, 
-            width=INPUT_WIDTH,
+            height=self.input_height, 
+            width=self.input_width,
             font=self.inputFont,
             wrap=tk.WORD
         )
@@ -190,9 +202,14 @@ class Input(tk.Frame):
         self.buttons.append(self.settings_button)
 
         for button in self.buttons:
-            button.configure(
-                width=3
-            )
+            if PLATFORM == "Windows":
+                button.configure(
+                    width=6
+                )
+            else:
+                button.configure(
+                    width=3
+                )
 
     def refresh_colors(self):
         self.colors = self.master.colors_obj.get_colors()

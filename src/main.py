@@ -1,7 +1,7 @@
 import tkinter as tk
 
 from colors import Colors
-from constants import HEIGHT, WIDTH, MODE
+from constants import *
 from entries import Entries
 from info_bar import InfoBar
 from input import Input
@@ -37,6 +37,11 @@ class Application(tk.Frame):
         else:
             self.top_frame_height = (self.height // 3) * 2
 
+        self.windows_offset = 110
+
+        if PLATFORM == "Windows":
+            self.top_frame_height += self.windows_offset
+
         self.top_frame = Entries(
             width=self.width, 
             height=self.top_frame_height,
@@ -49,6 +54,8 @@ class Application(tk.Frame):
             self.top_frame.grid(row=0, column=0)
 
         self.bottom_frame_height = self.height // 3
+        if PLATFORM == "Windows":
+            self.bottom_frame_height -= self.windows_offset
 
         self.bottom_frame = Input(
             width=self.width,

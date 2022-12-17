@@ -1,4 +1,5 @@
 from data import get_num_entries
+from constants import *
 
 class Key:
     def __init__(self, master):
@@ -11,12 +12,17 @@ class Key:
         self.edit_selection_mode = False
         self.edit_selection_index = 0
 
+        if PLATFORM == "Windows":
+            self.cmd_key = "Control"
+        else:
+            self.cmd_key = "Meta"
+
     def key_press(self, event):
 
         # Holding down CMD or Shift
-        if "Meta" in event.keysym:
+        if self.cmd_key in event.keysym:
             self.keys_pressed["cmd"] = True
-        if "Shift" in event.keysym:
+        if self.cmd_key in event.keysym:
             self.keys_pressed["shift"] = True
 
         # see shortcuts.txt for a list of all shortcuts
