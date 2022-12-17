@@ -15,17 +15,13 @@ class Entries(tk.Frame):
         self.height = height
         self.canvas_object_ids = []
 
+        self.entry_width = self.width - (PADDING * 6)
+
         self.create_widgets()
 
         self.refresh_colors()
 
 
-    def scroll_config(self, event=None):
-        self.canvas.configure(
-            scrollregion=self.canvas.bbox("all"),
-            width=self.width - 25,
-            height=self.height
-        )
 
     def create_widgets(self):
         self.canvas = tk.Canvas(self)
@@ -84,6 +80,8 @@ class Entries(tk.Frame):
 
         self.container.configure(bg=self.colors["HL1"])
 
+
+
     def refresh_entries(self):
         self.entries_data = get_entries()
 
@@ -97,7 +95,7 @@ class Entries(tk.Frame):
                 date=self.entries_data[count]["date"],
                 time=self.entries_data[count]["time"],
                 text=self.entries_data[count]["text"],
-                width=(WIDTH - (PADDING * 6)),
+                width=self.entry_width,
                 height=ENTRY_HEIGHT,
                 master=self.container,
                 index=count
@@ -109,3 +107,12 @@ class Entries(tk.Frame):
                 padx=PADDING, 
                 pady=PADDING
             )
+
+
+
+    def scroll_config(self, event=None):
+        self.canvas.configure(
+            scrollregion=self.canvas.bbox("all"),
+            width=self.width - 25,
+            height=self.height
+        )
