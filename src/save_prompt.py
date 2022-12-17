@@ -16,23 +16,14 @@ class SavePrompt(tk.Frame):
         )
         self.window.title("Save prompt")
         self.window.geometry("250x100")
-        # self.window.geometry("370x100")
+        if PLATFORM == "Windows":
+            self.window.geometry("200x100")
+
+        self.buttons = []
 
         self.create_widgets()
 
         self.refresh_colors()
-
-    def yes_pressed(self):
-        self.master.save(and_exit=True)
-
-    def no_pressed(self):
-        exit()
-
-    def cancel_pressed(self):
-        self.window.destroy()
-
-    # def save_new_pressed(self):
-    #     print("save new")
 
     def create_widgets(self):
         self.label = tk.Label(
@@ -59,6 +50,7 @@ class SavePrompt(tk.Frame):
             pady=PADDING
         )
         self.yes_button.focus_set()
+        self.buttons.append(self.yes_button)
 
         self.no_button = tk.Button(
             self.window,
@@ -71,6 +63,8 @@ class SavePrompt(tk.Frame):
             padx=PADDING,
             pady=PADDING
         )
+        self.buttons.append(self.no_button)
+
 
         self.cancel_button = tk.Button(
             self.window,
@@ -83,18 +77,8 @@ class SavePrompt(tk.Frame):
             padx=PADDING,
             pady=PADDING
         )
+        self.buttons.append(self.cancel_button)
 
-        # self.save_new_button = tk.Button(
-        #     self.window,
-        #     text="Save new",
-        #     command=self.save_new_pressed
-        # )
-        # self.save_new_button.grid(
-        #     row=1,
-        #     column=3,
-        #     padx=PADDING,
-        #     pady=PADDING
-        # )
 
     def refresh_colors(self):
         self.colors = self.master.master.colors_obj.get_colors()
@@ -108,17 +92,22 @@ class SavePrompt(tk.Frame):
             fg=self.colors["HL2"],
         )
         
-        self.yes_button.configure(
-            highlightbackground=self.colors["BG2"],
-            highlightcolor=self.colors["HL2"]
-        )
+        for button in self.buttons:
+            button.configure(
+                highlightbackground=self.colors["BG2"],
+                highlightcolor=self.colors["HL2"]
+            )
+            if PLATFORM == "Windows":
+                button.configure(
+                    bg=self.colors["BG1"],
+                    fg=self.colors["HL2"]
+                )
 
-        self.no_button.configure(
-            highlightbackground=self.colors["BG2"],
-            highlightcolor=self.colors["HL2"]
-        )
+    def yes_pressed(self):
+        self.master.save(and_exit=True)
 
-        self.cancel_button.configure(
-            highlightbackground=self.colors["BG2"],
-            highlightcolor=self.colors["HL2"]
-        )
+    def no_pressed(self):
+        exit()
+
+    def cancel_pressed(self):
+        self.window.destroy()

@@ -22,7 +22,7 @@ class Key:
         # Holding down CMD or Shift
         if self.cmd_key in event.keysym:
             self.keys_pressed["cmd"] = True
-        if self.cmd_key in event.keysym:
+        if "Shift" in event.keysym:
             self.keys_pressed["shift"] = True
 
         # see shortcuts.txt for a list of all shortcuts

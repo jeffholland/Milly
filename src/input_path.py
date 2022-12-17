@@ -118,6 +118,11 @@ class InputPath(tk.Frame):
             button.configure(
                 highlightbackground=self.colors["BG1"]
             )
+            if PLATFORM == "Windows":
+                button.configure(
+                    bg=self.colors["BG2"],
+                    fg=self.colors["HL2"]
+                )
 
     def submit(self):
         input_string = self.entry.get()
