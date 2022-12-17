@@ -225,6 +225,11 @@ class Input(tk.Frame):
             button.configure(
                 highlightbackground=self.colors["BG2"]
             )
+            if PLATFORM == "Windows":
+                button.configure(
+                    bg=self.colors["BG1"],
+                    fg=self.colors["HL2"]
+                )
 
         if (self.input_path):
             self.input_path.refresh_colors()

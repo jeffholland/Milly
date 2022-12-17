@@ -31,9 +31,16 @@ class Entry(tk.Frame):
         }
 
         # Variable height
+        vh_constant = 5.5
+        vh_limit = 100
 
-        if len(text) > 100:
-            self.height = height + (floor((len(text) - 100) / 5.5))
+        if PLATFORM == "Windows":
+            vh_constant = 3.2
+            vh_limit = 60
+
+        if len(text) > vh_limit:
+
+            self.height = height + (floor((len(text) - vh_limit) / vh_constant))
 
             self.configure(height=self.height)
 
@@ -107,10 +114,14 @@ class Entry(tk.Frame):
 
         # Buttons
 
+        self.button_width = 1
+        if PLATFORM == "Windows":
+            self.button_width = 4
+
         self.edit_button = tk.Button(
             self,
             text="edit",
-            width=1,
+            width=self.button_width,
             command=self.edit_pressed
         )
         self.edit_button.grid(
@@ -122,7 +133,7 @@ class Entry(tk.Frame):
         self.up_button = tk.Button(
             self,
             text="up",
-            width=1,
+            width=self.button_width,
             command=self.up_pressed
         )
         self.up_button.grid(
@@ -134,7 +145,7 @@ class Entry(tk.Frame):
         self.down_button = tk.Button(
             self,
             text="down",
-            width=1,
+            width=self.button_width,
             command=self.down_pressed
         )
         self.down_button.grid(
@@ -146,7 +157,7 @@ class Entry(tk.Frame):
         self.copy_button = tk.Button(
             self,
             text="copy",
-            width=2,
+            width=self.button_width,
             command=self.copy_pressed
         )
         self.copy_button.grid(
@@ -155,10 +166,13 @@ class Entry(tk.Frame):
         )
         self.buttons.append(self.copy_button)
 
+        if PLATFORM != "Windows":
+            self.copy_button.configure(width=self.button_width * 2)
+
         self.x_button = tk.Button(
             self,
             text="x",
-            width=1,
+            width=self.button_width,
             command=self.x_pressed
         )
         self.x_button.grid(
@@ -166,6 +180,8 @@ class Entry(tk.Frame):
             column=7
         )
         self.buttons.append(self.x_button)
+        if PLATFORM == "Windows":
+            self.x_button.configure(width=1)
 
 
 
@@ -180,7 +196,7 @@ class Entry(tk.Frame):
         self.save_button = tk.Button(
             self,
             text="save",
-            width=1,
+            width=self.button_width,
             command=self.edit_save
         )
         self.buttons.append(self.save_button)
@@ -204,6 +220,11 @@ class Entry(tk.Frame):
             button.configure(
                 highlightbackground=self.colors["BG1"]
             )
+            if PLATFORM == "Windows":
+                button.configure(
+                    bg=self.colors["BG2"],
+                    fg=self.colors["HL2"]
+                )
 
         self.edit_box.configure(
             bg=self.colors["BG1"],
