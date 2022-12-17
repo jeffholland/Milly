@@ -9,7 +9,12 @@ from constants import *
 class ColorSchemeSettings(tk.Frame):
     def __init__(self, master):
 
-        tk.Frame.__init__(self, master, width=WIDTH, height=HEIGHT)
+        tk.Frame.__init__(
+            self, 
+            master, 
+            width=WIDTH - PADDING_BIG * 2, 
+            height=200
+        )
 
         self.labels = []
 

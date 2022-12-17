@@ -20,7 +20,7 @@ ENTRY_HEIGHT = 80
 # format settings
 
 PADDING = 10
-
+PADDING_BIG = 40
 
 
 # fonts

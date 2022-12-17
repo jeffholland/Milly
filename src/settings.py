@@ -40,6 +40,7 @@ class Settings(tk.Frame):
 
         if self.cmd_pressed:
             if event.keysym.lower() == "s":
+                print(event.keysym)
                 self.save_settings()
             if event.keysym.lower() == "l":
                 self.load_settings()
@@ -58,7 +59,13 @@ class Settings(tk.Frame):
 
         self.color_scheme_settings = ColorSchemeSettings(self)
         self.color_scheme_settings.grid_propagate(0)
-        self.color_scheme_settings.grid(row=0, column=0)
+        self.color_scheme_settings.grid(
+            row=0, 
+            column=0,
+            padx=PADDING_BIG,
+            pady=PADDING_BIG,
+            columnspan=3
+        )
 
         # Main buttons
 
@@ -112,6 +119,11 @@ class Settings(tk.Frame):
             button.configure(
                 highlightbackground=self.colors["BG1"]
             )
+            if PLATFORM == "Windows":
+                button.configure(
+                    bg=self.colors["BG2"],
+                    fg=self.colors["HL2"]
+                )
 
     def refresh_settings(self):           
         self.refresh_colors()
