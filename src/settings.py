@@ -28,8 +28,12 @@ class Settings(tk.Frame):
         self.bind_all("<KeyRelease>", self.key_released)
 
     def key_pressed(self, event):
-        if "Meta" in event.keysym:
-            self.cmd_pressed = True
+        if PLATFORM == "Windows":
+            if "Control" in event.keysym:
+                self.cmd_pressed = True
+        else:
+            if "Meta" in event.keysym:
+                self.cmd_pressed = True
 
         if event.keysym == "Escape":
             self.back()
@@ -41,8 +45,12 @@ class Settings(tk.Frame):
                 self.load_settings()
 
     def key_released(self, event):
-        if "Meta" in event.keysym:
-            self.cmd_pressed = False
+        if PLATFORM == "Windows":
+            if "Control" in event.keysym:
+                self.cmd_pressed = False
+        else:
+            if "Meta" in event.keysym:
+                self.cmd_pressed = False
 
     def create_widgets(self):
 
