@@ -192,6 +192,8 @@ class Entry(tk.Frame):
             width=100,
             height=(self.height // 30)
         )
+        if PLATFORM == "Windows":
+            self.edit_box.configure(width=90)
 
         self.save_button = tk.Button(
             self,
@@ -342,10 +344,23 @@ class Entry(tk.Frame):
 
     def edit_selected(self, selected):
         if selected:
-            self.edit_button.configure(
-                highlightbackground=self.colors["HL2"]
-            )
+            if PLATFORM == "Windows":
+                self.edit_button.configure(
+                    bg=self.colors["HL2"],
+                    fg=self.colors["BG1"]
+                )
+            else:
+                self.edit_button.configure(
+                    highlightbackground=self.colors["HL2"]
+                )
         else:
-            self.edit_button.configure(
-                highlightbackground=self.colors["BG1"]
-            )
+            if PLATFORM == "Windows":
+                self.edit_button.configure(
+                    bg=self.colors["BG2"],
+                    fg=self.colors["HL2"]
+                )
+            else:
+                self.edit_button.configure(
+                    highlightbackground=self.colors["BG1"]
+                )
+            self.update_idletasks()
