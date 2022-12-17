@@ -20,7 +20,6 @@ class Application(tk.Frame):
             self.height = HEIGHT
 
         self.colors_obj = Colors(self)
-        self.colors_obj.load_colors()
 
         self.show_info_bar = False
         self.info_bar = None

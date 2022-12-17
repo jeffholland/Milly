@@ -111,7 +111,6 @@ class ColorSchemeSettings(tk.Frame):
         self.ncs_name_entry.bind("<KeyPress>", self.ncs_name_key_pressed)
 
     def refresh_colors(self):
-        print("Calling from ColorSchemeSettings:")
         self.colors = self.master.master.colors_obj.get_colors()
 
         self.configure(
@@ -145,7 +144,7 @@ class ColorSchemeSettings(tk.Frame):
         )
 
     def default_color_scheme_changed(self, event):
-        self.settings_data["default_color_scheme"] = self.dcs_var.get()
+        self.master.settings_data["default_color_scheme"] = self.dcs_var.get()
 
     
     # New color scheme functions

@@ -40,7 +40,6 @@ class Settings(tk.Frame):
 
         if self.cmd_pressed:
             if event.keysym.lower() == "s":
-                print(event.keysym)
                 self.save_settings()
             if event.keysym.lower() == "l":
                 self.load_settings()
@@ -103,7 +102,6 @@ class Settings(tk.Frame):
         self.buttons.append(self.back_button)
 
     def refresh_colors(self):
-        print("Calling from Settings:")
         self.colors = self.master.colors_obj.get_colors()
         
         self.configure(
