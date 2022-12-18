@@ -123,9 +123,6 @@ class ColorSchemeSettings(tk.Frame):
         self.dcs_selector["values"] = (
             self.master.master.colors_obj.get_color_schemes())
 
-        self.master.master.colors_obj.set_color_scheme(
-            self.master.settings_data["default_color_scheme"])
-
         for entry in self.ncs_entries:
             entry.configure(
                 bg=self.colors["BG2"],

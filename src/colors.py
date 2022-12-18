@@ -14,21 +14,26 @@ class Colors:
 
         self.load_colors()
 
-    def load_colors(self):
-        self.color_schemes.clear()
+    def load_colors(self, refresh=True):
+        if refresh:
 
-        with scandir("json/color_schemes/") as entries:
-            for entry in entries:
-                self.color_schemes.append(entry.name[:-5])
-        
-        self.color_schemes.sort()
+            self.color_schemes.clear()
 
-        scheme_name = ""
+            with scandir("json/color_schemes/") as entries:
+                for entry in entries:
+                    self.color_schemes.append(entry.name[:-5])
+            
+            self.color_schemes.sort()
 
-        with open("json/settings.json") as f:
-            settings = json.load(f)
+            scheme_name = ""
 
-            scheme_name = settings["default_color_scheme"]
+            with open("json/settings.json") as f:
+                settings = json.load(f)
+
+                scheme_name = settings["default_color_scheme"]
+
+        else:
+            scheme_name = self.color_schemes[self.color_scheme_index]
 
         filepath = f"json/color_schemes/{scheme_name}.json"
 
@@ -62,7 +67,7 @@ class Colors:
             else:
                 self.color_scheme_index += 1
         
-        self.load_colors()
+        self.load_colors(refresh=False)
 
     def set_color_scheme(self, name):
 
