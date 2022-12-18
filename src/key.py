@@ -1,6 +1,8 @@
 from data import get_num_entries
 from constants import *
 
+from sys import exit
+
 class Key:
     def __init__(self, master):
         self.master = master
@@ -34,32 +36,47 @@ class Key:
         # cmd key pressed
 
         if self.keys_pressed["cmd"] == True:
+
             if event.keysym.lower() == "i":
                 self.master.insert()
+
             if event.keysym.lower() == "s":
                 self.master.save()
+
             if event.keysym.lower() == "l":
                 self.master.load()
+
             if event.keysym.lower() == "c":
                 self.master.clear()
+
             if event.keysym == "BackSpace":
                 if self.keys_pressed["shift"] == True:
                     self.master.remove_last_entry()
                 else:
                     self.master.remove_first_entry()
+
             if event.keysym == "Left":
                 self.master.master.colors_obj.switch_color_scheme("left")
                 self.master.master.refresh_colors()
+
             if event.keysym == "Right":
                 self.master.master.colors_obj.switch_color_scheme("right")
                 self.master.master.refresh_colors()
+
             if event.keysym.lower() == "e":
                 if get_num_entries() > 0:
                     # Enter or exit edit selection mode
                     self.edit_selection_mode = not self.edit_selection_mode
                     self.master.master.top_frame.entries[self.edit_selection_index].edit_selected(self.edit_selection_mode)
+
             if event.keysym == "comma":
                 self.master.master.show_settings()
+
+            if PLATFORM == "Windows":
+                if event.keysym.lower() == "w":
+                    exit()
+
+        # endif cmd key pressed
             
         # Edit selection mode
         
