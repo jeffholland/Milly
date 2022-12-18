@@ -74,7 +74,7 @@ class Key:
 
             if PLATFORM == "Windows":
                 if event.keysym.lower() == "w":
-                    exit()
+                    self.master.destroy()
 
         # endif cmd key pressed
             
