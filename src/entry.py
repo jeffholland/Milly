@@ -33,18 +33,17 @@ class Entry(tk.Frame):
         # Variable height
         if MODE == "fullscreen":
             vh_constant = 9.0
-            vh_limit = 100
         else:
-            vh_constant = 5.5
-            vh_limit = 100
+            vh_constant = 5.36
+        vh_limit = 100
 
         if PLATFORM == "Windows":
             if MODE == "fullscreen":
                 vh_constant = 6.35
-                vh_limit = 60
             else:
                 vh_constant = 3.2
                 vh_limit = 60
+            vh_limit = 60
 
         if len(text) > vh_limit:
 
@@ -100,18 +99,21 @@ class Entry(tk.Frame):
 
         self.text_label_var = tk.StringVar(self)
 
+        self.text_label_width = 200
+
         # Text label dimensions adjustments
         if MODE == "fullscreen":
-            self.text_label_width = 200
 
             # todo: make this depend on window size
             if PLATFORM == "Windows":
-                self.text_label_wrap_length = 1800
+                self.text_label_wrap_length = self.width + 300
             else:
-                self.text_label_wrap_length = 1400
+                self.text_label_wrap_length = self.width - 52
         else:
-            self.text_label_width = 100
-            self.text_label_wrap_length = 720
+            self.text_label_wrap_length = self.width - 40
+
+        print(self.width)
+        print(self.text_label_wrap_length)
 
         self.text_label = tk.Label(
             self, 
