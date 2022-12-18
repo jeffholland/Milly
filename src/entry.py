@@ -35,8 +35,12 @@ class Entry(tk.Frame):
         vh_limit = 100
 
         if PLATFORM == "Windows":
-            vh_constant = 3.2
-            vh_limit = 60
+            if MODE == "fullscreen":
+                vh_constant = 6.35
+                vh_limit = 60
+            else:
+                vh_constant = 3.2
+                vh_limit = 60
 
         if len(text) > vh_limit:
 
@@ -91,13 +95,27 @@ class Entry(tk.Frame):
         self.labels.append(self.time_label)
 
         self.text_label_var = tk.StringVar(self)
+
+        # Text label dimensions adjustments
+        if MODE == "fullscreen":
+            if PLATFORM == "Windows":
+                self.text_label_width = 200
+                self.text_label_wrap_length = 1800
+            else:
+                # todo: check on mac
+                self.text_label_width = 200
+                self.text_label_wrap_length = 1800
+        else:
+            self.text_label_width = 100
+            self.text_label_wrap_length = 720
+
         self.text_label = tk.Label(
             self, 
             font=self.font,
-            wraplength=720,
+            wraplength=self.text_label_wrap_length,
             anchor=tk.NW,
             justify=tk.LEFT,
-            width=100,
+            width=self.text_label_width,
             textvariable=self.text_label_var
         )
         self.text_label_var.set(self.text)
@@ -106,9 +124,10 @@ class Entry(tk.Frame):
             column=0, 
             padx=PADDING,
             pady=PADDING,
-            columnspan=100
+            columnspan=200
         )
         self.labels.append(self.text_label)
+        print(self.width)
 
 
 
