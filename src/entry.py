@@ -31,8 +31,12 @@ class Entry(tk.Frame):
         }
 
         # Variable height
-        vh_constant = 5.5
-        vh_limit = 100
+        if MODE == "fullscreen":
+            vh_constant = 9.0
+            vh_limit = 100
+        else:
+            vh_constant = 5.5
+            vh_limit = 100
 
         if PLATFORM == "Windows":
             if MODE == "fullscreen":
@@ -98,13 +102,13 @@ class Entry(tk.Frame):
 
         # Text label dimensions adjustments
         if MODE == "fullscreen":
+            self.text_label_width = 200
+
+            # todo: make this depend on window size
             if PLATFORM == "Windows":
-                self.text_label_width = 200
                 self.text_label_wrap_length = 1800
             else:
-                # todo: check on mac
-                self.text_label_width = 200
-                self.text_label_wrap_length = 1800
+                self.text_label_wrap_length = 1400
         else:
             self.text_label_width = 100
             self.text_label_wrap_length = 720
@@ -127,8 +131,6 @@ class Entry(tk.Frame):
             columnspan=200
         )
         self.labels.append(self.text_label)
-        print(self.width)
-
 
 
         # Buttons
