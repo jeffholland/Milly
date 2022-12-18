@@ -3,6 +3,7 @@ import tkinter as tk
 from constants import *
 from data import get_entries
 from entry import Entry
+from subentry import SubEntry
 
 class Entries(tk.Frame):
     def __init__(self, width, height, master=None):
@@ -61,6 +62,9 @@ class Entries(tk.Frame):
 
         # Contains the array of dicts sourced from data.py
         self.entries_data = []
+
+        # Contains the SubEntry objects
+        self.sub_entries = []
         
         self.refresh_entries()
 
@@ -100,9 +104,25 @@ class Entries(tk.Frame):
                 master=self.container,
                 index=count
             ))
+            self.sub_entries.append(SubEntry(
+                date=self.entries_data[count]["date"],
+                time=self.entries_data[count]["time"],
+                text=self.entries_data[count]["text"],
+                width=self.entry_width,
+                height=ENTRY_HEIGHT,
+                master=self.container,
+                index=count
+            ))
             self.entries[count].grid_propagate(0)
             self.entries[count].grid(
                 row=count, 
+                column=0,
+                padx=PADDING, 
+                pady=PADDING
+            )
+            self.sub_entries[count].grid_propagate(0)
+            self.sub_entries[count].grid(
+                row=count + len(self.entries), 
                 column=0,
                 padx=PADDING, 
                 pady=PADDING

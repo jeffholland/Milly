@@ -10,8 +10,8 @@ class Entry(tk.Frame):
     def __init__(self, date, time, text, width, height, index, master=None):
 
         tk.Frame.__init__(
-            self, 
-            master, 
+            self,
+            master,
             width=width,
             height=height
         )
