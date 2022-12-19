@@ -22,7 +22,7 @@ class Input(tk.Frame):
 
         # Input (Text widget) details
 
-        self.input_height = 7
+        self.input_height = 6
 
         if MODE == "fullscreen":
             self.input_width = 130
@@ -32,10 +32,15 @@ class Input(tk.Frame):
             else:
                 self.input_width = 60
 
-        self.inputFont = tkFont.Font(
+        self.input_font = tkFont.Font(
             self, 
             family=INPUT_FONT_FAMILY, 
             size=INPUT_FONT_SIZE
+        )
+        self.info_font = tkFont.Font(
+            self,
+            family="Times New Roman",
+            size=14
         )
 
         # Button array to efficiently configure all buttons
@@ -64,60 +69,14 @@ class Input(tk.Frame):
         # Bool for exiting after save
         self.exit_after_saving = False
 
-    def destroy(self, event=None):
-        if change_detected():
-            self.save_prompt = SavePrompt(self)
-        else:
-            exit()
 
-    def submit(self):
-        add_entry(self.input.get("1.0", "end"))
-        self.master.refresh_entries()
-        self.input.delete("1.0", "end")
-
-    def insert(self):
-        if len(get_entries()) == 0:
-            self.submit()
-        else:
-            self.insert_prompt = InsertPrompt(self)
-
-    def save(self, and_exit=False):
-        self.input_path = InputPath(self, "save")
-
-        if and_exit:
-            self.exit_after_saving = True
-
-    def load(self):
-        self.input_path = InputPath(self, "load")
-
-    def save_submit(self, filepath):
-        save_entries(filepath)
-
-        if self.exit_after_saving:
-            exit()
-
-    def load_submit(self, filepath):
-        load_entries(filepath)
-        self.master.refresh_entries()
-
-    def clear(self):
-        clear_entries()
-        self.master.refresh_entries()
-
-    def remove_first_entry(self):
-        remove_entry(0)
-        self.master.refresh_entries()
-
-    def remove_last_entry(self):
-        remove_entry(len(get_entries()) - 1)
-        self.master.refresh_entries()
 
     def create_widgets(self):
         self.input = tk.Text(
             self, 
             height=self.input_height, 
             width=self.input_width,
-            font=self.inputFont,
+            font=self.input_font,
             wrap=tk.WORD
         )
         self.input.grid(
@@ -211,6 +170,18 @@ class Input(tk.Frame):
                     width=3
                 )
 
+        self.info_label = tk.Label(
+            self,
+            text="Info label test",
+            font=self.info_font
+        )
+        self.info_label.grid(
+            row=5, 
+            column=0, 
+            padx=PADDING,
+            sticky=tk.NW
+        )
+
     def refresh_colors(self):
         self.colors = self.master.colors_obj.get_colors()
 
@@ -233,3 +204,58 @@ class Input(tk.Frame):
 
         if (self.input_path):
             self.input_path.refresh_colors()
+
+        self.info_label.configure(
+            bg=self.colors["HL2"],
+            fg=self.colors["BG1"]
+        )
+
+
+
+    def destroy(self, event=None):
+        if change_detected():
+            self.save_prompt = SavePrompt(self)
+        else:
+            exit()
+
+    def submit(self):
+        add_entry(self.input.get("1.0", "end"))
+        self.master.refresh_entries()
+        self.input.delete("1.0", "end")
+
+    def insert(self):
+        if len(get_entries()) == 0:
+            self.submit()
+        else:
+            self.insert_prompt = InsertPrompt(self)
+
+    def save(self, and_exit=False):
+        self.input_path = InputPath(self, "save")
+
+        if and_exit:
+            self.exit_after_saving = True
+
+    def load(self):
+        self.input_path = InputPath(self, "load")
+
+    def save_submit(self, filepath):
+        save_entries(filepath)
+
+        if self.exit_after_saving:
+            exit()
+
+    def load_submit(self, filepath):
+        load_entries(filepath)
+        self.master.refresh_entries()
+
+    def clear(self):
+        clear_entries()
+        self.master.refresh_entries()
+
+    def remove_first_entry(self):
+        remove_entry(0)
+        self.master.refresh_entries()
+
+    def remove_last_entry(self):
+        remove_entry(len(get_entries()) - 1)
+        self.master.refresh_entries()
