@@ -24,10 +24,11 @@ class Application(tk.Frame):
         self.refresh_colors()
 
     def create_widgets(self):
+        # Top frame is where entries are shown
+
         self.top_frame_height = (self.height // 3) * 2
 
         self.windows_offset = 110
-
         if PLATFORM == "Windows":
             self.top_frame_height += self.windows_offset
 
@@ -43,6 +44,10 @@ class Application(tk.Frame):
         if PLATFORM == "Windows":
             self.bottom_frame_height -= self.windows_offset
 
+
+
+        # Bottom frame is where entries are input
+
         self.bottom_frame = Input(
             width=self.width,
             height=self.bottom_frame_height,
@@ -51,6 +56,10 @@ class Application(tk.Frame):
         self.bottom_frame.grid_propagate(0)
 
         self.bottom_frame.grid(row=1, column=0)
+
+
+
+        # Only shows when Settings is shown with cmd+comma
 
         self.settings_frame = Settings(
             self, 
