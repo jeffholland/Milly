@@ -17,6 +17,7 @@ class ColorSchemeSettings(tk.Frame):
         )
 
         self.labels = []
+        self.buttons = []
 
         self.create_widgets()
         self.refresh_colors()
@@ -25,6 +26,7 @@ class ColorSchemeSettings(tk.Frame):
 
         # dcs = default color scheme
 
+        # label
         self.dcs_label = tk.Label(
             self,
             text="Default color scheme: "
@@ -37,12 +39,14 @@ class ColorSchemeSettings(tk.Frame):
         )
         self.labels.append(self.dcs_label)
 
+        # selector
         self.dcs_var = tk.StringVar(self)
         self.dcs_selector = ttk.Combobox(
             self,
             textvariable=self.dcs_var,
             values=self.master.master.colors_obj.get_color_schemes(),
-            state="readonly"
+            state="readonly",
+            takefocus=0
         )
         self.dcs_selector.grid(
             row=0,
@@ -55,6 +59,36 @@ class ColorSchemeSettings(tk.Frame):
             "<<ComboboxSelected>>", 
             self.default_color_scheme_changed
         )
+
+        # left arrow button
+        self.dcs_arrow_left = tk.Button(
+            self,
+            text="<<",
+            width=1,
+            command=lambda: self.dcs_switch("left")
+        )
+        self.dcs_arrow_left.grid(
+            row=0,
+            column=4,
+            padx=PADDING,
+            pady=PADDING
+        )
+        self.buttons.append(self.dcs_arrow_left)
+
+        # right arrow button
+        self.dcs_arrow_right = tk.Button(
+            self,
+            text=">>",
+            width=1,
+            command=lambda: self.dcs_switch("right")
+        )
+        self.dcs_arrow_right.grid(
+            row=0,
+            column=5,
+            padx=PADDING,
+            pady=PADDING
+        )
+        self.buttons.append(self.dcs_arrow_right)
 
 
         # ncs = new color scheme
@@ -123,6 +157,11 @@ class ColorSchemeSettings(tk.Frame):
         self.dcs_selector["values"] = (
             self.master.master.colors_obj.get_color_schemes())
 
+        for button in self.buttons:
+            button.configure(
+                highlightbackground=self.colors["BG1"]
+            )
+
         for entry in self.ncs_entries:
             entry.configure(
                 bg=self.colors["BG2"],
@@ -140,9 +179,27 @@ class ColorSchemeSettings(tk.Frame):
             fg=self.colors["BG1"]
         )
 
-    def default_color_scheme_changed(self, event):
+    def default_color_scheme_changed(self, event=None):
         self.master.settings_data["default_color_scheme"] = self.dcs_var.get()
         self.master.save_settings()
+
+    def dcs_switch(self, dir):
+        vals = self.dcs_selector["values"]
+        index = vals.index(self.dcs_var.get())
+
+        if dir == "left":
+            if index <= 0:
+                new_index = len(vals) - 1
+            else:
+                new_index = index - 1
+        else:
+            if index >= len(vals) - 1:
+                new_index = 0
+            else:
+                new_index = index + 1
+
+        self.dcs_var.set(vals[new_index])
+        self.default_color_scheme_changed()
 
     
     # New color scheme functions
