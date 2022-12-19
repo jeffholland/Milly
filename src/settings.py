@@ -136,12 +136,13 @@ class Settings(tk.Frame):
     # Handlers
 
     def save_settings(self):
-        with open("json/settings.json", "w") as f:
-            json.dump(self.settings_data, f)
 
         # Check for new color scheme data entered
         # save it if detected.
         self.color_scheme_settings.ncs_check()
+        
+        with open("json/settings.json", "w") as f:
+            json.dump(self.settings_data, f)
 
         self.load_settings()
 

@@ -142,6 +142,7 @@ class ColorSchemeSettings(tk.Frame):
 
     def default_color_scheme_changed(self, event):
         self.master.settings_data["default_color_scheme"] = self.dcs_var.get()
+        self.master.save_settings()
 
     
     # New color scheme functions
