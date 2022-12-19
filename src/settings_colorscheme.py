@@ -13,7 +13,7 @@ class ColorSchemeSettings(tk.Frame):
             self, 
             master, 
             width=WIDTH - PADDING_BIG * 2, 
-            height=200
+            height=120
         )
 
         self.labels = []
@@ -148,29 +148,38 @@ class ColorSchemeSettings(tk.Frame):
         self.colors = self.master.master.colors_obj.get_colors()
 
         self.configure(
-            bg=self.colors["BG1"]
+            bg=self.colors["BG2"]
         )
 
         self.dcs_var.set(
             self.master.settings_data["default_color_scheme"]
         )
         self.dcs_selector["values"] = (
-            self.master.master.colors_obj.get_color_schemes())
+            self.master.master.colors_obj.get_color_schemes()
+        )
+        self.dcs_selector_style = ttk.Style()
+        self.dcs_selector_style.theme_use("alt")
+        self.dcs_selector_style.configure(
+            "TCombobox",
+            fieldbackground=self.colors["BG2"],
+            background=self.colors["BG1"],
+            foreground=self.colors["HL2"]
+        )
 
         for button in self.buttons:
             button.configure(
-                highlightbackground=self.colors["BG1"]
+                highlightbackground=self.colors["BG2"]
             )
 
         for entry in self.ncs_entries:
             entry.configure(
-                bg=self.colors["BG2"],
-                fg=self.colors["HL2"]
+                bg=self.colors["HL1"],
+                fg=self.colors["BG1"]
             )
 
         for label in self.labels:
             label.configure(
-                bg=self.colors["BG1"],
+                bg=self.colors["BG2"],
                 fg=self.colors["HL2"]
             )
 
