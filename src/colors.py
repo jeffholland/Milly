@@ -21,7 +21,8 @@ class Colors:
 
             with scandir("json/color_schemes/") as entries:
                 for entry in entries:
-                    self.color_schemes.append(entry.name[:-5])
+                    if entry.name[-5:] == ".json":
+                        self.color_schemes.append(entry.name[:-5])
             
             self.color_schemes.sort()
 
