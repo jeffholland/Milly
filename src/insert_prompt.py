@@ -1,5 +1,6 @@
 import tkinter as tk
 
+from constants import PLATFORM
 from data import get_entries, insert_entry
 
 class InsertPrompt(tk.Frame):
@@ -23,6 +24,7 @@ class InsertPrompt(tk.Frame):
         self.spinbox.selection('to', tk.END)
 
         self.spinbox.bind("<KeyPress>", self.key_pressed)
+        self.spinbox.bind("<KeyRelease>", self.key_released)
 
     def key_pressed(self, event):
         if event.keysym == "Return":
@@ -35,3 +37,12 @@ class InsertPrompt(tk.Frame):
 
             self.window.destroy()
             self.window.update()
+
+    def key_released(self, event):
+        # Release command key while in other window
+        if PLATFORM == "Windows":
+            if "Control" in event.keysym:
+                self.master.key.keys_pressed["cmd"] = False
+        else:
+            if "Meta" in event.keysym:
+                self.master.key.keys_pressed["cmd"] = False
