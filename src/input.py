@@ -170,9 +170,10 @@ class Input(tk.Frame):
                     width=3
                 )
 
+        self.info_var = tk.StringVar()
         self.info_label = tk.Label(
             self,
-            text="Info label test",
+            textvariable=self.info_var,
             font=self.info_font
         )
         self.info_label.grid(
@@ -206,11 +207,12 @@ class Input(tk.Frame):
             self.input_path.refresh_colors()
 
         self.info_label.configure(
-            bg=self.colors["HL2"],
-            fg=self.colors["BG1"]
+            bg=self.colors["BG2"],
+            fg=self.colors["HL2"]
         )
 
-
+    def show_info(self, text):
+        self.info_var.set(text)
 
     def destroy(self, event=None):
         if change_detected():

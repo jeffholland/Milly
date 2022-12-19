@@ -199,6 +199,7 @@ class ColorSchemeSettings(tk.Frame):
                 new_index = index + 1
 
         self.dcs_var.set(vals[new_index])
+        self.master.master.bottom_frame.show_info(vals[new_index])
         self.default_color_scheme_changed()
 
     

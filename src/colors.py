@@ -16,7 +16,6 @@ class Colors:
 
     def load_colors(self, refresh=True):
         if refresh:
-
             self.color_schemes.clear()
 
             with scandir("json/color_schemes/") as entries:
