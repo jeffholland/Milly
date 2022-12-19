@@ -37,11 +37,6 @@ class Input(tk.Frame):
             family=INPUT_FONT_FAMILY, 
             size=INPUT_FONT_SIZE
         )
-        self.info_font = tkFont.Font(
-            self,
-            family="Times New Roman",
-            size=14
-        )
 
         # Button array to efficiently configure all buttons
         self.buttons = []
@@ -170,19 +165,6 @@ class Input(tk.Frame):
                     width=3
                 )
 
-        self.info_var = tk.StringVar()
-        self.info_label = tk.Label(
-            self,
-            textvariable=self.info_var,
-            font=self.info_font
-        )
-        self.info_label.grid(
-            row=5, 
-            column=0, 
-            padx=PADDING,
-            sticky=tk.NW
-        )
-
     def refresh_colors(self):
         self.colors = self.master.colors_obj.get_colors()
 
@@ -205,14 +187,6 @@ class Input(tk.Frame):
 
         if (self.input_path):
             self.input_path.refresh_colors()
-
-        self.info_label.configure(
-            bg=self.colors["BG2"],
-            fg=self.colors["HL2"]
-        )
-
-    def show_info(self, text):
-        self.info_var.set(text)
 
     def destroy(self, event=None):
         if change_detected():
