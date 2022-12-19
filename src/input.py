@@ -5,6 +5,7 @@ from sys import exit
 
 from constants import *
 from data import *
+from find import FindWindow
 from key import Key
 from input_path import InputPath
 from insert_prompt import InsertPrompt
@@ -51,7 +52,7 @@ class Input(tk.Frame):
 
         self.refresh_colors()
 
-        # Key object handles key press and release methods for Text widget
+        # object handles key press and release methods for Text widget
         self.key = Key(self)
 
         # Key press and release bindings
@@ -235,3 +236,6 @@ class Input(tk.Frame):
     def remove_last_entry(self):
         remove_entry(len(get_entries()) - 1)
         self.master.refresh_entries()
+
+    def show_find_window(self):
+        self.find_window = FindWindow(self)

@@ -22,20 +22,6 @@ class InputPath(tk.Frame):
         self.create_widgets()
 
         self.refresh_colors()
-    
-
-    def key_press(self, event):
-        if (event.keysym == "Return"):
-            self.submit()
-
-    def key_release(self, event):
-        # Release command key while in other window
-        if PLATFORM == "Windows":
-            if "Control" in event.keysym:
-                self.master.key.keys_pressed["cmd"] = False
-        else:
-            if "Meta" in event.keysym:
-                self.master.key.keys_pressed["cmd"] = False
 
 
     def create_widgets(self):
@@ -123,6 +109,21 @@ class InputPath(tk.Frame):
                     bg=self.colors["BG2"],
                     fg=self.colors["HL2"]
                 )
+    
+
+    def key_press(self, event):
+        if (event.keysym == "Return"):
+            self.submit()
+
+    def key_release(self, event):
+        # Release command key while in other window
+        if PLATFORM == "Windows":
+            if "Control" in event.keysym:
+                self.master.key.keys_pressed["cmd"] = False
+        else:
+            if "Meta" in event.keysym:
+                self.master.key.keys_pressed["cmd"] = False
+                
 
     def submit(self):
         input_string = self.entry.get()

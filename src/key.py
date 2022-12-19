@@ -71,6 +71,9 @@ class Key:
                     self.edit_selection_mode = not self.edit_selection_mode
                     self.master.master.top_frame.entries[self.edit_selection_index].edit_selected(self.edit_selection_mode)
 
+            if event.keysym.lower() == "f":
+                self.master.show_find_window()
+
             if event.keysym == "comma":
                 self.master.master.show_settings()
 
