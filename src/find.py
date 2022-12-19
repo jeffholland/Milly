@@ -25,9 +25,11 @@ class FindWindow(tk.Frame):
         self.window.geometry(f"{self.width}x{self.height}")
         self.window.overrideredirect(True)
 
+        self.entry_var = tk.StringVar()
         self.entry = tk.Entry(
             self.window,
-            width=10
+            width=10,
+            textvariable=self.entry_var
         )
         self.entry.grid(
             row=0, 
@@ -37,10 +39,12 @@ class FindWindow(tk.Frame):
             columnspan=2
         )
         self.entry.focus_set()
+        self.entry.bind("<KeyPress>", self.key_pressed)
 
         self.ok_button = tk.Button(
             self.window,
-            text="Ok"
+            text="Ok",
+            command=self.ok_pressed
         )
         self.ok_button.grid(
             row=1,
@@ -51,7 +55,8 @@ class FindWindow(tk.Frame):
         
         self.cancel_button = tk.Button(
             self.window,
-            text="Cancel"
+            text="Cancel",
+            command=self.cancel_pressed
         )
         self.cancel_button.grid(
             row=1,
@@ -71,3 +76,16 @@ class FindWindow(tk.Frame):
             bg=self.colors["HL1"],
             fg=self.colors["BG2"]
         )
+
+
+    def key_pressed(self, event):
+        print(event.keysym)
+
+        if event.keysym == "Return":
+            self.ok_pressed()
+
+    def ok_pressed(self):
+        print("ok")
+
+    def cancel_pressed(self):
+        print("cancel")
