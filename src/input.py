@@ -22,7 +22,7 @@ class Input(tk.Frame):
 
         # Input (Text widget) details
 
-        self.input_height = 6
+        self.input_height = 7
 
         if MODE == "fullscreen":
             self.input_width = 130
