@@ -115,14 +115,23 @@ class Entries(tk.Frame):
             )
 
 
-    def filter_entries(self, filter):
-
+    def filter_entries(self, filter, case_sensitive=False):
         for entry in self.entries:
             entry.grid_forget()
 
+        for entry in self.filtered_entries:
+            entry.grid_forget()
+
+        self.filtered_entries.clear()
+        self.filtered_entries_data.clear()
+
         for data in self.entries_data:
-            if filter in data["text"]:
-                self.filtered_entries_data.append(data)
+            if case_sensitive:
+                if filter in data["text"]:
+                    self.filtered_entries_data.append(data)
+            else:
+                if filter.lower() in data["text"].lower():
+                    self.filtered_entries_data.append(data)
         
         for count in range(len(self.filtered_entries_data)):
             self.filtered_entries.append(
