@@ -56,11 +56,17 @@ class Entries(tk.Frame):
         self.container.bind("<Configure>", self.scroll_config)
         self.container.bind("<Motion>", self.scroll_config)
 
-        # Contains the Entry objects
+        # Contains a list of Entry objects
         self.entries = []
 
-        # Contains the array of dicts sourced from data.py
+        # Contains a list of dicts sourced from data.py
         self.entries_data = []
+
+        # Contains a filtered list of Entry objects
+        self.filtered_entries = []
+
+        # Contains a filtered list of dicts
+        self.filtered_entries_data = []
         
         self.refresh_entries()
 
@@ -108,6 +114,35 @@ class Entries(tk.Frame):
                 pady=PADDING
             )
 
+
+    def filter_entries(self, filter):
+
+        for entry in self.entries:
+            entry.grid_forget()
+
+        for data in self.entries_data:
+            if filter in data["text"]:
+                self.filtered_entries_data.append(data)
+        
+        for count in range(len(self.filtered_entries_data)):
+            self.filtered_entries.append(
+                Entry(
+                    date=self.filtered_entries_data[count]["date"],
+                    time=self.filtered_entries_data[count]["time"],
+                    text=self.filtered_entries_data[count]["text"],
+                    width=self.entry_width,
+                    height=ENTRY_HEIGHT,
+                    master=self.container,
+                    index=count
+                )
+            )
+            self.filtered_entries[count].grid_propagate(0)
+            self.filtered_entries[count].grid(
+                row=count, 
+                column=0,
+                padx=PADDING, 
+                pady=PADDING
+            )
 
 
     def scroll_config(self, event=None):

@@ -79,13 +79,19 @@ class FindWindow(tk.Frame):
 
 
     def key_pressed(self, event):
-        print(event.keysym)
-
         if event.keysym == "Return":
             self.ok_pressed()
+        if event.keysym == "Escape":
+            self.cancel_pressed()
 
     def ok_pressed(self):
-        print("ok")
+        text = self.entry_var.get()
+        self.master.master.top_frame.filter_entries(text)
+        
+        self.window.withdraw()
+        self.master.input.focus_set()
 
     def cancel_pressed(self):
         print("cancel")
+        self.window.withdraw()
+        self.master.input.focus_set()
