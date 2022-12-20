@@ -97,6 +97,14 @@ class Entries(tk.Frame):
         self.entries.clear()
 
         for count in range(len(self.entries_data)):
+            try:
+                if self.entries_data[count]["checkbox"]:
+                    print("yes!")
+                else:
+                    print("no!")
+            except KeyError:
+                print("what is this checkbox you speak of...")
+
             self.entries.append(Entry(
                 date=self.entries_data[count]["date"],
                 time=self.entries_data[count]["time"],
