@@ -163,7 +163,7 @@ class ColorSchemeSettings(tk.Frame):
             "TCombobox",
             fieldbackground=self.colors["BG2"],
             background=self.colors["BG1"],
-            foreground=self.colors["HL2"]
+            foreground=self.colors["BG2"]
         )
 
         for button in self.buttons:
