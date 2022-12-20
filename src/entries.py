@@ -97,13 +97,13 @@ class Entries(tk.Frame):
         self.entries.clear()
 
         for count in range(len(self.entries_data)):
-            try:
-                if self.entries_data[count]["checkbox"]:
-                    print("yes!")
-                else:
-                    print("no!")
-            except KeyError:
-                print("what is this checkbox you speak of...")
+            # try:
+            #     if self.entries_data[count]["checkbox"]:
+            #         print("yes!")
+            #     else:
+            #         print("no!")
+            # except KeyError:
+            #     print("what is this checkbox you speak of...")
 
             self.entries.append(Entry(
                 date=self.entries_data[count]["date"],
@@ -112,8 +112,8 @@ class Entries(tk.Frame):
                 width=self.entry_width,
                 height=ENTRY_HEIGHT,
                 master=self.container,
-                index=count
-                # checkbox=True
+                index=count,
+                checkbox=True
             ))
             self.entries[count].grid_propagate(0)
             self.entries[count].grid(

@@ -93,7 +93,7 @@ class Entry(tk.Frame):
                 height=1,
                 variable=self.checkbox_var
             )
-            self.checkbox.grid(row=1, column=0)
+            self.checkbox.grid(row=1, column=0, padx=PADDING)
             column_var = 1
 
         # Labels
@@ -108,6 +108,10 @@ class Entry(tk.Frame):
             column=0
         )
         self.labels.append(self.date_label)
+        if self.check_bool:
+            self.date_label.grid_configure(
+                columnspan=2
+            )
 
         self.time_label = tk.Label(
             self, 
