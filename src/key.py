@@ -71,7 +71,7 @@ class Key:
                     self.edit_selection_mode = not self.edit_selection_mode
                     self.master.master.top_frame.entries[self.edit_selection_index].edit_selected(self.edit_selection_mode)
 
-            if event.keysym.lower() == "f":
+            if event.keysym.lower() == "f" and not self.keys_pressed["shift"]:
                 self.master.show_find_window()
 
             if event.keysym == "comma":
@@ -80,6 +80,11 @@ class Key:
             if PLATFORM == "Windows":
                 if event.keysym.lower() == "w":
                     self.master.destroy()
+
+            # cmd+shift+f to remove any filter
+            if self.keys_pressed["shift"] == True:
+                if event.keysym.lower() == "f":
+                    self.master.master.top_frame.remove_filter()
 
         # endif cmd key pressed
             

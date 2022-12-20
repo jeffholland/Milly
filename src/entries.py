@@ -144,6 +144,12 @@ class Entries(tk.Frame):
                 pady=PADDING
             )
 
+    def remove_filter(self):
+        for entry in self.filtered_entries:
+            entry.grid_forget()
+
+        self.refresh_entries()
+
 
     def scroll_config(self, event=None):
         self.canvas.configure(
