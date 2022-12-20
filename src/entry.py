@@ -89,8 +89,8 @@ class Entry(tk.Frame):
             self.checkbox_var = tk.IntVar()
             self.checkbox = tk.Checkbutton(
                 self,
-                width=40,
-                height=40,
+                width=1,
+                height=1,
                 variable=self.checkbox_var
             )
             self.checkbox.grid(row=1, column=0)

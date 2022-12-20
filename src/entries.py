@@ -105,6 +105,7 @@ class Entries(tk.Frame):
                 height=ENTRY_HEIGHT,
                 master=self.container,
                 index=count
+                # checkbox=True
             ))
             self.entries[count].grid_propagate(0)
             self.entries[count].grid(

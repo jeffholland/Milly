@@ -8,7 +8,8 @@ class Key:
         self.master = master
         self.keys_pressed = {
             "cmd": False,
-            "shift": False
+            "shift": False,
+            "alt": False
         }
         self.just_submitted = False
         self.edit_selection_mode = False
@@ -26,10 +27,13 @@ class Key:
             self.keys_pressed["cmd"] = True
         if "Shift" in event.keysym:
             self.keys_pressed["shift"] = True
+        if "Alt" in event.keysym:
+            self.keys_pressed["alt"] = True
 
         # see shortcuts.txt for a list of all shortcuts
 
-        if event.keysym == "Return" and self.keys_pressed["shift"] == False:
+        if (event.keysym == "Return" 
+            and self.keys_pressed["shift"] == False):
             self.master.submit()
             self.just_submitted = True
         
@@ -121,6 +125,8 @@ class Key:
             self.keys_pressed["cmd"] = False
         if "Shift" in event.keysym:
             self.keys_pressed["shift"] = False
+        if "Alt" in event.keysym:
+            self.keys_pressed["alt"] = False
 
         if self.just_submitted == True:
             if event.keysym == "Return":
