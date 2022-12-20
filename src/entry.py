@@ -7,7 +7,8 @@ from constants import *
 from data import *
 
 class Entry(tk.Frame):
-    def __init__(self, date, time, text, width, height, index, master=None):
+    def __init__(self, date, time, text, width, height, index, 
+        master=None, checkbox=False):
 
         tk.Frame.__init__(
             self,
@@ -24,6 +25,10 @@ class Entry(tk.Frame):
         self.index = index
         self.width = width
         self.height = height
+
+        # include a checkbox or not
+        self.check_bool = checkbox
+        self.checkbox = None
 
         self.keys_pressed = {
             "cmd": False,
@@ -74,6 +79,25 @@ class Entry(tk.Frame):
 
 
     def create_widgets(self):
+
+        # Checkbox
+
+        # for gridding the text label next to the checkbox
+        column_var = 0
+
+        if self.check_bool:
+            self.checkbox_var = tk.IntVar()
+            self.checkbox = tk.Checkbutton(
+                self,
+                width=40,
+                height=40,
+                variable=self.checkbox_var
+            )
+            self.checkbox.grid(row=1, column=0)
+            column_var = 1
+
+        # Labels
+
         self.date_label = tk.Label(
             self, 
             text=self.date,
@@ -98,7 +122,10 @@ class Entry(tk.Frame):
 
         self.text_label_var = tk.StringVar(self)
 
-        self.text_label_width = 200
+        if self.check_bool:
+            self.text_label_width = 160
+        else:
+            self.text_label_width = 200
         self.text_label_wrap_length = self.width - 40
 
         self.text_label = tk.Label(
@@ -113,7 +140,7 @@ class Entry(tk.Frame):
         self.text_label_var.set(self.text)
         self.text_label.grid(
             row=1, 
-            column=0, 
+            column=column_var, 
             padx=PADDING,
             pady=PADDING,
             columnspan=200
