@@ -163,6 +163,30 @@ class Entry(tk.Frame):
         )
         self.buttons.append(self.down_button)
 
+        self.top_button = tk.Button(
+            self,
+            text="top",
+            width=self.button_width,
+            command=self.top_pressed
+        )
+        self.top_button.grid(
+            row=0,
+            column=6
+        )
+        self.buttons.append(self.top_button)
+
+        self.bottom_button = tk.Button(
+            self,
+            text="last",
+            width=self.button_width,
+            command=self.bottom_pressed
+        )
+        self.bottom_button.grid(
+            row=0,
+            column=7
+        )
+        self.buttons.append(self.bottom_button)
+
         self.copy_button = tk.Button(
             self,
             text="copy",
@@ -171,7 +195,7 @@ class Entry(tk.Frame):
         )
         self.copy_button.grid(
             row=0,
-            column=6
+            column=8
         )
         self.buttons.append(self.copy_button)
 
@@ -186,7 +210,7 @@ class Entry(tk.Frame):
         )
         self.x_button.grid(
             row=0,
-            column=7
+            column=9
         )
         self.buttons.append(self.x_button)
         if PLATFORM == "Windows":
@@ -280,7 +304,7 @@ class Entry(tk.Frame):
             self.master.master.master.refresh_entries()
 
     def down_pressed(self):
-        if self.index < len(get_entries()) - 1:
+        if self.index < get_num_entries() - 1:
             swap_entry(self.index, self.index + 1)
             self.master.master.master.refresh_entries()
 
@@ -288,6 +312,15 @@ class Entry(tk.Frame):
         self.clipboard_clear()
         self.clipboard_append(self.text)
 
+    def top_pressed(self):
+        if self.index > 0:
+            move_entry(self.index, 0)
+            self.master.master.master.refresh_entries()
+
+    def bottom_pressed(self):
+        if self.index < get_num_entries() - 1:
+            move_entry(self.index, get_num_entries() - 1)
+            self.master.master.master.refresh_entries()
 
 
     # Edit box key handlers

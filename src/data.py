@@ -86,3 +86,7 @@ def swap_entry(index1, index2):
 
 def insert_entry(index, text):
     entries.insert(index, create_entry(text))
+
+def move_entry(index1, index2):
+    tmp = entries.pop(index1)
+    entries.insert(index2, tmp)
