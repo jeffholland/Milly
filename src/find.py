@@ -91,6 +91,5 @@ class FindWindow(tk.Frame):
         self.master.input.focus_set()
 
     def cancel_pressed(self):
-        print("cancel")
         self.window.withdraw()
         self.master.input.focus_set()

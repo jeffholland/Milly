@@ -44,7 +44,6 @@ class Input(tk.Frame):
         self.num_buttons = 5
 
         # Input path set to None by default
-        # (warning: always set it back to None after closing it)
         
         self.input_path = None
 
@@ -68,6 +67,9 @@ class Input(tk.Frame):
 
 
     def create_widgets(self):
+
+        # Text input widget
+
         self.input = tk.Text(
             self, 
             height=self.input_height, 
@@ -84,16 +86,16 @@ class Input(tk.Frame):
         )
         self.input.focus_set()
 
+
+
+        # Buttons
+
         self.submit_button = tk.Button(
             self, 
             text="Submit", 
             command=self.submit
         )
-        self.submit_button.grid(
-            row=0, 
-            column=1, 
-            padx=PADDING
-        )
+        self.submit_button.grid(row=0, column=1)
         self.buttons.append(self.submit_button)
 
         self.insert_button = tk.Button(
@@ -101,11 +103,7 @@ class Input(tk.Frame):
             text="Insert",
             command=self.insert
         )
-        self.insert_button.grid(
-            row=1,
-            column=1,
-            padx=PADDING
-        )
+        self.insert_button.grid(row=1, column=1)
         self.buttons.append(self.insert_button)
 
         self.save_button = tk.Button(
@@ -113,11 +111,7 @@ class Input(tk.Frame):
             text="Save", 
             command=self.save
         )
-        self.save_button.grid(
-            row=2, 
-            column=1, 
-            padx=PADDING
-        )
+        self.save_button.grid(row=2, column=1)
         self.buttons.append(self.save_button)
 
         self.load_button = tk.Button(
@@ -125,11 +119,7 @@ class Input(tk.Frame):
             text="Load",
             command=self.load
         )
-        self.load_button.grid(
-            row=3, 
-            column=1, 
-            padx=PADDING
-        )
+        self.load_button.grid(row=3, column=1)
         self.buttons.append(self.load_button)
 
         self.clear_button = tk.Button(
@@ -137,11 +127,7 @@ class Input(tk.Frame):
             text="Clear",
             command=self.clear
         )
-        self.clear_button.grid(
-            row=4,
-            column=1,
-            padx=PADDING
-        )
+        self.clear_button.grid(row=4, column=1)
         self.buttons.append(self.clear_button)
 
         self.settings_button = tk.Button(
@@ -149,22 +135,26 @@ class Input(tk.Frame):
             text="Settings",
             command=self.master.show_settings
         )
-        self.settings_button.grid(
-            row=0,
-            column=2,
-            padx=PADDING
-        )
+        self.settings_button.grid(row=0, column=2)
         self.buttons.append(self.settings_button)
+
+        self.find_button = tk.Button(
+            self,
+            text="Find",
+            command=self.show_find_window
+        )
+        self.find_button.grid(row=1, column=2)
+        self.buttons.append(self.find_button)
+
+
+        # Configure all buttons
 
         for button in self.buttons:
             if PLATFORM == "Windows":
-                button.configure(
-                    width=6
-                )
+                button.configure(width=6)
             else:
-                button.configure(
-                    width=3
-                )
+                button.configure(width=3)
+            button.grid_configure(padx=PADDING)
         
         self.find_window = FindWindow(self)
         self.find_window.window.withdraw()
