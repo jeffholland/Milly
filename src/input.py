@@ -165,6 +165,10 @@ class Input(tk.Frame):
                 button.configure(
                     width=3
                 )
+        
+        self.find_window = FindWindow(self)
+        self.find_window.window.withdraw()
+        # self.input.focus_set()
 
     def refresh_colors(self):
         self.colors = self.master.colors_obj.get_colors()
@@ -238,4 +242,5 @@ class Input(tk.Frame):
         self.master.refresh_entries()
 
     def show_find_window(self):
-        self.find_window = FindWindow(self)
+        self.find_window.window.deiconify()
+        self.find_window.entry.focus_set()

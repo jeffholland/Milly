@@ -38,7 +38,6 @@ class FindWindow(tk.Frame):
             pady=PADDING,
             columnspan=2
         )
-        self.entry.focus_set()
         self.entry.bind("<KeyPress>", self.key_pressed)
 
         self.ok_button = tk.Button(
