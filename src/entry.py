@@ -8,7 +8,7 @@ from data import *
 
 class Entry(tk.Frame):
     def __init__(self, date, time, text, width, height, index, 
-        master=None, checkbox=False):
+        master=None, checkbox=False, checked=False):
 
         tk.Frame.__init__(
             self,
@@ -28,6 +28,9 @@ class Entry(tk.Frame):
 
         # include a checkbox or not
         self.check_bool = checkbox
+        # checkbox is checked or not
+        self.checked_bool = checked
+        # the checkbox object itself
         self.checkbox = None
 
         self.keys_pressed = {
@@ -36,6 +39,8 @@ class Entry(tk.Frame):
         }
 
         # Variable height
+        # (need to find a way to do this that doesn't keep breaking)
+
         if MODE == "fullscreen":
             vh_constant = 9.0
         else:
@@ -50,7 +55,6 @@ class Entry(tk.Frame):
             vh_limit = 60
 
         if len(text) > vh_limit:
-
             self.height = height + (floor((len(text) - vh_limit) / vh_constant))
 
             self.configure(height=self.height)
@@ -87,6 +91,8 @@ class Entry(tk.Frame):
 
         if self.check_bool:
             self.checkbox_var = tk.IntVar()
+            if self.checked_bool:
+                self.checkbox_var.set(1)
             self.checkbox = tk.Checkbutton(
                 self,
                 width=2,
@@ -449,9 +455,12 @@ class Entry(tk.Frame):
             self.master.master.master.refresh_entries()
 
     def checkbox_pressed(self):
-        # Move entries to bottom when checked off
+        # Move entries to bottom when checked
         if self.checkbox_var.get() == 1:
+            self.master.master.master.entries_data[self.index]["checked"] = True
             self.bottom_pressed()
+
         # Move back to top when unchecked
         else:
+            self.master.master.master.entries_data[self.index]["checked"] = False
             self.top_pressed()
