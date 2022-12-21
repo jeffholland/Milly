@@ -93,7 +93,11 @@ class Entry(tk.Frame):
                 height=1,
                 variable=self.checkbox_var
             )
-            self.checkbox.grid(row=1, column=0, padx=PADDING)
+            self.checkbox.grid(
+                row=1, 
+                column=0, 
+                padx=PADDING
+            )
             column_var = 1
 
         # Labels
@@ -127,10 +131,9 @@ class Entry(tk.Frame):
         self.text_label_var = tk.StringVar(self)
 
         if self.check_bool:
-            self.text_label_width = 160
+            self.text_label_wrap_length = self.width - 80
         else:
-            self.text_label_width = 200
-        self.text_label_wrap_length = self.width - 40
+            self.text_label_wrap_length = self.width - 40
 
         self.text_label = tk.Label(
             self, 
@@ -138,7 +141,7 @@ class Entry(tk.Frame):
             wraplength=self.text_label_wrap_length,
             anchor=tk.NW,
             justify=tk.LEFT,
-            width=self.text_label_width,
+            width=200,
             textvariable=self.text_label_var
         )
         self.text_label_var.set(self.text)
@@ -300,31 +303,6 @@ class Entry(tk.Frame):
 
     # Button handlers
 
-    def edit_pressed(self):
-        self.text_label.grid_remove()
-        for button in self.buttons:
-            button.grid_remove()
-
-        self.edit_box.grid(
-            row=1, 
-            column=0, 
-            padx=PADDING,
-            pady=PADDING,
-            columnspan=100
-        )
-
-        self.edit_box.insert("1.0", self.text_label_var.get())
-        self.edit_box.delete("end - 1 chars") # remove newline
-        self.edit_box.focus_set()
-
-        self.edit_box.bind("<KeyPress>", self.edit_box_key_pressed)
-        self.edit_box.bind("<KeyRelease>", self.edit_box_key_released)
-
-        self.save_button.grid(
-            row=0,
-            column=3
-        )
-
     def x_pressed(self):
         remove_entry(self.index)
         self.master.master.master.refresh_entries()
@@ -354,23 +332,32 @@ class Entry(tk.Frame):
             self.master.master.master.refresh_entries()
 
 
-    # Edit box key handlers
+    # Edit mode button pressed
 
-    def edit_box_key_pressed(self, event):
-        if "Meta" in event.keysym:
-            self.keys_pressed["cmd"] = True
-        if "Shift" in event.keysym:
-            self.keys_pressed["shift"] = True
+    def edit_pressed(self):
+        self.text_label.grid_remove()
+        for button in self.buttons:
+            button.grid_remove()
 
-        if ("Return" in event.keysym 
-            and self.keys_pressed["shift"] == False):
-            self.edit_save()
+        self.edit_box.grid(
+            row=1, 
+            column=0, 
+            padx=PADDING,
+            pady=PADDING,
+            columnspan=100
+        )
 
-    def edit_box_key_released(self, event):
-        if "Meta" in event.keysym:
-            self.keys_pressed["cmd"] = False
-        if "Shift" in event.keysym:
-            self.keys_pressed["shift"] = False
+        self.edit_box.insert("1.0", self.text_label_var.get())
+        self.edit_box.delete("end - 1 chars") # remove newline
+        self.edit_box.focus_set()
+
+        self.edit_box.bind("<KeyPress>", self.edit_box_key_pressed)
+        self.edit_box.bind("<KeyRelease>", self.edit_box_key_released)
+
+        self.save_button.grid(
+            row=0,
+            column=3
+        )
 
     # Edit mode save button handler
 
@@ -393,27 +380,39 @@ class Entry(tk.Frame):
         self.save_button.grid_remove()
 
         # Re-grid the usual Entry widgets
-        self.text_label.grid(
-            row=1, 
-            column=0, 
-            padx=PADDING,
-            pady=PADDING,
-            columnspan=100
-        )
+        self.text_label.grid()
 
-        count = 3
+        if self.check_bool:
+            self.checkbox.grid()
+
         for button in self.buttons:
             # Don't re-grid the save button
             if button.cget("text") == "save":
                 continue
 
-            button.grid(
-                row=0,
-                column=count
-            )
-            count += 1
+            button.grid()
 
         self.master.master.master.master.bottom_frame.input.focus_set()
+
+
+
+    # Edit box key handlers
+
+    def edit_box_key_pressed(self, event):
+        if "Meta" in event.keysym:
+            self.keys_pressed["cmd"] = True
+        if "Shift" in event.keysym:
+            self.keys_pressed["shift"] = True
+
+        if ("Return" in event.keysym 
+            and self.keys_pressed["shift"] == False):
+            self.edit_save()
+
+    def edit_box_key_released(self, event):
+        if "Meta" in event.keysym:
+            self.keys_pressed["cmd"] = False
+        if "Shift" in event.keysym:
+            self.keys_pressed["shift"] = False
 
 
 
