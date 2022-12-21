@@ -23,15 +23,18 @@ class ExportWindow(tk.Frame):
         self.create_widgets()
         self.refresh_colors()
 
+
+
     def create_widgets(self):
         self.window = tk.Toplevel(self)
         self.window.geometry(f"{self.width}x{self.height}")
         self.window.overrideredirect(True)
 
-        self.csv_button = tk.Button(
+        self.csv_var = tk.IntVar()
+        self.csv_button = tk.Checkbutton(
             self.window,
             text="csv",
-            command=self.export_csv
+            variable=self.csv_var
         )
         self.csv_button.grid(
             row=0,
@@ -63,26 +66,33 @@ class ExportWindow(tk.Frame):
         self.window.configure(bg=self.colors["BG2"])
 
         for button in self.buttons:
-            button.configure(highlightbackground=self.colors["BG2"])
+            button.configure(
+                highlightbackground=self.colors["HL1"],
+                bg=self.colors["BG2"],
+                fg=self.colors["HL2"]
+            )
 
     
+
     def key_pressed(self, event):
         if event.keysym == "Return":
-            self.export_csv()
+            self.export()
 
 
-    def export_csv(self):
+    def export(self):
         filename = self.filename_var.get()
 
-        if filename[-4:] != ".csv":
-            filename = filename + ".csv"
+        if self.csv_var.get() == 1:
+            self.export_csv(filename)
 
-        if filename[:7] != "export/":
-            filename = "export/" + filename
+        self.window.withdraw()
+
+
+    def export_csv(self, filename):
+
+        filename = "export/" + filename + ".csv"
 
         with open(filename, "w") as csvfile:
             writer = csv.writer(csvfile, delimiter=",")
             for entry in self.master.entries:
                 writer.writerow([entry.text])
-
-        self.window.withdraw()
