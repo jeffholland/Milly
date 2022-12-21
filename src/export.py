@@ -5,6 +5,7 @@ from math import floor
 
 from fpdf import FPDF
 
+from colors import hex_to_rgb
 from constants import *
 
 class ExportWindow(tk.Frame):
@@ -147,7 +148,6 @@ class ExportWindow(tk.Frame):
                 writer.writerow([entry.text])
 
     def export_txt(self, filename):
-
         filename = filename + ".txt"
 
         with open(filename, "w") as txtfile:
@@ -160,13 +160,23 @@ class ExportWindow(tk.Frame):
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font(ENTRY_FONT_FAMILY, size=ENTRY_FONT_SIZE)
+        pdf.set_margins(PADDING, PADDING, PADDING)
+        pdf.set_line_width(0.1)
+        
+        if self.colors_var.get() == 1:
+            bg = hex_to_rgb(self.colors["BG2"])
+            fg = hex_to_rgb(self.colors["HL2"])
+
+            pdf.set_fill_color(bg[0], bg[1], bg[2])
+            pdf.set_text_color(fg[0], fg[1], fg[2])
         
         for count in range(len(self.master.entries)):
             pdf.multi_cell(
-                w=160,
+                w=180,
                 h=floor(self.master.entries[count].height / 4),
                 txt=self.master.entries[count].text.strip(),
-                border=1
+                border=1,
+                fill=True
             )
 
         pdf.output(filename)

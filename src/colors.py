@@ -83,3 +83,15 @@ class Colors:
 
         with open(filepath, "w") as f:
             json.dump(scheme, f)
+
+
+
+# utility functions
+
+
+def hex_to_rgb(hex):
+
+    # stolen from stackoverflow
+    hex = hex.lstrip("#")
+    lh = len(hex)
+    return tuple(int(hex[i:i + lh // 3], 16) for i in range(0, lh, lh // 3))
