@@ -1,0 +1,29 @@
+"Export to csv, txt, or pdf
+"
+"Save default show/hide checkboxes settings
+"
+"Fix variable height - base it on the number of characters, the font size, and any line breaks.
+"
+"Settings: Show/hide date, time, menu buttons
+
+"
+"Settings: add font sizes and families
+"
+"Shawn's idea - journal prompts. Save them to JSON and then add the ability to make custom prompts in the Settings menu.
+
+"
+"Put settings in a canvas with a scrollbar so that it can be scrollable	
+"
+"If default color scheme not found, display a message asking the user to pick a color scheme from the dropdown menu.
+"
+"Get entry stats - entry count, word count, character count, etc.
+"
+"Checkbox entries - make them go to the bottom when checked.
+"
+"Make switching color schemes via cmd+arrow keys actually save the default color scheme.
+	
+"
+"Show/hide checkboxes
+"
+"Key shortcut for show/hide checkboxes - cmd+shift+h ?
+"

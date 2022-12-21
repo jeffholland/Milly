@@ -53,6 +53,7 @@ class ExportWindow(tk.Frame):
             pady=PADDING
         )
         self.filename_entry.focus_set()
+        self.filename_entry.bind("<KeyPress>", self.key_pressed)
 
 
 
@@ -64,15 +65,23 @@ class ExportWindow(tk.Frame):
         for button in self.buttons:
             button.configure(highlightbackground=self.colors["BG2"])
 
+    
+    def key_pressed(self, event):
+        if event.keysym == "Return":
+            self.export_csv()
+
 
     def export_csv(self):
         filename = self.filename_var.get()
 
-        if ".csv" not in filename:
+        if filename[-4:] != ".csv":
             filename = filename + ".csv"
 
+        if filename[:7] != "export/":
+            filename = "export/" + filename
+
         with open(filename, "w") as csvfile:
-            writer = csv.writer(csvfile)
+            writer = csv.writer(csvfile, delimiter=",")
             for entry in self.master.entries:
                 writer.writerow([entry.text])
 
