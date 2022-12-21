@@ -17,6 +17,8 @@ class Entries(tk.Frame):
 
         self.entry_width = self.width - (PADDING * 6)
 
+        self.show_checkboxes = False
+
         self.create_widgets()
 
         self.refresh_colors()
@@ -110,7 +112,7 @@ class Entries(tk.Frame):
                 height=ENTRY_HEIGHT,
                 master=self.container,
                 index=count,
-                checkbox=True,
+                checkbox=self.show_checkboxes,
                 checked=checked_bool
             ))
             self.entries[count].grid_propagate(0)

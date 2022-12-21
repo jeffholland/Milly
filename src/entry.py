@@ -290,11 +290,12 @@ class Entry(tk.Frame):
         self.configure(
             bg=self.colors["BG1"]
         )
-
-        self.checkbox.configure(
-            bg=self.colors["BG1"],
-            highlightbackground=self.colors["BG1"]
-        )
+        
+        if self.checkbox:
+            self.checkbox.configure(
+                bg=self.colors["BG1"],
+                highlightbackground=self.colors["BG1"]
+            )
 
         for label in self.labels:
             label.configure(

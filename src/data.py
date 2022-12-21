@@ -70,8 +70,7 @@ def create_entry(text):
     return {
         "date": date.strftime(date.today(), "%A") + " " + str(date.today()),
         "time": datetime.now().strftime("%I:%M %p"),
-        "text": text,
-        "checkbox": False
+        "text": text
     }
 
 def add_entry(text):
