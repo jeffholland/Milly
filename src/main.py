@@ -96,6 +96,14 @@ class Application(tk.Frame):
         self.bottom_frame.input.focus_set()
 
         self.refresh_colors()
+
+    def show_hide_checks(self):
+        current = self.settings_frame.entry_settings.show_checkboxes_var.get()
+        if current == 0:
+            self.settings_frame.entry_settings.show_checkboxes_var.set(1)
+        else:
+            self.settings_frame.entry_settings.show_checkboxes_var.set(0)
+        self.settings_frame.entry_settings.show_checkboxes_pressed()
         
 
 

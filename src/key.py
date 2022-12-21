@@ -85,10 +85,16 @@ class Key:
                 if event.keysym.lower() == "w":
                     self.master.destroy()
 
-            # cmd+shift+f to remove any filter
+            # cmd+shift
             if self.keys_pressed["shift"] == True:
+
+                # cmd+shift+f to remove any filter
                 if event.keysym.lower() == "f":
                     self.master.master.top_frame.remove_filter()
+
+                # cmd+shift+h to show/hide checkboxes
+                if event.keysym.lower() == "h":
+                    self.master.master.show_hide_checks()
 
         # endif cmd key pressed
             
