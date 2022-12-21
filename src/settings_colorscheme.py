@@ -164,9 +164,13 @@ class ColorSchemeSettings(tk.Frame):
             bg=self.colors["BG2"]
         )
 
-        self.dcs_var.set(
-            self.master.settings_data["default_color_scheme"]
-        )
+        try:
+            self.dcs_var.set(
+                self.master.settings_data["default_color_scheme"]
+            )
+        except KeyError:
+            pass
+        
         self.dcs_selector["values"] = (
             self.master.master.colors_obj.get_color_schemes()
         )

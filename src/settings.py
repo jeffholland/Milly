@@ -19,12 +19,12 @@ class Settings(tk.Frame):
         self.labels = []
         self.buttons = []
         
-        self.settings_data = None
+        self.settings_data = dict()
         self.color_scheme_settings = None
 
-        self.load_settings()
-
         self.create_widgets()
+
+        self.load_settings()
 
         self.refresh_colors()
 
@@ -171,8 +171,11 @@ class Settings(tk.Frame):
 
         with f:
             self.settings_data = json.load(f)
-            self.master.colors_obj.set_color_scheme(self.settings_data["default_color_scheme"])
-            self.refresh_settings()
+        
+        self.master.colors_obj.set_color_scheme(self.settings_data["default_color_scheme"])
+
+        self.entry_settings.show_checkboxes_var.set(self.settings_data["show_checkboxes"])
+        self.entry_settings.show_checkboxes_pressed()
 
     def back(self):
         self.master.hide_settings()
