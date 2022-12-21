@@ -1,6 +1,8 @@
 import json
 from os import scandir
 
+from tkinter import messagebox
+
 
 class Colors:
     def __init__(self, master):
@@ -27,18 +29,25 @@ class Colors:
 
             scheme_name = ""
 
-            with open("json/settings.json") as f:
-                settings = json.load(f)
-
-                scheme_name = settings["default_color_scheme"]
+            try:
+                with open("json/settings.json") as f:
+                    settings = json.load(f)
+                    scheme_name = settings["default_color_scheme"]
+            except OSError:
+                messagebox.showerror("Settings not found",
+                    "Error: settings.json not found. Please make sure it is saved to the correct path.")
 
         else:
             scheme_name = self.color_schemes[self.color_scheme_index]
 
         filepath = f"json/color_schemes/{scheme_name}.json"
 
-        with open(filepath, 'r') as f:
-            self.colors = json.load(f)
+        try:
+            with open(filepath, 'r') as f:
+                self.colors = json.load(f)
+        except OSError:
+            messagebox.showerror("Default color scheme not found",
+                f"Error: Default color scheme {filepath} not found. \nPlease make sure the default color scheme in settings.json is set to an existing color scheme")
 
 
     def get_colors(self):

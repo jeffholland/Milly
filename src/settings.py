@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 import json
 
@@ -166,7 +167,7 @@ class Settings(tk.Frame):
         try:
             f = open("json/settings.json", "r")
         except OSError:
-            print("Could not open settings.json. Make sure the file exists")
+            messagebox.showerror("Could not open settings.json. Make sure the file exists")
 
         with f:
             self.settings_data = json.load(f)

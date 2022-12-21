@@ -22,8 +22,9 @@ class ColorSchemeSettings(tk.Frame):
         self.create_widgets()
         self.refresh_colors()
 
-    def create_widgets(self):
 
+
+    def create_widgets(self):
         self.title_label = tk.Label(
             self,
             text="Color Scheme",
