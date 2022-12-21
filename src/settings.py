@@ -4,6 +4,7 @@ import json
 
 from constants import *
 from settings_colorscheme import ColorSchemeSettings
+from settings_entry import EntrySettings
 
 class Settings(tk.Frame):
     def __init__(self, master, width, height):
@@ -68,6 +69,21 @@ class Settings(tk.Frame):
             pady=PADDING_BIG,
             columnspan=3
         )
+
+
+        # Entry settings
+
+        self.entry_settings = EntrySettings(self)
+        self.entry_settings.grid_propagate(0)
+        self.entry_settings.grid(
+            row=1, 
+            column=0,
+            padx=PADDING_BIG,
+            pady=PADDING_BIG,
+            columnspan=3
+        )
+
+
 
         # Main buttons
 

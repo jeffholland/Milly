@@ -24,6 +24,18 @@ class ColorSchemeSettings(tk.Frame):
 
     def create_widgets(self):
 
+        self.title_label = tk.Label(
+            self,
+            text="Color Scheme",
+            justify=tk.CENTER
+        )
+        self.title_label.grid(
+            row=0,
+            column=0,
+            columnspan=10
+        )
+        self.labels.append(self.title_label)
+
         # dcs = default color scheme
 
         # label
@@ -32,7 +44,7 @@ class ColorSchemeSettings(tk.Frame):
             text="Default color scheme: "
         )
         self.dcs_label.grid(
-            row=0,
+            row=1,
             column=0,
             padx=PADDING,
             pady=PADDING
@@ -49,7 +61,7 @@ class ColorSchemeSettings(tk.Frame):
             takefocus=0
         )
         self.dcs_selector.grid(
-            row=0,
+            row=1,
             column=1,
             padx=PADDING,
             pady=PADDING,
@@ -68,7 +80,7 @@ class ColorSchemeSettings(tk.Frame):
             command=lambda: self.dcs_switch("left")
         )
         self.dcs_arrow_left.grid(
-            row=0,
+            row=1,
             column=4,
             padx=PADDING,
             pady=PADDING
@@ -83,7 +95,7 @@ class ColorSchemeSettings(tk.Frame):
             command=lambda: self.dcs_switch("right")
         )
         self.dcs_arrow_right.grid(
-            row=0,
+            row=1,
             column=5,
             padx=PADDING,
             pady=PADDING
@@ -98,7 +110,7 @@ class ColorSchemeSettings(tk.Frame):
             text="New color scheme:"
         )
         self.ncs_label.grid(
-            row=1,
+            row=2,
             column=0,
             padx=PADDING,
             pady=PADDING
@@ -114,7 +126,7 @@ class ColorSchemeSettings(tk.Frame):
                 )
             )
             self.ncs_entries[i].grid(
-                row=1,
+                row=2,
                 column=1+i,
                 padx=PADDING,
                 pady=PADDING
@@ -125,7 +137,7 @@ class ColorSchemeSettings(tk.Frame):
             text="Name:"
         )
         self.ncs_name_label.grid(
-            row=1, 
+            row=2, 
             column=5,
             padx=PADDING,
             pady=PADDING
@@ -137,7 +149,7 @@ class ColorSchemeSettings(tk.Frame):
             width=10
         )
         self.ncs_name_entry.grid(
-            row=1, 
+            row=2, 
             column=6,
             padx=PADDING,
             pady=PADDING
