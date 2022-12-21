@@ -69,7 +69,11 @@ class EntrySettings(tk.Frame):
             )
 
     def show_checkboxes_pressed(self):
-        if (self.show_checkboxes_var.get() == 1):
+        v = self.show_checkboxes_var.get()
+
+        self.master.settings_data["show_checkboxes"] = v
+
+        if (v == 1):
             self.master.master.top_frame.show_checkboxes = True
             self.master.master.top_frame.refresh_entries()
         else:
