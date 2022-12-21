@@ -283,6 +283,10 @@ class Entry(tk.Frame):
     def refresh_colors(self):
         self.colors = self.master.master.master.master.colors_obj.get_colors()
 
+        main_fg = self.colors["HL2"]
+        if self.checked_bool:
+            main_fg = self.colors["HL1"]
+
         self.configure(
             bg=self.colors["BG1"]
         )
@@ -295,7 +299,7 @@ class Entry(tk.Frame):
         for label in self.labels:
             label.configure(
                 bg=self.colors["BG1"], 
-                fg=self.colors["HL2"]
+                fg=main_fg
             )
 
         for button in self.buttons:
@@ -305,12 +309,12 @@ class Entry(tk.Frame):
             if PLATFORM == "Windows":
                 button.configure(
                     bg=self.colors["BG2"],
-                    fg=self.colors["HL2"]
+                    fg=main_fg
                 )
 
         self.edit_box.configure(
             bg=self.colors["BG1"],
-            fg=self.colors["HL2"]
+            fg=main_fg
         )
 
 
