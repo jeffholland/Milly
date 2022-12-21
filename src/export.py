@@ -1,6 +1,9 @@
 import tkinter as tk
 
 import csv
+from math import floor
+
+from fpdf import FPDF
 
 from constants import *
 
@@ -64,6 +67,15 @@ class ExportWindow(tk.Frame):
         self.pdf_button.grid(row=2, column=0)
         self.buttons.append(self.pdf_button)
 
+        self.colors_var = tk.IntVar()
+        self.colors_button = tk.Checkbutton(
+            self.window,
+            text="show colors",
+            variable=self.colors_var
+        )
+        self.colors_button.grid(row=2, column=1)
+        self.buttons.append(self.colors_button)
+
         for button in self.buttons:
             button.grid_configure(
                 padx=PADDING,
@@ -110,7 +122,8 @@ class ExportWindow(tk.Frame):
 
 
     def export(self):
-        filename = self.filename_var.get()
+        # Save everything to export folder
+        filename = "export/" + self.filename_var.get()
 
         if self.csv_var.get() == 1:
             self.export_csv(filename)
@@ -126,7 +139,7 @@ class ExportWindow(tk.Frame):
 
     def export_csv(self, filename):
 
-        filename = "export/" + filename + ".csv"
+        filename = filename + ".csv"
 
         with open(filename, "w") as csvfile:
             writer = csv.writer(csvfile, delimiter=",")
@@ -134,7 +147,26 @@ class ExportWindow(tk.Frame):
                 writer.writerow([entry.text])
 
     def export_txt(self, filename):
-        print("export txt")
+
+        filename = filename + ".txt"
+
+        with open(filename, "w") as txtfile:
+            for entry in self.master.entries:
+                txtfile.write(entry.text)
 
     def export_pdf(self, filename):
-        print("export pdf")
+        filename = filename + ".pdf"
+
+        pdf = FPDF()
+        pdf.add_page()
+        pdf.set_font(ENTRY_FONT_FAMILY, size=ENTRY_FONT_SIZE)
+        
+        for count in range(len(self.master.entries)):
+            pdf.multi_cell(
+                w=160,
+                h=floor(self.master.entries[count].height / 4),
+                txt=self.master.entries[count].text.strip(),
+                border=1
+            )
+
+        pdf.output(filename)
