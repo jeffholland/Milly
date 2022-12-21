@@ -7,7 +7,7 @@ from constants import *
 class ExportWindow(tk.Frame):
     def __init__(self, master):
 
-        self.width = 280
+        self.width = 300
         self.height = 100
 
         tk.Frame.__init__(

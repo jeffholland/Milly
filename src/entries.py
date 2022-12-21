@@ -189,3 +189,4 @@ class Entries(tk.Frame):
 
     def export(self):
         self.export_window.window.deiconify()
+        self.export_window.filename_entry.focus_set()

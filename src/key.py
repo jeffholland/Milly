@@ -96,6 +96,10 @@ class Key:
                 if event.keysym.lower() == "h":
                     self.master.master.show_hide_checks()
 
+                # cmd+shift+x to bring up the export window
+                if event.keysym.lower() == "x":
+                    self.master.export()
+
         # endif cmd key pressed
             
         # Edit selection mode
