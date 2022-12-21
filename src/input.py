@@ -146,6 +146,14 @@ class Input(tk.Frame):
         self.find_button.grid(row=1, column=2)
         self.buttons.append(self.find_button)
 
+        self.export_button = tk.Button(
+            self,
+            text="Export",
+            command=self.export
+        )
+        self.export_button.grid(row=2, column=2)
+        self.buttons.append(self.export_button)
+
 
         # Configure all buttons
 
@@ -158,7 +166,8 @@ class Input(tk.Frame):
         
         self.find_window = FindWindow(self)
         self.find_window.window.withdraw()
-        # self.input.focus_set()
+
+
 
     def refresh_colors(self):
         self.colors = self.master.colors_obj.get_colors()
@@ -182,6 +191,10 @@ class Input(tk.Frame):
 
         if (self.input_path):
             self.input_path.refresh_colors()
+
+
+
+    # Button and key shortcut handlers
 
     def destroy(self, event=None):
         if change_detected():
@@ -234,3 +247,6 @@ class Input(tk.Frame):
     def show_find_window(self):
         self.find_window.window.deiconify()
         self.find_window.entry.focus_set()
+
+    def export(self):
+        self.master.top_frame.export()

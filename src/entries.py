@@ -3,6 +3,7 @@ import tkinter as tk
 from constants import *
 from data import get_entries
 from entry import Entry
+from export import ExportWindow
 
 class Entries(tk.Frame):
     def __init__(self, width, height, master=None):
@@ -22,6 +23,41 @@ class Entries(tk.Frame):
         self.create_widgets()
 
         self.refresh_colors()
+
+
+
+    def refresh_entries(self):
+        self.entries_data = get_entries()
+
+        for entry in self.entries:
+            entry.grid_forget()
+
+        self.entries.clear()
+
+        for count in range(len(self.entries_data)):
+            try:
+                checked_bool = self.entries_data[count]["checked"]
+            except KeyError:
+                checked_bool = False
+
+            self.entries.append(Entry(
+                date=self.entries_data[count]["date"],
+                time=self.entries_data[count]["time"],
+                text=self.entries_data[count]["text"],
+                width=self.entry_width,
+                height=ENTRY_HEIGHT,
+                master=self.container,
+                index=count,
+                checkbox=self.show_checkboxes,
+                checked=checked_bool
+            ))
+            self.entries[count].grid_propagate(0)
+            self.entries[count].grid(
+                row=count, 
+                column=0,
+                padx=PADDING, 
+                pady=PADDING
+            )
 
 
 
@@ -72,6 +108,14 @@ class Entries(tk.Frame):
         
         self.refresh_entries()
 
+
+        # Export window
+
+        self.export_window = ExportWindow(self)
+        self.export_window.window.withdraw()
+
+
+
     def refresh_colors(self):
         self.colors = self.master.colors_obj.get_colors()
 
@@ -88,40 +132,6 @@ class Entries(tk.Frame):
 
         self.container.configure(bg=self.colors["HL1"])
 
-
-
-    def refresh_entries(self):
-        self.entries_data = get_entries()
-
-        for entry in self.entries:
-            entry.grid_forget()
-
-        self.entries.clear()
-
-        for count in range(len(self.entries_data)):
-            try:
-                checked_bool = self.entries_data[count]["checked"]
-            except KeyError:
-                checked_bool = False
-
-            self.entries.append(Entry(
-                date=self.entries_data[count]["date"],
-                time=self.entries_data[count]["time"],
-                text=self.entries_data[count]["text"],
-                width=self.entry_width,
-                height=ENTRY_HEIGHT,
-                master=self.container,
-                index=count,
-                checkbox=self.show_checkboxes,
-                checked=checked_bool
-            ))
-            self.entries[count].grid_propagate(0)
-            self.entries[count].grid(
-                row=count, 
-                column=0,
-                padx=PADDING, 
-                pady=PADDING
-            )
 
 
     def filter_entries(self, filter, case_sensitive=False):
@@ -175,3 +185,7 @@ class Entries(tk.Frame):
             width=self.width - 25,
             height=self.height
         )
+
+
+    def export(self):
+        self.export_window.window.deiconify()
