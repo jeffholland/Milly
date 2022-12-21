@@ -89,9 +89,11 @@ class Entry(tk.Frame):
             self.checkbox_var = tk.IntVar()
             self.checkbox = tk.Checkbutton(
                 self,
-                width=1,
+                width=2,
                 height=1,
-                variable=self.checkbox_var
+                anchor=tk.NW,
+                variable=self.checkbox_var,
+                command=self.checkbox_pressed
             )
             self.checkbox.grid(
                 row=1, 
@@ -279,6 +281,11 @@ class Entry(tk.Frame):
             bg=self.colors["BG1"]
         )
 
+        self.checkbox.configure(
+            bg=self.colors["BG1"],
+            highlightbackground=self.colors["BG1"]
+        )
+
         for label in self.labels:
             label.configure(
                 bg=self.colors["BG1"], 
@@ -299,37 +306,6 @@ class Entry(tk.Frame):
             bg=self.colors["BG1"],
             fg=self.colors["HL2"]
         )
-
-
-    # Button handlers
-
-    def x_pressed(self):
-        remove_entry(self.index)
-        self.master.master.master.refresh_entries()
-
-    def up_pressed(self):
-        if self.index > 0:
-            swap_entry(self.index - 1, self.index)
-            self.master.master.master.refresh_entries()
-
-    def down_pressed(self):
-        if self.index < get_num_entries() - 1:
-            swap_entry(self.index, self.index + 1)
-            self.master.master.master.refresh_entries()
-
-    def copy_pressed(self):
-        self.clipboard_clear()
-        self.clipboard_append(self.text)
-
-    def top_pressed(self):
-        if self.index > 0:
-            move_entry(self.index, 0)
-            self.master.master.master.refresh_entries()
-
-    def bottom_pressed(self):
-        if self.index < get_num_entries() - 1:
-            move_entry(self.index, get_num_entries() - 1)
-            self.master.master.master.refresh_entries()
 
 
     # Edit mode button pressed
@@ -440,3 +416,42 @@ class Entry(tk.Frame):
                     highlightbackground=self.colors["BG1"]
                 )
             self.update_idletasks()
+
+
+    # Other button handlers
+
+    def x_pressed(self):
+        remove_entry(self.index)
+        self.master.master.master.refresh_entries()
+
+    def up_pressed(self):
+        if self.index > 0:
+            swap_entry(self.index - 1, self.index)
+            self.master.master.master.refresh_entries()
+
+    def down_pressed(self):
+        if self.index < get_num_entries() - 1:
+            swap_entry(self.index, self.index + 1)
+            self.master.master.master.refresh_entries()
+
+    def copy_pressed(self):
+        self.clipboard_clear()
+        self.clipboard_append(self.text)
+
+    def top_pressed(self):
+        if self.index > 0:
+            move_entry(self.index, 0)
+            self.master.master.master.refresh_entries()
+
+    def bottom_pressed(self):
+        if self.index < get_num_entries() - 1:
+            move_entry(self.index, get_num_entries() - 1)
+            self.master.master.master.refresh_entries()
+
+    def checkbox_pressed(self):
+        # Move entries to bottom when checked off
+        if self.checkbox_var.get() == 1:
+            self.bottom_pressed()
+        # Move back to top when unchecked
+        else:
+            self.top_pressed()
