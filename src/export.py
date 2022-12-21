@@ -8,7 +8,7 @@ class ExportWindow(tk.Frame):
     def __init__(self, master):
 
         self.width = 300
-        self.height = 100
+        self.height = 200
 
         tk.Frame.__init__(
             self,
@@ -26,9 +26,16 @@ class ExportWindow(tk.Frame):
 
 
     def create_widgets(self):
+
+        # toplevel window
+
         self.window = tk.Toplevel(self)
         self.window.geometry(f"{self.width}x{self.height}")
         self.window.overrideredirect(True)
+
+
+
+        # checkbuttons
 
         self.csv_var = tk.IntVar()
         self.csv_button = tk.Checkbutton(
@@ -36,13 +43,36 @@ class ExportWindow(tk.Frame):
             text="csv",
             variable=self.csv_var
         )
-        self.csv_button.grid(
-            row=0,
-            column=0,
-            padx=PADDING,
-            pady=PADDING
-        )
+        self.csv_button.grid(row=0, column=0)
         self.buttons.append(self.csv_button)
+
+        self.txt_var = tk.IntVar()
+        self.txt_button = tk.Checkbutton(
+            self.window,
+            text="txt",
+            variable=self.txt_var
+        )
+        self.txt_button.grid(row=1, column=0)
+        self.buttons.append(self.txt_button)
+
+        self.pdf_var = tk.IntVar()
+        self.pdf_button = tk.Checkbutton(
+            self.window,
+            text="pdf",
+            variable=self.pdf_var
+        )
+        self.pdf_button.grid(row=2, column=0)
+        self.buttons.append(self.pdf_button)
+
+        for button in self.buttons:
+            button.grid_configure(
+                padx=PADDING,
+                pady=PADDING
+            )
+
+
+
+        # filename entry
 
         self.filename_var = tk.StringVar()
         self.filename_entry = tk.Entry(
@@ -85,6 +115,12 @@ class ExportWindow(tk.Frame):
         if self.csv_var.get() == 1:
             self.export_csv(filename)
 
+        if self.txt_var.get() == 1:
+            self.export_txt(filename)
+
+        if self.pdf_var.get() == 1:
+            self.export_pdf(filename)
+
         self.window.withdraw()
 
 
@@ -96,3 +132,9 @@ class ExportWindow(tk.Frame):
             writer = csv.writer(csvfile, delimiter=",")
             for entry in self.master.entries:
                 writer.writerow([entry.text])
+
+    def export_txt(self, filename):
+        print("export txt")
+
+    def export_pdf(self, filename):
+        print("export pdf")
