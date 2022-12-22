@@ -194,14 +194,12 @@ class ColorSchemeSettings(tk.Frame):
             self.master.master.colors_obj.get_color_schemes()
         )
         self.dcs_selector_style = ttk.Style()
-        self.dcs_selector_style.theme_use("clam")
+        self.dcs_selector_style.theme_use("alt")
         self.dcs_selector_style.configure(
             "TCombobox",
             fieldbackground=self.colors["BG2"],
-            foreground=self.colors["BG1"],
-            background=self.colors["HL1"],
-            selectbackground=self.colors["BG1"],
-            selectforeground=self.colors["HL2"]
+            background=self.colors["BG1"],
+            foreground=self.colors["BG2"]
         )
 
         for button in self.buttons:
