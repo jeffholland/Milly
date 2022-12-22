@@ -6,8 +6,8 @@ from data import *
 class Stats(tk.Frame):
     def __init__(self, master):
 
-        self.width = 150
-        self.height = 180
+        self.width = 180
+        self.height = 240
 
         tk.Frame.__init__(
             self,
@@ -90,6 +90,26 @@ class Stats(tk.Frame):
         self.num_chars_label.grid(row=2, column=1)
         self.labels.append(self.num_chars_label)
 
+
+        # Number of color schemes
+
+        self.label4 = tk.Label(
+            self.window,
+            text="Color schemes: "
+        )
+        self.label4.grid(row=3, column=0)
+        self.labels.append(self.label4)
+
+        self.num_schemes_var = tk.StringVar()
+        self.num_schemes_var.set(0)
+
+        self.num_schemes_label = tk.Label(
+            self.window,
+            textvariable=self.num_schemes_var
+        )
+        self.num_schemes_label.grid(row=3, column=1)
+        self.labels.append(self.num_schemes_label)
+
         
         # OK button
 
@@ -112,6 +132,10 @@ class Stats(tk.Frame):
 
 
     def refresh_colors(self, colors):
+        # Set num_schemes here
+        self.num_schemes_var.set(
+            len(self.master.master.colors_obj.get_color_schemes()))
+
         self.colors = colors
 
         self.window.configure(
