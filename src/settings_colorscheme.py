@@ -110,7 +110,7 @@ class ColorSchemeSettings(tk.Frame):
         # show color scheme button
         self.show_color_scheme_button = tk.Button(
             self,
-            text="Show color schemes",
+            text="Show all",
             command=self.show_color_schemes
         )
         self.show_color_scheme_button.grid(row=1, column=6)

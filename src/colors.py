@@ -59,6 +59,15 @@ class Colors:
         return self.color_schemes
 
 
+    def get_color_scheme(self, scheme_name):
+        try:
+            with open(f"json/color_schemes/{scheme_name}.json") as f:
+                return json.load(f)
+        except OSError:
+            messagebox.showerror("Bad color scheme name",
+                f"Error: Could not find color scheme \"{scheme_name}\"")
+
+
     def get_current_color_scheme(self):
         return self.color_schemes[self.color_scheme_index]
 

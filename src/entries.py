@@ -12,6 +12,7 @@ class Entries(tk.Frame):
             master, 
             width=width, 
             height=height)
+
         self.width = width
         self.height = height
         self.canvas_object_ids = []
@@ -120,6 +121,14 @@ class Entries(tk.Frame):
         self.export_window.window.withdraw()
 
 
+    def scroll_config(self, event=None):
+        self.canvas.configure(
+            scrollregion=self.canvas.bbox("all"),
+            width=self.width - 25,
+            height=self.height
+        )
+
+
 
     def refresh_colors(self, colors):
         self.colors = colors
@@ -184,14 +193,6 @@ class Entries(tk.Frame):
             entry.grid_forget()
 
         self.refresh_entries()
-
-
-    def scroll_config(self, event=None):
-        self.canvas.configure(
-            scrollregion=self.canvas.bbox("all"),
-            width=self.width - 25,
-            height=self.height
-        )
 
 
     def export(self):
