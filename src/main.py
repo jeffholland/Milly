@@ -91,6 +91,7 @@ class Application(tk.Frame):
 
     def refresh_entries(self):
         self.top_frame.refresh_entries()
+        self.bottom_frame.stats.refresh_stats()
 
 
 

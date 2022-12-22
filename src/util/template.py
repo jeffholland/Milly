@@ -16,6 +16,9 @@ class Template(tk.Frame):
         )
         self.master = master
 
+        self.labels = []
+        self.buttons = []
+
         self.create_widgets()
         self.refresh_colors()
 
@@ -23,6 +26,7 @@ class Template(tk.Frame):
         self.window = tk.Toplevel(self)
         self.window.geometry(f"{self.width}x{self.height}")
         self.window.title("Template")
+        self.window.overrideredirect(True)
 
     def refresh_colors(self, colors):
         self.colors = colors
