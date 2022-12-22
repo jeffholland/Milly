@@ -2,11 +2,11 @@ import tkinter as tk
 
 from constants import *
 
-class Template(tk.Frame):
+class Stats(tk.Frame):
     def __init__(self, master):
 
         self.width = 200
-        self.height = 100
+        self.height = 400
 
         tk.Frame.__init__(
             self,
@@ -17,10 +17,10 @@ class Template(tk.Frame):
         self.master = master
 
         self.create_widgets()
-        self.refresh_colors()
 
     def create_widgets(self):
-        pass
+        self.window = tk.Toplevel(self)
+        self.window.geometry(f"{self.width}x{self.height}")
 
     def refresh_colors(self, colors):
         self.colors = colors

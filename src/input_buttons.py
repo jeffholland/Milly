@@ -1,8 +1,6 @@
 import tkinter as tk
 
-from constants import *
-
-class Template(tk.Frame):
+class InputButtons(tk.Frame):
     def __init__(self, master):
 
         self.width = 200
@@ -17,7 +15,6 @@ class Template(tk.Frame):
         self.master = master
 
         self.create_widgets()
-        self.refresh_colors()
 
     def create_widgets(self):
         pass
