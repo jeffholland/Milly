@@ -7,6 +7,7 @@ from constants import *
 from data import *
 from find import FindWindow
 from key import Key
+from input_buttons import InputButtons
 from input_path import InputPath
 from insert_prompt import InsertPrompt
 from save_prompt import SavePrompt
@@ -39,8 +40,7 @@ class Input(tk.Frame):
             size=INPUT_FONT_SIZE
         )
 
-        # Button array to efficiently configure all buttons
-        self.buttons = []
+        # Number of buttons high the InputButtons frame is
         self.num_buttons = 5
 
         # Input path set to None by default
@@ -83,83 +83,8 @@ class Input(tk.Frame):
         self.input.bind('<KeyPress>', self.key.key_press)
         self.input.bind('<KeyRelease>', self.key.key_release)
 
-
-
-        # Buttons
-
-        self.submit_button = tk.Button(
-            self, 
-            text="Submit", 
-            command=self.submit
-        )
-        self.submit_button.grid(row=0, column=1)
-        self.buttons.append(self.submit_button)
-
-        self.insert_button = tk.Button(
-            self,
-            text="Insert",
-            command=self.insert
-        )
-        self.insert_button.grid(row=1, column=1)
-        self.buttons.append(self.insert_button)
-
-        self.save_button = tk.Button(
-            self, 
-            text="Save", 
-            command=self.save
-        )
-        self.save_button.grid(row=2, column=1)
-        self.buttons.append(self.save_button)
-
-        self.load_button = tk.Button(
-            self,
-            text="Load",
-            command=self.load
-        )
-        self.load_button.grid(row=3, column=1)
-        self.buttons.append(self.load_button)
-
-        self.clear_button = tk.Button(
-            self,
-            text="Clear",
-            command=self.clear
-        )
-        self.clear_button.grid(row=4, column=1)
-        self.buttons.append(self.clear_button)
-
-        self.settings_button = tk.Button(
-            self,
-            text="Settings",
-            command=self.master.show_settings
-        )
-        self.settings_button.grid(row=0, column=2)
-        self.buttons.append(self.settings_button)
-
-        self.find_button = tk.Button(
-            self,
-            text="Find",
-            command=self.show_find_window
-        )
-        self.find_button.grid(row=1, column=2)
-        self.buttons.append(self.find_button)
-
-        self.export_button = tk.Button(
-            self,
-            text="Export",
-            command=self.export
-        )
-        self.export_button.grid(row=2, column=2)
-        self.buttons.append(self.export_button)
-
-
-        # Configure all buttons
-
-        for button in self.buttons:
-            if PLATFORM == "Windows":
-                button.configure(width=6)
-            else:
-                button.configure(width=3)
-            button.grid_configure(padx=PADDING)
+        self.input_buttons = InputButtons(self)
+        self.input_buttons.grid(row=0, column=1)
         
         self.find_window = FindWindow(self)
         self.find_window.window.withdraw()
@@ -176,15 +101,7 @@ class Input(tk.Frame):
             highlightcolor=self.colors["HL1"]
         )
 
-        for button in self.buttons:
-            button.configure(
-                highlightbackground=self.colors["BG2"]
-            )
-            if PLATFORM == "Windows":
-                button.configure(
-                    bg=self.colors["BG1"],
-                    fg=self.colors["HL2"]
-                )
+        self.input_buttons.refresh_colors(colors)
 
         if self.input_path:
             self.input_path.refresh_colors(colors)
