@@ -22,9 +22,10 @@ class Settings(tk.Frame):
         self.settings_data = dict()
         self.color_scheme_settings = None
 
-        self.create_widgets()
-
+        # Load data from settings.json into self.settings_data
         self.load_settings()
+
+        self.create_widgets()
 
         self.refresh_colors()
 
@@ -32,30 +33,18 @@ class Settings(tk.Frame):
         self.bind_all("<KeyPress>", self.key_pressed)
         self.bind_all("<KeyRelease>", self.key_released)
 
-    def key_pressed(self, event):
-        if PLATFORM == "Windows":
-            if "Control" in event.keysym:
-                self.cmd_pressed = True
-        else:
-            if "Meta" in event.keysym:
-                self.cmd_pressed = True
 
-        if event.keysym == "Escape":
-            self.back()
 
-        if self.cmd_pressed:
-            if event.keysym.lower() == "s":
-                self.save_settings()
-            if event.keysym.lower() == "l":
-                self.load_settings()
+    def load_settings(self):
+        try:
+            f = open("json/settings.json", "r")
+        except OSError:
+            messagebox.showerror("Could not open settings.json. Make sure the file exists")
 
-    def key_released(self, event):
-        if PLATFORM == "Windows":
-            if "Control" in event.keysym:
-                self.cmd_pressed = False
-        else:
-            if "Meta" in event.keysym:
-                self.cmd_pressed = False
+        with f:
+            self.settings_data = json.load(f)
+
+
 
     def create_widgets(self):
 
@@ -83,7 +72,6 @@ class Settings(tk.Frame):
             pady=PADDING_BIG,
             columnspan=3
         )
-
 
 
         # Main buttons
@@ -121,6 +109,8 @@ class Settings(tk.Frame):
         )
         self.buttons.append(self.back_button)
 
+
+
     def refresh_colors(self):
         self.colors = self.master.colors_obj.get_colors()
 
@@ -146,11 +136,17 @@ class Settings(tk.Frame):
                     bg=self.colors["BG2"],
                     fg=self.colors["HL2"]
                 )
+        
 
-    def refresh_settings(self):           
-        self.refresh_colors()
 
-    # Handlers
+    def apply_settings(self):
+
+        self.master.colors_obj.set_color_scheme(self.settings_data["default_color_scheme"])
+
+        self.entry_settings.show_checkboxes_var.set(self.settings_data["show_checkboxes"])
+        self.entry_settings.show_checkboxes_pressed()
+
+
 
     def save_settings(self):
 
@@ -162,20 +158,37 @@ class Settings(tk.Frame):
             json.dump(self.settings_data, f)
 
         self.load_settings()
+        self.apply_settings()
 
-    def load_settings(self):
-        try:
-            f = open("json/settings.json", "r")
-        except OSError:
-            messagebox.showerror("Could not open settings.json. Make sure the file exists")
 
-        with f:
-            self.settings_data = json.load(f)
-        
-        self.master.colors_obj.set_color_scheme(self.settings_data["default_color_scheme"])
 
-        self.entry_settings.show_checkboxes_var.set(self.settings_data["show_checkboxes"])
-        self.entry_settings.show_checkboxes_pressed()
+    def key_pressed(self, event):
+        if PLATFORM == "Windows":
+            if "Control" in event.keysym:
+                self.cmd_pressed = True
+        else:
+            if "Meta" in event.keysym:
+                self.cmd_pressed = True
+
+        if event.keysym == "Escape":
+            self.back()
+
+        if self.cmd_pressed:
+            if event.keysym.lower() == "s":
+                self.save_settings()
+            if event.keysym.lower() == "l":
+                self.load_settings()
+                self.apply_settings()
+
+    def key_released(self, event):
+        if PLATFORM == "Windows":
+            if "Control" in event.keysym:
+                self.cmd_pressed = False
+        else:
+            if "Meta" in event.keysym:
+                self.cmd_pressed = False
+
+
 
     def back(self):
         self.master.hide_settings()

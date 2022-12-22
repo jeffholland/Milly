@@ -6,9 +6,13 @@ from entries import Entries
 from input import Input
 from settings import Settings
 
+
+
 class Application(tk.Frame):
     def __init__(self, master=None):
+
         tk.Frame.__init__(self, master)
+        
         self.grid(row=0, column=0)
 
         if MODE == "fullscreen":
@@ -23,7 +27,19 @@ class Application(tk.Frame):
         self.create_widgets()
         self.refresh_colors()
 
+
+
     def create_widgets(self):
+
+        # Settings initialized first
+
+        self.settings = Settings(
+            self, 
+            width=self.width, 
+            height=self.height
+        )
+        self.settings.grid_propagate(0)
+
         # Top frame is where entries are shown
 
         self.top_frame_height = (self.height // 3) * 2
@@ -44,8 +60,6 @@ class Application(tk.Frame):
         if PLATFORM == "Windows":
             self.bottom_frame_height -= self.windows_offset
 
-
-
         # Bottom frame is where entries are input
 
         self.bottom_frame = Input(
@@ -57,39 +71,37 @@ class Application(tk.Frame):
 
         self.bottom_frame.grid(row=1, column=0)
 
+        # Settings applied after all other widgets created
+        self.settings.apply_settings()
 
 
-        # Only shows when Settings is shown with cmd+comma
-
-        self.settings_frame = Settings(
-            self, 
-            width=self.width, 
-            height=self.height
-        )
-        self.settings_frame.grid_propagate(0)
-
-    def refresh_entries(self):
-        self.top_frame.refresh_entries()
 
     def refresh_colors(self):
         self.colors = self.colors_obj.get_colors()
 
         self.top_frame.configure(bg=self.colors["HL1"])
         self.bottom_frame.configure(bg=self.colors["BG2"])
-        self.settings_frame.configure(bg=self.colors["BG1"])
+        self.settings.configure(bg=self.colors["BG1"])
 
         self.top_frame.refresh_colors()
         self.bottom_frame.refresh_colors()
-        self.settings_frame.refresh_colors()
+        self.settings.refresh_colors()
+
+
+
+    def refresh_entries(self):
+        self.top_frame.refresh_entries()
+
+
 
     def show_settings(self):
         self.top_frame.grid_remove()
         self.bottom_frame.grid_remove()
 
-        self.settings_frame.grid(row=0, column=0)
+        self.settings.grid(row=0, column=0)
 
     def hide_settings(self):
-        self.settings_frame.grid_remove()
+        self.settings.grid_remove()
 
         self.top_frame.grid()
         self.bottom_frame.grid()
@@ -98,12 +110,12 @@ class Application(tk.Frame):
         self.refresh_colors()
 
     def show_hide_checks(self):
-        current = self.settings_frame.entry_settings.show_checkboxes_var.get()
+        current = self.settings.entry_settings.show_checkboxes_var.get()
         if current == 0:
-            self.settings_frame.entry_settings.show_checkboxes_var.set(1)
+            self.settings.entry_settings.show_checkboxes_var.set(1)
         else:
-            self.settings_frame.entry_settings.show_checkboxes_var.set(0)
-        self.settings_frame.entry_settings.show_checkboxes_pressed()
+            self.settings.entry_settings.show_checkboxes_var.set(0)
+        self.settings.entry_settings.show_checkboxes_pressed()
         
 
 
