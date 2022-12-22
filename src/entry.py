@@ -5,6 +5,7 @@ from math import floor
 
 from constants import *
 from data import *
+# from entry_menu import EntryMenu
 
 class Entry(tk.Frame):
     def __init__(self, date, time, text, width, height, index, 
@@ -106,7 +107,8 @@ class Entry(tk.Frame):
             )
             column_var = 1
 
-        # Labels
+
+        # Entry menu - contains all the labels and buttons at the top.
 
         self.date_label = tk.Label(
             self, 
@@ -118,6 +120,7 @@ class Entry(tk.Frame):
             column=0
         )
         self.labels.append(self.date_label)
+
         if self.check_bool:
             self.date_label.grid_configure(
                 columnspan=2
@@ -133,32 +136,6 @@ class Entry(tk.Frame):
             column=2
         )
         self.labels.append(self.time_label)
-
-        self.text_label_var = tk.StringVar(self)
-
-        if self.check_bool:
-            self.text_label_wrap_length = self.width - 80
-        else:
-            self.text_label_wrap_length = self.width - 40
-
-        self.text_label = tk.Label(
-            self, 
-            font=self.font,
-            wraplength=self.text_label_wrap_length,
-            anchor=tk.NW,
-            justify=tk.LEFT,
-            width=200,
-            textvariable=self.text_label_var
-        )
-        self.text_label_var.set(self.text)
-        self.text_label.grid(
-            row=1, 
-            column=column_var, 
-            padx=PADDING,
-            pady=PADDING,
-            columnspan=200
-        )
-        self.labels.append(self.text_label)
 
 
         # Buttons
@@ -256,17 +233,7 @@ class Entry(tk.Frame):
         if PLATFORM == "Windows":
             self.x_button.configure(width=1)
 
-
-
-        # Widgets that only show when "edit" button pressed
-
-        self.edit_box = tk.Text(
-            self,
-            width=100,
-            height=(self.height // 30)
-        )
-        if PLATFORM == "Windows":
-            self.edit_box.configure(width=90)
+        # only shows in edit mode
 
         self.save_button = tk.Button(
             self,
@@ -277,6 +244,46 @@ class Entry(tk.Frame):
         self.buttons.append(self.save_button)
 
 
+        # Text label - shows the actual text of the Entry
+
+        self.text_label_var = tk.StringVar(self)
+
+        if self.check_bool:
+            self.text_label_wrap_length = self.width - 80
+        else:
+            self.text_label_wrap_length = self.width - 40
+
+        self.text_label = tk.Label(
+            self, 
+            font=self.font,
+            wraplength=self.text_label_wrap_length,
+            anchor=tk.NW,
+            justify=tk.LEFT,
+            width=200,
+            textvariable=self.text_label_var
+        )
+        self.text_label_var.set(self.text)
+        self.text_label.grid(
+            row=1, 
+            column=column_var, 
+            padx=PADDING,
+            pady=PADDING,
+            columnspan=200
+        )
+        self.labels.append(self.text_label)
+
+
+        # Edit box - only shows in edit mode
+
+        self.edit_box = tk.Text(
+            self,
+            width=100,
+            height=(self.height // 30)
+        )
+        if PLATFORM == "Windows":
+            self.edit_box.configure(width=90)
+
+
 
     def refresh_colors(self, colors):
         self.colors = colors
@@ -284,16 +291,6 @@ class Entry(tk.Frame):
         main_fg = self.colors["HL2"]
         if self.checked_bool:
             main_fg = self.colors["HL1"]
-
-        self.configure(
-            bg=self.colors["BG1"]
-        )
-        
-        if self.checkbox:
-            self.checkbox.configure(
-                bg=self.colors["BG1"],
-                highlightbackground=self.colors["BG1"]
-            )
 
         for label in self.labels:
             label.configure(
@@ -311,6 +308,16 @@ class Entry(tk.Frame):
                     fg=main_fg
                 )
 
+        self.configure(
+            bg=self.colors["BG1"]
+        )
+        
+        if self.checkbox:
+            self.checkbox.configure(
+                bg=self.colors["BG1"],
+                highlightbackground=self.colors["BG1"]
+            )
+
         self.edit_box.configure(
             bg=self.colors["BG1"],
             fg=main_fg
@@ -320,9 +327,17 @@ class Entry(tk.Frame):
     # Edit mode button pressed
 
     def edit_pressed(self):
-        self.text_label.grid_remove()
+        # self.entry_menu.edit_pressed()
+        
         for button in self.buttons:
             button.grid_remove()
+
+        self.save_button.grid(
+            row=0,
+            column=3
+        )
+
+        self.text_label.grid_remove()
 
         self.edit_box.grid(
             row=1, 
@@ -338,11 +353,6 @@ class Entry(tk.Frame):
 
         self.edit_box.bind("<KeyPress>", self.edit_box_key_pressed)
         self.edit_box.bind("<KeyRelease>", self.edit_box_key_released)
-
-        self.save_button.grid(
-            row=0,
-            column=3
-        )
 
     # Edit mode save button handler
 
@@ -362,20 +372,20 @@ class Entry(tk.Frame):
 
         # Remove edit box and save button
         self.edit_box.grid_remove()
-        self.save_button.grid_remove()
 
         # Re-grid the usual Entry widgets
         self.text_label.grid()
 
-        if self.check_bool:
-            self.checkbox.grid()
-
+        self.save_button.grid_remove()
         for button in self.buttons:
             # Don't re-grid the save button
             if button.cget("text") == "save":
                 continue
 
             button.grid()
+
+        if self.check_bool:
+            self.checkbox.grid()
 
         self.master.master.master.master.bottom_frame.input.focus_set()
 
@@ -404,6 +414,15 @@ class Entry(tk.Frame):
     # Edit selection mode - from pressing cmd+e
 
     def edit_selected(self, selected):
+        if selected:
+            self.set_selected(True)
+        else:
+            self.set_selected(False)
+
+
+
+    def set_selected(self, selected):
+
         if selected:
             if PLATFORM == "Windows":
                 self.edit_button.configure(
