@@ -7,6 +7,8 @@ from constants import *
 from settings_colorscheme import ColorSchemeSettings
 from settings_entry import EntrySettings
 
+
+
 class Settings(tk.Frame):
     def __init__(self, master, width, height):
         tk.Frame.__init__(
@@ -32,6 +34,8 @@ class Settings(tk.Frame):
         self.cmd_pressed = False
         self.bind_all("<KeyPress>", self.key_pressed)
         self.bind_all("<KeyRelease>", self.key_released)
+
+        # apply_settings called in main loop after all widgets initialized
 
 
 
@@ -114,9 +118,9 @@ class Settings(tk.Frame):
     def refresh_colors(self):
         self.colors = self.master.colors_obj.get_colors()
 
-        if self.color_scheme_settings:
-            self.color_scheme_settings.refresh_colors()
-        
+        self.color_scheme_settings.refresh_colors()
+        self.entry_settings.refresh_colors()
+
         self.configure(
             bg=self.colors["BG1"]
         )
@@ -145,6 +149,8 @@ class Settings(tk.Frame):
 
         self.entry_settings.show_checkboxes_var.set(self.settings_data["show_checkboxes"])
         self.entry_settings.show_checkboxes_pressed()
+
+        self.refresh_colors()
 
 
 

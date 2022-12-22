@@ -60,12 +60,12 @@ class Key:
                     self.master.remove_first_entry()
 
             if event.keysym == "Left":
-                self.master.master.settings_frame.color_scheme_settings.dcs_switch("left")
+                self.master.master.settings.color_scheme_settings.dcs_switch("left")
                 # self.master.master.colors_obj.switch_color_scheme("left")
                 self.master.master.refresh_colors()
 
             if event.keysym == "Right":
-                self.master.master.settings_frame.color_scheme_settings.dcs_switch("right")
+                self.master.master.settings.color_scheme_settings.dcs_switch("right")
                 # self.master.master.colors_obj.switch_color_scheme("right")
                 self.master.master.refresh_colors()
 

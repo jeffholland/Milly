@@ -2,9 +2,11 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
-import re
+import re  # for validating hex codes
 
 from constants import *
+
+
 
 class ColorSchemeSettings(tk.Frame):
     def __init__(self, master):
@@ -25,6 +27,8 @@ class ColorSchemeSettings(tk.Frame):
 
 
     def create_widgets(self):
+        # title label
+
         self.title_label = tk.Label(
             self,
             text="Color Scheme",
@@ -118,20 +122,20 @@ class ColorSchemeSettings(tk.Frame):
         )
         self.labels.append(self.ncs_label)
 
+        # Four entry fields for hex codes
+        # BG1, BG2, HL1, and HL2
+
         self.ncs_entries = []
         for i in range(4):
-            self.ncs_entries.append(
-                tk.Entry(
-                    self,
-                    width=6
-                )
-            )
+            self.ncs_entries.append(tk.Entry(self, width=6))
             self.ncs_entries[i].grid(
                 row=2,
                 column=1+i,
                 padx=PADDING,
                 pady=PADDING
             )
+
+        # Entry for naming the color scheme
 
         self.ncs_name_label = tk.Label(
             self,
@@ -157,6 +161,8 @@ class ColorSchemeSettings(tk.Frame):
         )
         self.ncs_name_entry.bind("<KeyPress>", self.ncs_name_key_pressed)
 
+
+
     def refresh_colors(self):
         self.colors = self.master.master.colors_obj.get_colors()
 
@@ -169,7 +175,8 @@ class ColorSchemeSettings(tk.Frame):
                 self.master.settings_data["default_color_scheme"]
             )
         except KeyError:
-            pass
+            messagebox.showerror("Default color scheme not loaded",
+                "Error: Could not find the default color scheme. Ensure that settings have been properly loaded.")
         
         self.dcs_selector["values"] = (
             self.master.master.colors_obj.get_color_schemes()
