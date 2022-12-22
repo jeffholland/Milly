@@ -255,7 +255,7 @@ class ColorSchemeSettings(tk.Frame):
             )
 
         self.master.settings_data["default_color_scheme"] = self.ncs_name_entry.get()
-        self.master.refresh_settings()
+        self.master.refresh_colors(self.colors)
 
         for entry in self.ncs_entries:
             entry.delete(0, tk.END)
