@@ -25,7 +25,6 @@ class ExportWindow(tk.Frame):
         self.buttons = []
 
         self.create_widgets()
-        self.refresh_colors()
 
 
 
@@ -103,8 +102,8 @@ class ExportWindow(tk.Frame):
 
 
 
-    def refresh_colors(self):
-        self.colors = self.master.master.colors_obj.get_colors()
+    def refresh_colors(self, colors):
+        self.colors = colors
 
         self.window.configure(bg=self.colors["BG2"])
 

@@ -17,7 +17,8 @@ class EntrySettings(tk.Frame):
         self.buttons = []
 
         self.create_widgets()
-        self.refresh_colors()
+
+
 
     def create_widgets(self):
 
@@ -48,8 +49,10 @@ class EntrySettings(tk.Frame):
         )
         self.buttons.append(self.show_checkboxes)
 
-    def refresh_colors(self):
-        self.colors = self.master.master.colors_obj.get_colors()
+
+
+    def refresh_colors(self, colors):
+        self.colors = colors
 
         self.configure(
             bg=self.colors["BG2"]
@@ -67,6 +70,8 @@ class EntrySettings(tk.Frame):
                 bg=self.colors["BG2"],
                 fg=self.colors["HL2"]
             )
+
+
 
     def show_checkboxes_pressed(self):
         v = self.show_checkboxes_var.get()

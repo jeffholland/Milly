@@ -22,7 +22,6 @@ class ColorSchemeSettings(tk.Frame):
         self.buttons = []
 
         self.create_widgets()
-        self.refresh_colors()
 
 
 
@@ -163,8 +162,8 @@ class ColorSchemeSettings(tk.Frame):
 
 
 
-    def refresh_colors(self):
-        self.colors = self.master.master.colors_obj.get_colors()
+    def refresh_colors(self, colors):
+        self.colors = colors
 
         self.configure(
             bg=self.colors["BG2"]

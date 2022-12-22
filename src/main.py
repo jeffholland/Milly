@@ -83,9 +83,9 @@ class Application(tk.Frame):
         self.bottom_frame.configure(bg=self.colors["BG2"])
         self.settings.configure(bg=self.colors["BG1"])
 
-        self.top_frame.refresh_colors()
-        self.bottom_frame.refresh_colors()
-        self.settings.refresh_colors()
+        self.top_frame.refresh_colors(self.colors)
+        self.bottom_frame.refresh_colors(self.colors)
+        self.settings.refresh_colors(self.colors)
 
 
 

@@ -78,8 +78,6 @@ class Entry(tk.Frame):
 
         self.create_widgets()
 
-        self.refresh_colors()
-
 
 
     def create_widgets(self):
@@ -280,8 +278,8 @@ class Entry(tk.Frame):
 
 
 
-    def refresh_colors(self):
-        self.colors = self.master.master.master.master.colors_obj.get_colors()
+    def refresh_colors(self, colors):
+        self.colors = colors
 
         main_fg = self.colors["HL2"]
         if self.checked_bool:

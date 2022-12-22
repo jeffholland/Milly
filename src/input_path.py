@@ -21,7 +21,6 @@ class InputPath(tk.Frame):
 
         self.create_widgets()
 
-        self.refresh_colors()
 
 
     def create_widgets(self):
@@ -81,8 +80,10 @@ class InputPath(tk.Frame):
             self.ok_button.configure(width=1)
             self.cancel_button.configure(width=2)
 
-    def refresh_colors(self):
-        self.colors = self.master.master.colors_obj.get_colors()
+
+
+    def refresh_colors(self, colors):
+        self.colors = colors
 
         try:
             self.window.configure(

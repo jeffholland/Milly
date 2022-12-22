@@ -46,23 +46,18 @@ class Input(tk.Frame):
         # Input path set to None by default
         
         self.input_path = None
-
-        self.create_widgets()
-
-        self.refresh_colors()
+        self.save_prompt = None
 
         # object handles key press and release methods for Text widget
         self.key = Key(self)
-
-        # Key press and release bindings
-        self.input.bind('<KeyPress>', self.key.key_press)
-        self.input.bind('<KeyRelease>', self.key.key_release)
 
         # Set up protocol event for window exit
         self.master.master.protocol("WM_DELETE_WINDOW", self.destroy)
 
         # Bool for exiting after save
         self.exit_after_saving = False
+
+        self.create_widgets()
 
 
 
@@ -85,6 +80,8 @@ class Input(tk.Frame):
             rowspan=self.num_buttons
         )
         self.input.focus_set()
+        self.input.bind('<KeyPress>', self.key.key_press)
+        self.input.bind('<KeyRelease>', self.key.key_release)
 
 
 
@@ -169,8 +166,8 @@ class Input(tk.Frame):
 
 
 
-    def refresh_colors(self):
-        self.colors = self.master.colors_obj.get_colors()
+    def refresh_colors(self, colors):
+        self.colors = colors
 
         self.input.configure(
             bg=self.colors["BG1"],
@@ -189,8 +186,13 @@ class Input(tk.Frame):
                     fg=self.colors["HL2"]
                 )
 
-        if (self.input_path):
-            self.input_path.refresh_colors()
+        if self.input_path:
+            self.input_path.refresh_colors(colors)
+
+        if self.save_prompt:
+            self.save_prompt.refresh_colors(colors)
+
+        self.find_window.refresh_colors(colors)
 
 
 

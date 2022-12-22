@@ -22,9 +22,10 @@ class Entries(tk.Frame):
 
         self.create_widgets()
 
-        self.refresh_colors()
 
 
+    # IMPORTANT: this is the function where the entries get
+    # put on the screen.
 
     def refresh_entries(self):
         self.entries_data = get_entries()
@@ -116,8 +117,10 @@ class Entries(tk.Frame):
 
 
 
-    def refresh_colors(self):
-        self.colors = self.master.colors_obj.get_colors()
+    def refresh_colors(self, colors):
+        self.colors = colors
+
+        self.container.configure(bg=self.colors["HL1"])
 
         self.canvas.configure(bg=self.colors["HL1"])
 
@@ -128,9 +131,9 @@ class Entries(tk.Frame):
         )
 
         for entry in self.entries:
-            entry.refresh_colors()
+            entry.refresh_colors(colors)
 
-        self.container.configure(bg=self.colors["HL1"])
+        self.export_window.refresh_colors(colors)
 
 
 

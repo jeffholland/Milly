@@ -17,7 +17,8 @@ class FindWindow(tk.Frame):
         self.master = master
 
         self.create_widgets()
-        self.refresh_colors()
+
+
 
     def create_widgets(self):
 
@@ -64,7 +65,9 @@ class FindWindow(tk.Frame):
             pady=PADDING
         )
 
-    def refresh_colors(self):
+
+
+    def refresh_colors(self, colors):
         self.colors = self.master.master.colors_obj.get_colors()
 
         self.window.configure(

@@ -23,7 +23,7 @@ class SavePrompt(tk.Frame):
 
         self.create_widgets()
 
-        self.refresh_colors()
+
 
     def create_widgets(self):
         self.label = tk.Label(
@@ -65,7 +65,6 @@ class SavePrompt(tk.Frame):
         )
         self.buttons.append(self.no_button)
 
-
         self.cancel_button = tk.Button(
             self.window,
             text="Cancel",
@@ -80,8 +79,9 @@ class SavePrompt(tk.Frame):
         self.buttons.append(self.cancel_button)
 
 
-    def refresh_colors(self):
-        self.colors = self.master.master.colors_obj.get_colors()
+
+    def refresh_colors(self, colors):
+        self.colors = colors
 
         self.window.configure(
             bg=self.colors["BG2"]

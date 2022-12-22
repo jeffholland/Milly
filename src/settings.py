@@ -27,16 +27,11 @@ class Settings(tk.Frame):
         # Load data from settings.json into self.settings_data
         self.load_settings()
 
-        self.create_widgets()
-
-        self.refresh_colors()
-
         self.cmd_pressed = False
         self.bind_all("<KeyPress>", self.key_pressed)
         self.bind_all("<KeyRelease>", self.key_released)
 
-        # apply_settings called in main loop after all widgets initialized
-
+        self.create_widgets()
 
 
     def load_settings(self):
@@ -115,11 +110,11 @@ class Settings(tk.Frame):
 
 
 
-    def refresh_colors(self):
-        self.colors = self.master.colors_obj.get_colors()
+    def refresh_colors(self, colors):
+        self.colors = colors
 
-        self.color_scheme_settings.refresh_colors()
-        self.entry_settings.refresh_colors()
+        self.color_scheme_settings.refresh_colors(colors)
+        self.entry_settings.refresh_colors(colors)
 
         self.configure(
             bg=self.colors["BG1"]
@@ -150,7 +145,7 @@ class Settings(tk.Frame):
         self.entry_settings.show_checkboxes_var.set(self.settings_data["show_checkboxes"])
         self.entry_settings.show_checkboxes_pressed()
 
-        self.refresh_colors()
+        self.master.refresh_colors()
 
 
 
