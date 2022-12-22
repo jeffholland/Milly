@@ -20,6 +20,8 @@ class Entries(tk.Frame):
 
         self.show_checkboxes = False
 
+        self.colors = None
+
         self.create_widgets()
 
 
@@ -59,6 +61,8 @@ class Entries(tk.Frame):
                 padx=PADDING, 
                 pady=PADDING
             )
+        if self.colors:
+            self.refresh_colors(self.colors)
 
 
 
