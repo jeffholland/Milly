@@ -85,6 +85,14 @@ class InputButtons(tk.Frame):
         self.export_button.grid(row=2, column=2)
         self.buttons.append(self.export_button)
 
+        self.stats_button = tk.Button(
+            self,
+            text="Stats",
+            command=self.master.show_stats
+        )
+        self.stats_button.grid(row=3, column=2)
+        self.buttons.append(self.stats_button)
+
 
         # Configure all buttons
 

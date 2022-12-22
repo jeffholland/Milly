@@ -20,7 +20,9 @@ class Template(tk.Frame):
         self.refresh_colors()
 
     def create_widgets(self):
-        pass
+        self.window = tk.Toplevel(self)
+        self.window.geometry(f"{self.width}x{self.height}")
+        self.window.title("Template")
 
     def refresh_colors(self, colors):
         self.colors = colors

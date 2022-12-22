@@ -11,6 +11,8 @@ from input_buttons import InputButtons
 from input_path import InputPath
 from insert_prompt import InsertPrompt
 from save_prompt import SavePrompt
+from stats import Stats
+
 
 
 class Input(tk.Frame):
@@ -86,8 +88,11 @@ class Input(tk.Frame):
         self.input_buttons = InputButtons(self)
         self.input_buttons.grid(row=0, column=1)
         
-        self.find_window = FindWindow(self)
-        self.find_window.window.withdraw()
+        self.find = FindWindow(self)
+        self.find.window.withdraw()
+
+        self.stats = Stats(self)
+        self.stats.window.withdraw()
 
 
 
@@ -109,7 +114,9 @@ class Input(tk.Frame):
         if self.save_prompt:
             self.save_prompt.refresh_colors(colors)
 
-        self.find_window.refresh_colors(colors)
+        self.find.refresh_colors(colors)
+
+        self.stats.refresh_colors(colors)
 
 
 
@@ -164,8 +171,11 @@ class Input(tk.Frame):
         self.master.refresh_entries()
 
     def show_find_window(self):
-        self.find_window.window.deiconify()
-        self.find_window.entry.focus_set()
+        self.find.window.deiconify()
+        self.find.entry.focus_set()
 
     def export(self):
         self.master.top_frame.export()
+
+    def show_stats(self):
+        self.stats.window.deiconify()
