@@ -2,7 +2,7 @@ import tkinter as tk
 
 from constants import *
 
-class Template(tk.Frame):
+class ExportWindow(tk.Frame):
     def __init__(self, master):
 
         self.width = 200
@@ -31,5 +31,5 @@ class Template(tk.Frame):
 
 
 
-    def refresh_colors(self, colors):
-        self.colors = colors
+    def refresh_colors(self):
+        pass
