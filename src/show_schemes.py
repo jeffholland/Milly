@@ -25,7 +25,7 @@ class ShowColorSchemes(tk.Frame):
         # Template code
         self.window = tk.Toplevel(self)
         self.window.geometry(f"{self.width}x{self.height}")
-        self.window.overrideredirect(True)
+        # self.window.overrideredirect(True)
 
         # Scrollable template code
         self.canvas_object_ids = []
