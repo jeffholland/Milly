@@ -22,12 +22,11 @@ class ShowColorSchemes(tk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
-        # Template code
+        self.labels.clear()
+
         self.window = tk.Toplevel(self)
         self.window.geometry(f"{self.width}x{self.height}")
-        # self.window.overrideredirect(True)
 
-        # Scrollable template code
         self.canvas_object_ids = []
 
         self.canvas = tk.Canvas(self.window)

@@ -99,7 +99,7 @@ class Application(tk.Frame):
         self.top_frame.grid_remove()
         self.bottom_frame.grid_remove()
 
-        self.settings.show_settings()
+        # self.settings.show_settings()
         self.settings.grid(row=0, column=0)
 
     def hide_settings(self):
