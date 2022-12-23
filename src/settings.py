@@ -193,3 +193,19 @@ class Settings(tk.Frame):
 
     def back(self):
         self.master.hide_settings()
+
+    
+
+    def show_settings(self):
+
+        # This is sort of a workaround because the color_scheme_window
+        # was causing problems with the window not closing.
+        # The color scheme settings' show_settings function just
+        # creates and withdraws the show_color_schemes window
+        # so that it isn't done during the create_widgets function,
+        # but only when the settings are shown.
+        
+        # Not sure if that makes sense but it seemed to fix the problem,
+        # so whatever.
+
+        self.color_scheme_settings.show_settings()
