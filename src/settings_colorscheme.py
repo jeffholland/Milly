@@ -5,7 +5,7 @@ from tkinter import messagebox
 import re  # for validating hex codes
 
 from constants import *
-from show_schemes import ShowColorSchemes
+# from show_schemes import ShowColorSchemes
 
 
 class ColorSchemeSettings(tk.Frame):
@@ -108,13 +108,13 @@ class ColorSchemeSettings(tk.Frame):
 
         
         # show color scheme button
-        self.show_color_scheme_button = tk.Button(
-            self,
-            text="Show all",
-            command=self.show_color_schemes
-        )
-        self.show_color_scheme_button.grid(row=1, column=6)
-        self.buttons.append(self.show_color_scheme_button)
+        # self.show_color_scheme_button = tk.Button(
+        #     self,
+        #     text="Show all",
+        #     command=self.show_color_schemes
+        # )
+        # self.show_color_scheme_button.grid(row=1, column=6)
+        # self.buttons.append(self.show_color_scheme_button)
 
 
         # ncs = new color scheme
@@ -170,8 +170,8 @@ class ColorSchemeSettings(tk.Frame):
         )
         self.ncs_name_entry.bind("<KeyPress>", self.ncs_name_key_pressed)
 
-        self.color_scheme_window = ShowColorSchemes(self)
-        self.color_scheme_window.window.withdraw()
+        # self.color_scheme_window = ShowColorSchemes(self)
+        # self.color_scheme_window.window.withdraw()
 
 
 
