@@ -5,7 +5,6 @@ from math import floor
 
 from constants import *
 from data import *
-# from entry_menu import EntryMenu
 
 class Entry(tk.Frame):
     def __init__(self, date, time, text, width, height, index, 
