@@ -36,8 +36,11 @@ class FontSettings(tk.Frame):
         )
         self.labels.append(self.title_label)
 
+        self.font_var = tk.StringVar()
         self.font_selector = ttk.Combobox(
-            self
+            self,
+            state="readonly",
+            textvariable=self.font_var
         )
         self.font_selector.grid(
             row=1, 
@@ -46,6 +49,84 @@ class FontSettings(tk.Frame):
             pady=PADDING
         )
         self.font_selector["values"] = tkFont.families()
+        self.font_selector.bind(
+            "<<ComboboxSelected>>", 
+            self.font_selected
+        )
+        self.font_var.set("Helvetica")
+
+        self.font_arrow_left = tk.Button(
+            self,
+            text="<<",
+            command=lambda: self.arrow_pressed("left")
+        )
+        self.font_arrow_left.grid(
+            row=1,
+            column=1,
+            padx=PADDING,
+            pady=PADDING
+        )
+        self.buttons.append(self.font_arrow_left)
+
+        self.font_arrow_right = tk.Button(
+            self,
+            text=">>",
+            command=lambda: self.arrow_pressed("right")
+        )
+        self.font_arrow_right.grid(
+            row=1,
+            column=2,
+            padx=PADDING,
+            pady=PADDING
+        )
+        self.buttons.append(self.font_arrow_right)
+
+        self.example_text = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
+
+        self.font_example = tk.Label(
+            self,
+            text=self.example_text,
+            font=tkFont.Font(self, family=self.font_var.get(), size=12)
+        )
+        self.font_example.grid(
+            row=2,
+            column=0,
+            padx=PADDING,
+            pady=PADDING,
+            columnspan=5
+        )
+        self.labels.append(self.font_example)
+
+
+    def arrow_pressed(self, dir):
+        families = tkFont.families()
+        index = families.index(self.font_var.get())
+
+        if dir == "left":
+            if index > 0:
+                self.font_var.set(families[index - 1])
+            else:
+                self.font_var.set(families[len(families) - 1])
+        else:
+            if index < len(families) - 1:
+                self.font_var.set(families[index + 1])
+            else:
+                self.font_var.set(families[0])
+
+        self.font_selected()
+
+
+    def font_selected(self, event=None):
+        font = tkFont.Font(self, family=self.font_var.get(), size=12)
+        self.show_font_example(font)
+
+
+    def show_font_example(self, font):
+        self.font_example.grid_remove()
+
+        self.font_example.configure(font=font)
+        self.font_example.grid()
+        self.refresh_colors(self.colors)
 
 
 
@@ -57,17 +138,18 @@ class FontSettings(tk.Frame):
         )
 
         for label in self.labels:
-            label.configure(
-                bg=self.colors["BG2"],
-                fg=self.colors["HL2"]
-            )
+            if label:
+                label.configure(
+                    bg=self.colors["BG2"],
+                    fg=self.colors["HL2"]
+                )
 
         for button in self.buttons:
             button.configure(
-                highlightbackground=self.colors["BG1"]
+                highlightbackground=self.colors["BG2"]
             )
             if PLATFORM == "Windows":
                 button.configure(
-                    bg=self.colors["BG2"],
+                    bg=self.colors["BG1"],
                     fg=self.colors["HL2"]
                 )
