@@ -1,5 +1,4 @@
 import tkinter as tk
-import tkinter.font as tkFont
 
 from math import floor
 
@@ -8,7 +7,7 @@ from data import *
 from entry_menu import EntryMenu
 
 class Entry(tk.Frame):
-    def __init__(self, master, date, time, menu, text, width, height, index, 
+    def __init__(self, master, date, time, menu, text, width, height, index, font,
         checkbox=False, checked=False):
 
         tk.Frame.__init__(
@@ -26,6 +25,7 @@ class Entry(tk.Frame):
         self.index = index
         self.width = width
         self.height = height
+        self.font = font
 
         length = len(self.text)
         newline_count = self.text.count('\n')
@@ -81,18 +81,6 @@ class Entry(tk.Frame):
 
         self.configure(height=self.height)
 
-        # Font
-
-        self.font = tkFont.Font(
-            family=ENTRY_FONT_FAMILY, 
-            size=ENTRY_FONT_SIZE
-        )
-        self.font_bold = tkFont.Font(
-            family=ENTRY_FONT_FAMILY, 
-            size=ENTRY_FONT_SIZE, 
-            weight="bold"
-        )
-
         # Arrays for easy widget configuration
 
         self.labels = []
@@ -137,8 +125,7 @@ class Entry(tk.Frame):
             self.time,
             self.check_bool,
             self.checked_bool, 
-            self.font, 
-            self.font_bold
+            self.font
         )
         if self.menu_bool:
             self.entry_menu.grid(row=0, column=0, columnspan=2)

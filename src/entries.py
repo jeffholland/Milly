@@ -1,4 +1,5 @@
 import tkinter as tk
+import tkinter.font as tkFont
 
 from constants import *
 from data import get_entries
@@ -26,6 +27,8 @@ class Entries(tk.Frame):
         self.show_menu = False
 
         self.colors = None
+
+        self.font = tkFont.Font(self, family="Helvetica", size=14)
 
         self.create_widgets()
 
@@ -64,6 +67,7 @@ class Entries(tk.Frame):
                 width=self.entry_width,
                 height=ENTRY_HEIGHT,
                 index=count,
+                font=self.font,
                 checkbox=self.show_checkboxes,
                 checked=checked_bool
             ))
@@ -211,3 +215,7 @@ class Entries(tk.Frame):
     def export(self):
         self.export_window.window.deiconify()
         self.export_window.filename_entry.focus_set()
+
+    def set_font(self, font):
+        self.font = font
+        self.refresh_entries()

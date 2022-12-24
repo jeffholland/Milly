@@ -97,6 +97,19 @@ class FontSettings(tk.Frame):
         )
         self.labels.append(self.font_example)
 
+        self.apply_font = tk.Button(
+            self,
+            text="Apply",
+            command=self.apply_pressed
+        )
+        self.apply_font.grid(
+            row=1,
+            column=3,
+            padx=PADDING,
+            pady=PADDING
+        )
+        self.buttons.append(self.apply_font)
+
 
     def arrow_pressed(self, dir):
         families = tkFont.families()
@@ -114,6 +127,15 @@ class FontSettings(tk.Frame):
                 self.font_var.set(families[0])
 
         self.font_selected()
+
+
+    def apply_pressed(self):
+        font = tkFont.Font(
+            self, 
+            family=self.font_var.get(), 
+            size=14
+        )
+        self.master.master.top_frame.set_font(font)
 
 
     def font_selected(self, event=None):

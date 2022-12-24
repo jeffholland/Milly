@@ -4,7 +4,7 @@ from constants import *
 
 class EntryMenu(tk.Frame):
     def __init__(self, master, date, time, check_bool, checked_bool, 
-        font, font_bold):
+        font):
 
         tk.Frame.__init__(self, master)
         self.master = master
@@ -15,7 +15,6 @@ class EntryMenu(tk.Frame):
         self.check_bool = check_bool
         self.checked_bool = checked_bool
         self.font = font
-        self.font_bold = font_bold
 
         self.labels = []
         self.buttons = []
@@ -28,7 +27,7 @@ class EntryMenu(tk.Frame):
         self.date_label = tk.Label(
             self, 
             text=self.date,
-            font=self.font_bold
+            font=self.font
         )
         self.date_label.grid(
             row=0, 
