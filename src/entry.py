@@ -26,12 +26,19 @@ class Entry(tk.Frame):
         self.width = width
         self.height = height
 
-        wraplength = 100
+        length = len(self.text)
         newline_count = self.text.count('\n')
 
-        print(f"Number of characters: {len(self.text)}")
-        print(f"Number of lines at {wraplength} characters per line: {floor(len(self.text) / wraplength)}")
-        print(f"Number of times a line break appears: {newline_count}")
+        # To make sure the Entry is tall enough if there are a 
+        # lot of line breaks
+        if newline_count > 0:
+            avg_line_length = len(self.text) / newline_count
+        else:
+            avg_line_length = len(self.text)
+
+        # print(f"Number of characters: {length}")
+        # print(f"Number of lines at {wraplength} characters per line: {floor(len(self.text) / wraplength)}")
+        # print(f"Number of times a line break appears: {newline_count}")
 
         # include a checkbox or not
         self.check_bool = checkbox
@@ -51,23 +58,32 @@ class Entry(tk.Frame):
         if MODE == "fullscreen":
             vh_constant = 9.0
         else:
-            vh_constant = 5.36
-        vh_limit = 100
+            vh_constant = 5.6
 
         if PLATFORM == "Windows":
             if MODE == "fullscreen":
                 vh_constant = 6.4
             else:
                 vh_constant = 3.09
-            vh_limit = 60
 
-        if len(text) > vh_limit:
-            self.height = height + (floor((len(text) - vh_limit) / vh_constant))
-            newline_offset = floor(newline_count * 2.5)
-            self.height = self.height + newline_offset
-            self.configure(height=self.height)
+        vh_limit = 60
 
-        print(f"Actual window height: {self.height}")
+        # if len(text) > vh_limit:
+        newline_offset = newline_count * 5
+
+        # Variable height past a certain number of characters
+        if len(text) >= vh_limit:
+            # Height is the length of the text divided by a constant
+            self.height = height + (floor((length - vh_limit) / vh_constant))
+            # plus an offset for any new lines
+            self.height += newline_offset
+            # and another offset for if there are multiple newlines that are really short
+            if newline_count > 5:
+                self.height += floor(400 / avg_line_length)
+
+        self.configure(height=self.height)
+
+        # print(f"Actual window height: {self.height}")
 
         # Font
 
@@ -262,8 +278,6 @@ class Entry(tk.Frame):
         else:
             self.text_label_wrap_length = self.width - 40
         
-        print(f"Actual wrap length: {self.text_label_wrap_length}")
-
         self.text_label = tk.Label(
             self, 
             font=self.font,

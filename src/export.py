@@ -99,6 +99,7 @@ class ExportWindow(tk.Frame):
         )
         self.filename_entry.focus_set()
         self.filename_entry.bind("<KeyPress>", self.key_pressed)
+        self.filename_entry.bind("<KeyRelease>", self.key_released)
 
 
 
@@ -119,6 +120,15 @@ class ExportWindow(tk.Frame):
     def key_pressed(self, event):
         if event.keysym == "Return":
             self.export()
+
+    def key_released(self, event):
+        # Release command key while in other window
+        if PLATFORM == "Windows":
+            if "Control" in event.keysym:
+                self.master.master.bottom_frame.key.keys_pressed["cmd"] = False
+        else:
+            if "Meta" in event.keysym:
+                self.master.master.bottom_frame.key.keys_pressed["cmd"] = False
 
 
     def export(self):
