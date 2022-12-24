@@ -122,6 +122,6 @@ class Application(tk.Frame):
 
 
 app = Application()
-app.master.title("Diary")
+app.master.title("Milly")
 app.master.geometry(str(app.width) + "x" + str(app.height))
 app.mainloop()
