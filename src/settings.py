@@ -161,6 +161,15 @@ class Settings(tk.Frame):
         self.entry_settings.show_checkboxes_var.set(self.settings_data["show_checkboxes"])
         self.entry_settings.show_checkboxes_pressed()
 
+        self.entry_settings.show_dates_var.set(self.settings_data["show_dates"])
+        self.entry_settings.show_dates_pressed()
+
+        self.entry_settings.show_times_var.set(self.settings_data["show_times"])
+        self.entry_settings.show_times_pressed()
+
+        self.entry_settings.show_menu_var.set(self.settings_data["show_menu"])
+        self.entry_settings.show_menu_pressed()
+
         self.master.refresh_colors()
 
 

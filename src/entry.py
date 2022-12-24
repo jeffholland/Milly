@@ -8,8 +8,8 @@ from data import *
 from entry_menu import EntryMenu
 
 class Entry(tk.Frame):
-    def __init__(self, date, time, text, width, height, index, 
-        master=None, checkbox=False, checked=False):
+    def __init__(self, master, date, time, menu, text, width, height, index, 
+        checkbox=False, checked=False):
 
         tk.Frame.__init__(
             self,
@@ -43,6 +43,9 @@ class Entry(tk.Frame):
         self.checked_bool = checked
         # the checkbox object itself
         self.checkbox = None
+
+        # include the menu or not
+        self.menu_bool = menu
 
         self.keys_pressed = {
             "cmd": False,
@@ -137,7 +140,8 @@ class Entry(tk.Frame):
             self.font, 
             self.font_bold
         )
-        self.entry_menu.grid(row=0, column=0, columnspan=2)
+        if self.menu_bool:
+            self.entry_menu.grid(row=0, column=0, columnspan=2)
 
 
         # Text label - shows the actual text of the Entry

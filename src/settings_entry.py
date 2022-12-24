@@ -133,14 +133,35 @@ class EntrySettings(tk.Frame):
     def show_dates_pressed(self):
         v = self.show_dates_var.get()
 
-        # self.master.settings_data["show_dates"] = v
+        self.master.settings_data["show_dates"] = v
+
+        if (v == 1):
+            self.master.master.top_frame.show_dates = True
+            self.master.master.top_frame.refresh_entries()
+        else:
+            self.master.master.top_frame.show_dates = False
+            self.master.master.top_frame.refresh_entries()
 
     def show_times_pressed(self):
         v = self.show_times_var.get()
 
-        # self.master.settings_data["show_dates"] = v
+        self.master.settings_data["show_times"] = v
+
+        if (v == 1):
+            self.master.master.top_frame.show_times = True
+            self.master.master.top_frame.refresh_entries()
+        else:
+            self.master.master.top_frame.show_times = False
+            self.master.master.top_frame.refresh_entries()
 
     def show_menu_pressed(self):
         v = self.show_menu_var.get()
 
-        # self.master.settings_data["show_menu"] = v
+        self.master.settings_data["show_menu"] = v
+
+        if (v == 1):
+            self.master.master.top_frame.show_menu = True
+            self.master.master.top_frame.refresh_entries()
+        else:
+            self.master.master.top_frame.show_menu = False
+            self.master.master.top_frame.refresh_entries()

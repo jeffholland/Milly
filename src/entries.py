@@ -19,7 +19,11 @@ class Entries(tk.Frame):
 
         self.entry_width = self.width - (PADDING * 6)
 
+        # Booleans for showing and hiding entry features
         self.show_checkboxes = False
+        self.show_dates = False
+        self.show_times = False
+        self.show_menu = False
 
         self.colors = None
 
@@ -44,13 +48,21 @@ class Entries(tk.Frame):
             except KeyError:
                 checked_bool = False
 
+            entry_date = None
+            if self.show_dates:
+                entry_date = self.entries_data[count]["date"]
+            entry_time = None
+            if self.show_times:
+                entry_time = self.entries_data[count]["time"]
+
             self.entries.append(Entry(
-                date=self.entries_data[count]["date"],
-                time=self.entries_data[count]["time"],
+                self.container,
+                date=entry_date,
+                time=entry_time,
+                menu=self.show_menu,
                 text=self.entries_data[count]["text"],
                 width=self.entry_width,
                 height=ENTRY_HEIGHT,
-                master=self.container,
                 index=count,
                 checkbox=self.show_checkboxes,
                 checked=checked_bool
