@@ -171,8 +171,7 @@ class Input(tk.Frame):
         self.master.refresh_entries()
 
     def show_find_window(self):
-        self.find.window.deiconify()
-        self.find.entry.focus_set()
+        self.find.show()
 
     def export(self):
         self.master.top_frame.export()

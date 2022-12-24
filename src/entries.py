@@ -187,6 +187,7 @@ class Entries(tk.Frame):
                 padx=PADDING, 
                 pady=PADDING
             )
+            self.filtered_entries[count].refresh_colors(self.colors)
 
     def remove_filter(self):
         for entry in self.filtered_entries:
