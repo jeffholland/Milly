@@ -155,7 +155,8 @@ class Entry(tk.Frame):
             column=column_var, 
             padx=PADDING,
             pady=PADDING,
-            columnspan=200
+            columnspan=200,
+            rowspan=3
         )
         self.labels.append(self.text_label)
 

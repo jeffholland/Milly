@@ -36,24 +36,24 @@ class FontSettings(tk.Frame):
         )
         self.labels.append(self.title_label)
 
-        self.font_var = tk.StringVar()
-        self.font_selector = ttk.Combobox(
+        self.font_family_var = tk.StringVar()
+        self.font_family_selector = ttk.Combobox(
             self,
             state="readonly",
-            textvariable=self.font_var
+            textvariable=self.font_family_var
         )
-        self.font_selector.grid(
+        self.font_family_selector.grid(
             row=1, 
             column=0,
             padx=PADDING,
             pady=PADDING
         )
-        self.font_selector["values"] = tkFont.families()
-        self.font_selector.bind(
+        self.font_family_selector["values"] = tkFont.families()
+        self.font_family_selector.bind(
             "<<ComboboxSelected>>", 
             self.font_selected
         )
-        self.font_var.set("Helvetica")
+        self.font_family_var.set("Helvetica")
 
         self.font_arrow_left = tk.Button(
             self,
@@ -86,7 +86,7 @@ class FontSettings(tk.Frame):
         self.font_example = tk.Label(
             self,
             text=self.example_text,
-            font=tkFont.Font(self, family=self.font_var.get(), size=12)
+            font=tkFont.Font(self, family=self.font_family_var.get(), size=12)
         )
         self.font_example.grid(
             row=2,
@@ -113,18 +113,18 @@ class FontSettings(tk.Frame):
 
     def arrow_pressed(self, dir):
         families = tkFont.families()
-        index = families.index(self.font_var.get())
+        index = families.index(self.font_family_var.get())
 
         if dir == "left":
             if index > 0:
-                self.font_var.set(families[index - 1])
+                self.font_family_var.set(families[index - 1])
             else:
-                self.font_var.set(families[len(families) - 1])
+                self.font_family_var.set(families[len(families) - 1])
         else:
             if index < len(families) - 1:
-                self.font_var.set(families[index + 1])
+                self.font_family_var.set(families[index + 1])
             else:
-                self.font_var.set(families[0])
+                self.font_family_var.set(families[0])
 
         self.font_selected()
 
@@ -132,15 +132,15 @@ class FontSettings(tk.Frame):
     def apply_pressed(self):
         font = tkFont.Font(
             self, 
-            family=self.font_var.get(), 
+            family=self.font_family_var.get(), 
             size=14
         )
-        self.master.settings_data["font_family"] = self.font_var.get()
+        self.master.settings_data["font_family"] = self.font_family_var.get()
         self.master.master.top_frame.set_font(font)
 
 
     def font_selected(self, event=None):
-        font = tkFont.Font(self, family=self.font_var.get(), size=12)
+        font = tkFont.Font(self, family=self.font_family_var.get(), size=12)
         self.show_font_example(font)
 
 

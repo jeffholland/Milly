@@ -176,7 +176,7 @@ class Settings(tk.Frame):
 
         # Font settings
 
-        self.font_settings.font_var.set(self.settings_data["font_family"])
+        self.font_settings.font_family_var.set(self.settings_data["font_family"])
         self.font_settings.apply_pressed()
 
         self.master.refresh_colors()
