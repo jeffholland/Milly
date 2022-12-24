@@ -239,6 +239,10 @@ class Entry(tk.Frame):
         # Change internally stored text
         self.text = self.edit_box.get("1.0", "end")
 
+        # Remove newline from the end if there is one
+        if self.text[-1] == '\n':
+            self.text = self.text[:-1]
+
         # Change text label
         self.text_label_var.set(self.text)
         
