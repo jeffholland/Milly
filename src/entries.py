@@ -219,3 +219,27 @@ class Entries(tk.Frame):
     def set_font(self, font):
         self.font = font
         self.refresh_entries()
+
+    def set_show_dates(self, show_dates):
+        self.show_dates = show_dates
+        if show_dates:
+            self.export_window.dates_button.configure(
+                state=tk.NORMAL
+            )
+        else:
+            self.export_window.dates_button.configure(
+                state=tk.DISABLED
+            )
+        self.refresh_entries()
+
+    def set_show_times(self, show_times):
+        self.show_times = show_times
+        if show_times:
+            self.export_window.times_button.configure(
+                state=tk.NORMAL
+            )
+        else:
+            self.export_window.times_button.configure(
+                state=tk.DISABLED
+            )
+        self.refresh_entries()

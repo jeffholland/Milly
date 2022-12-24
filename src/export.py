@@ -12,7 +12,7 @@ class ExportWindow(tk.Frame):
     def __init__(self, master):
 
         self.width = 300
-        self.height = 200
+        self.height = 160
 
         tk.Frame.__init__(
             self,
@@ -76,6 +76,28 @@ class ExportWindow(tk.Frame):
         self.colors_button.grid(row=2, column=1)
         self.buttons.append(self.colors_button)
 
+        self.dates_var = tk.IntVar()
+        self.dates_button = tk.Checkbutton(
+            self.window,
+            text="show dates",
+            variable=self.dates_var
+        )
+        self.dates_button.grid(row=1, column=1)
+        self.buttons.append(self.dates_button)
+        if not self.master.show_dates:
+            self.dates_button.configure(state=tk.DISABLED)
+
+        self.times_var = tk.IntVar()
+        self.times_button = tk.Checkbutton(
+            self.window,
+            text="show times",
+            variable=self.times_var
+        )
+        self.times_button.grid(row=1, column=2)
+        self.buttons.append(self.times_button)
+        if not self.master.show_times:
+            self.times_button.configure(state=tk.DISABLED)
+
         for button in self.buttons:
             button.grid_configure(
                 padx=PADDING,
@@ -95,7 +117,8 @@ class ExportWindow(tk.Frame):
             row=0, 
             column=1, 
             padx=PADDING, 
-            pady=PADDING
+            pady=PADDING,
+            columnspan=2
         )
         self.filename_entry.focus_set()
         self.filename_entry.bind("<KeyPress>", self.key_pressed)
@@ -145,6 +168,7 @@ class ExportWindow(tk.Frame):
             self.export_pdf(filename)
 
         self.window.withdraw()
+        self.master.master.bottom_frame.input.focus_set()
 
 
     def export_csv(self, filename):
@@ -153,15 +177,33 @@ class ExportWindow(tk.Frame):
 
         with open(filename, "w") as csvfile:
             writer = csv.writer(csvfile, delimiter=",")
+            
             for entry in self.master.entries:
-                writer.writerow([entry.text])
+                row = []
+
+                if self.dates_var.get() == 1:
+                    row.append(entry.date)
+                if self.times_var.get() == 1:
+                    row.append(entry.time)
+                    
+                row.append(entry.text)
+                writer.writerow(row)
+                
 
     def export_txt(self, filename):
         filename = filename + ".txt"
 
         with open(filename, "w") as txtfile:
             for entry in self.master.entries:
-                txtfile.write(entry.text)
+                row = ""
+
+                if self.dates_var.get() == 1:
+                    row += entry.date + " - "
+                if self.times_var.get() == 1:
+                    row += entry.time + " - "
+                row += entry.text
+
+                txtfile.write(row)
 
     def export_pdf(self, filename):
         filename = filename + ".pdf"
@@ -180,10 +222,18 @@ class ExportWindow(tk.Frame):
             pdf.set_text_color(fg[0], fg[1], fg[2])
         
         for count in range(len(self.master.entries)):
+            row = ""
+
+            if self.dates_var.get() == 1:
+                row += self.master.entries[count].date + " - "
+            if self.times_var.get() == 1:
+                row += self.master.entries[count].time + " - "
+            row += self.master.entries[count].text
+
             pdf.multi_cell(
                 w=180,
                 h=floor(self.master.entries[count].height / 4),
-                txt=self.master.entries[count].text.strip(),
+                txt=row,
                 border=1,
                 fill=True
             )
