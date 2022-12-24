@@ -161,6 +161,8 @@ class EntryMenu(tk.Frame):
     def refresh_colors(self, colors, main_fg):
         self.colors = colors
 
+        self.configure(bg=self.colors["BG1"])
+
         for label in self.labels:
             label.configure(
                 bg=self.colors["BG1"], 
