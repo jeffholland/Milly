@@ -156,7 +156,11 @@ class Settings(tk.Frame):
 
     def apply_settings(self):
 
+        # Color scheme settings
+
         self.master.colors_obj.set_color_scheme(self.settings_data["default_color_scheme"])
+
+        # Entry settings
 
         self.entry_settings.show_checkboxes_var.set(self.settings_data["show_checkboxes"])
         self.entry_settings.show_checkboxes_pressed()
@@ -169,6 +173,11 @@ class Settings(tk.Frame):
 
         self.entry_settings.show_menu_var.set(self.settings_data["show_menu"])
         self.entry_settings.show_menu_pressed()
+
+        # Font settings
+
+        self.font_settings.font_var.set(self.settings_data["font_family"])
+        self.font_settings.apply_pressed()
 
         self.master.refresh_colors()
 

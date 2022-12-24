@@ -135,6 +135,7 @@ class FontSettings(tk.Frame):
             family=self.font_var.get(), 
             size=14
         )
+        self.master.settings_data["font_family"] = self.font_var.get()
         self.master.master.top_frame.set_font(font)
 
 
