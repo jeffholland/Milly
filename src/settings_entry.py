@@ -49,6 +49,51 @@ class EntrySettings(tk.Frame):
         )
         self.buttons.append(self.show_checkboxes)
 
+        self.show_dates_var = tk.IntVar()
+        self.show_dates = tk.Checkbutton(
+            self,
+            text="Show dates",
+            variable = self.show_dates_var,
+            command = self.show_dates_pressed
+        )
+        self.show_dates.grid(
+            row=1, 
+            column=1,
+            padx=PADDING,
+            pady=PADDING
+        )
+        self.buttons.append(self.show_dates)
+
+        self.show_times_var = tk.IntVar()
+        self.show_times = tk.Checkbutton(
+            self,
+            text="Show times",
+            variable = self.show_times_var,
+            command = self.show_times_pressed
+        )
+        self.show_times.grid(
+            row=1, 
+            column=2,
+            padx=PADDING,
+            pady=PADDING
+        )
+        self.buttons.append(self.show_times)
+
+        self.show_menu_var = tk.IntVar()
+        self.show_menu = tk.Checkbutton(
+            self,
+            text="Show menu",
+            variable = self.show_menu_var,
+            command = self.show_menu_pressed
+        )
+        self.show_menu.grid(
+            row=1, 
+            column=3,
+            padx=PADDING,
+            pady=PADDING
+        )
+        self.buttons.append(self.show_menu)
+
 
 
     def refresh_colors(self, colors):
@@ -84,3 +129,18 @@ class EntrySettings(tk.Frame):
         else:
             self.master.master.top_frame.show_checkboxes = False
             self.master.master.top_frame.refresh_entries()
+
+    def show_dates_pressed(self):
+        v = self.show_dates_var.get()
+
+        # self.master.settings_data["show_dates"] = v
+
+    def show_times_pressed(self):
+        v = self.show_times_var.get()
+
+        # self.master.settings_data["show_dates"] = v
+
+    def show_menu_pressed(self):
+        v = self.show_menu_var.get()
+
+        # self.master.settings_data["show_menu"] = v
