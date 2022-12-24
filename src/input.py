@@ -129,7 +129,11 @@ class Input(tk.Frame):
             exit()
 
     def submit(self):
-        add_entry(self.input.get("1.0", "end"))
+        text = self.input.get("1.0", "end")
+        if text[-1] == '\n':
+            text = text[:-1]
+        add_entry(text)
+
         self.master.refresh_entries()
         self.input.delete("1.0", "end")
 

@@ -26,6 +26,13 @@ class Entry(tk.Frame):
         self.width = width
         self.height = height
 
+        wraplength = 100
+        newline_count = self.text.count('\n')
+
+        print(f"Number of characters: {len(self.text)}")
+        print(f"Number of lines at {wraplength} characters per line: {floor(len(self.text) / wraplength)}")
+        print(f"Number of times a line break appears: {newline_count}")
+
         # include a checkbox or not
         self.check_bool = checkbox
         # checkbox is checked or not
@@ -56,8 +63,11 @@ class Entry(tk.Frame):
 
         if len(text) > vh_limit:
             self.height = height + (floor((len(text) - vh_limit) / vh_constant))
-
+            newline_offset = floor(newline_count * 2.5)
+            self.height = self.height + newline_offset
             self.configure(height=self.height)
+
+        print(f"Actual window height: {self.height}")
 
         # Font
 
@@ -251,6 +261,8 @@ class Entry(tk.Frame):
             self.text_label_wrap_length = self.width - 80
         else:
             self.text_label_wrap_length = self.width - 40
+        
+        print(f"Actual wrap length: {self.text_label_wrap_length}")
 
         self.text_label = tk.Label(
             self, 
