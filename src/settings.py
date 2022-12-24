@@ -6,6 +6,7 @@ import json
 from constants import *
 from settings_colorscheme import ColorSchemeSettings
 from settings_entry import EntrySettings
+from settings_font import FontSettings
 
 
 
@@ -73,6 +74,20 @@ class Settings(tk.Frame):
         )
 
 
+        # Font settings
+
+        self.font_settings = FontSettings(self)
+        self.font_settings.grid_propagate(0)
+        self.font_settings.grid(
+            row=2, 
+            column=0,
+            padx=PADDING_BIG,
+            pady=PADDING_BIG,
+            columnspan=3
+        )
+
+
+
         # Main buttons
 
         self.save_button = tk.Button(
@@ -115,6 +130,7 @@ class Settings(tk.Frame):
 
         self.color_scheme_settings.refresh_colors(colors)
         self.entry_settings.refresh_colors(colors)
+        self.font_settings.refresh_colors(colors)
 
         self.configure(
             bg=self.colors["BG1"]
@@ -193,19 +209,3 @@ class Settings(tk.Frame):
 
     def back(self):
         self.master.hide_settings()
-
-    
-
-    # def show_settings(self):
-
-    #     # This is sort of a workaround because the color_scheme_window
-    #     # was causing problems with the window not closing.
-    #     # The color scheme settings' show_settings function just
-    #     # creates and withdraws the show_color_schemes window
-    #     # so that it isn't done during the create_widgets function,
-    #     # but only when the settings are shown.
-        
-    #     # Not sure if that makes sense but it seemed to fix the problem,
-    #     # so whatever.
-
-    #     self.color_scheme_settings.show_settings()
