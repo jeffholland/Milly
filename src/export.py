@@ -156,7 +156,7 @@ class ExportWindow(tk.Frame):
 
     def export(self):
         # Save everything to export folder
-        filename = "export/" + self.filename_var.get()
+        filename = EXPORT_PATH + self.filename_var.get()
 
         if self.csv_var.get() == 1:
             self.export_csv(filename)

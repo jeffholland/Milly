@@ -8,6 +8,22 @@ PLATFORM = platform.system()
 MODE = "normal"
 # MODE = "fullscreen"
 
+CONFIG = "interpret"
+# CONFIG = "build"
+
+
+
+# File paths
+
+if CONFIG == "interpret":
+    JSON_PATH = "json/"
+    EXPORT_PATH = "export/"
+if CONFIG == "build":
+    JSON_PATH = "../../json/"
+    EXPORT_PATH = "../../export/"
+
+COLOR_SCHEME_PATH = JSON_PATH + "color_schemes/"
+SETTINGS_PATH = JSON_PATH + "settings.json"
 
 
 # dimensions

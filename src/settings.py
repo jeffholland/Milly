@@ -37,7 +37,7 @@ class Settings(tk.Frame):
 
     def load_settings(self):
         try:
-            f = open("json/settings.json", "r")
+            f = open(SETTINGS_PATH, "r")
         except OSError:
             messagebox.showerror("Could not open settings.json. Make sure the file exists")
 
@@ -189,7 +189,7 @@ class Settings(tk.Frame):
         # save it if detected.
         self.color_scheme_settings.ncs_check()
         
-        with open("json/settings.json", "w") as f:
+        with open(SETTINGS_PATH, "w") as f:
             json.dump(self.settings_data, f)
 
         self.load_settings()

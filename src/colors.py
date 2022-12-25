@@ -3,6 +3,8 @@ from os import scandir
 
 from tkinter import messagebox
 
+from constants import *
+
 
 class Colors:
     def __init__(self, master):
@@ -20,7 +22,7 @@ class Colors:
         if refresh:
             self.color_schemes.clear()
 
-            with scandir("json/color_schemes/") as entries:
+            with scandir(COLOR_SCHEME_PATH) as entries:
                 for entry in entries:
                     if entry.name[-5:] == ".json":
                         self.color_schemes.append(entry.name[:-5])
@@ -30,7 +32,7 @@ class Colors:
             scheme_name = ""
 
             try:
-                with open("json/settings.json") as f:
+                with open(SETTINGS_PATH) as f:
                     settings = json.load(f)
                     scheme_name = settings["default_color_scheme"]
             except OSError:
@@ -40,7 +42,7 @@ class Colors:
         else:
             scheme_name = self.color_schemes[self.color_scheme_index]
 
-        filepath = f"json/color_schemes/{scheme_name}.json"
+        filepath = f"{COLOR_SCHEME_PATH}{scheme_name}.json"
 
         try:
             with open(filepath, 'r') as f:
@@ -61,7 +63,7 @@ class Colors:
 
     def get_color_scheme(self, scheme_name):
         try:
-            with open(f"json/color_schemes/{scheme_name}.json") as f:
+            with open(f"{COLOR_SCHEME_PATH}{scheme_name}.json") as f:
                 return json.load(f)
         except OSError:
             messagebox.showerror("Bad color scheme name",
@@ -97,7 +99,7 @@ class Colors:
             self.load_colors()
 
     def new_color_scheme(self, scheme, name="new_scheme"):
-        filepath = f"json/color_schemes/{name}.json"
+        filepath = f"{COLOR_SCHEME_PATH}{name}.json"
 
         with open(filepath, "w") as f:
             json.dump(scheme, f)

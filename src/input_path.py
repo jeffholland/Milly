@@ -85,14 +85,9 @@ class InputPath(tk.Frame):
     def refresh_colors(self, colors):
         self.colors = colors
 
-        try:
-            self.window.configure(
-                bg=self.colors["BG1"]
-            )
-        except tk.TclError:
-            if DEBUG:
-                messagebox.showinfo("TclError", "Known Bug: Attempt to configure window after destroying it.")
-            return
+        self.window.configure(
+            bg=self.colors["BG1"]
+        )
 
         self.entry.configure(
             bg=self.colors["BG2"],
@@ -129,8 +124,8 @@ class InputPath(tk.Frame):
     def submit(self):
         input_string = self.entry.get()
 
-        if input_string[:5] != "json/":
-            input_string = "json/" + input_string
+        if input_string[:5] != JSON_PATH:
+            input_string = JSON_PATH + input_string
 
         if input_string[-5:] != ".json":
             input_string = input_string + ".json"

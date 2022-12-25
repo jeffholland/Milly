@@ -1,8 +1,6 @@
 from data import get_num_entries
 from constants import *
 
-from sys import exit
-
 class Key:
     def __init__(self, master):
         self.master = master
