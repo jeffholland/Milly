@@ -42,7 +42,7 @@ class Key:
             if event.keysym.lower() == "i":
                 self.master.insert()
 
-            if event.keysym.lower() == "s":
+            if event.keysym.lower() == "s" and self.keys_pressed["shift"] == False:
                 self.master.save()
 
             if event.keysym.lower() == "l":
@@ -97,6 +97,10 @@ class Key:
                 # cmd+shift+x to bring up the export window
                 if event.keysym.lower() == "x":
                     self.master.export()
+
+                # cmd+shift+s to bring up the stats window
+                if event.keysym.lower() == "s":
+                    self.master.show_stats()
 
         # endif cmd key pressed
             

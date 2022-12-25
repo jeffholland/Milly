@@ -1,4 +1,4 @@
-All keyboard shortcuts usable in the main Text widget:
+In the main window's Text widget:
 
 
 return                 submit entry
@@ -7,16 +7,18 @@ cmd+i                  insert entry
 cmd+s                  save
 cmd+l                  load
 cmd+c                  clear
-cmd+backspace          delete top entry
-cmd+shift+backspace    delete bottom entry
-cmd+e                  enter edit selection mode
+cmd+,                  settings
+cmd+f                  find
+cmd+shift+f            remove find filter
+cmd+shift+x            export
+cmd+shift+s            stats
+cmd+shift+h            show/hide checkboxes
+cmd+left               switch color scheme left
+cmd+right              switch color scheme right
+cmd+backspace          delete top
+cmd+shift+backspace    delete bottom
+cmd+e                  edit selection mode
 
-
-
-All keyboard shortcuts usable in the Edit Mode text widget:
-
-
-cmd+s                  save edit
 
 
 EDIT SELECTION MODE
