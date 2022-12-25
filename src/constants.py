@@ -1,20 +1,23 @@
 import platform
 
+
+# general
+
 PLATFORM = platform.system()
 
-# debug mode on/off
+MODE = "normal"
+# MODE = "fullscreen"
 
-DEBUG = True
+
 
 # dimensions
 
 WIDTH = 800
 HEIGHT = 960
 
-MODE = "normal"
-# MODE = "fullscreen"
-
 ENTRY_HEIGHT = 80
+
+
 
 
 # format settings
