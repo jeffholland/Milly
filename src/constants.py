@@ -1,4 +1,5 @@
 import platform
+from os import path
 
 
 # general
@@ -8,12 +9,22 @@ PLATFORM = platform.system()
 MODE = "normal"
 # MODE = "fullscreen"
 
+# CONFIG = "build"
+CONFIG = "run"
+
 
 
 # file paths
 
-JSON_PATH = "json/"
-EXPORT_PATH = "export/"
+HOME_DIR = path.expanduser("~")
+
+ABS_PATH = HOME_DIR + "/Dev/Python/tkinter/milly/"
+
+if CONFIG == "build":
+    ABS_PATH = ABS_PATH + "dist/milly/"
+
+JSON_PATH = ABS_PATH + "json/"
+EXPORT_PATH = ABS_PATH + "export/"
 
 COLOR_SCHEME_PATH = JSON_PATH + "color_schemes/"
 SAVE_DATA_PATH = JSON_PATH + "save_data/"
