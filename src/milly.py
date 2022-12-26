@@ -1,3 +1,11 @@
+"""
+    MILLY
+
+    an assistant for productivity and reflection
+
+"""
+
+
 import tkinter as tk
 
 from colors import Colors

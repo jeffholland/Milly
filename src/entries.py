@@ -18,7 +18,7 @@ class Entries(tk.Frame):
         self.height = height
         self.canvas_object_ids = []
 
-        self.entry_width = self.width - (PADDING * 6)
+        self.entry_width = self.width - (PADDING * 2)
 
         # Booleans for showing and hiding entry features
         self.show_checkboxes = False
@@ -138,7 +138,7 @@ class Entries(tk.Frame):
     def scroll_config(self, event=None):
         self.canvas.configure(
             scrollregion=self.canvas.bbox("all"),
-            width=self.width - 25,
+            width=self.width,
             height=self.height
         )
 
