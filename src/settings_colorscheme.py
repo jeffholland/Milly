@@ -172,8 +172,6 @@ class ColorSchemeSettings(tk.Frame):
         )
         self.ncs_name_entry.bind("<KeyPress>", self.ncs_name_key_pressed)
 
-        self.color_scheme_window = ShowColorSchemes(self)
-
 
     # def show_settings(self):
     #     pass
@@ -313,8 +311,5 @@ class ColorSchemeSettings(tk.Frame):
             self.master.save_settings()
 
     def show_color_schemes(self):
-        try:
-            self.color_scheme_window.window.deiconify()
-        except tk.TclError:
-            self.color_scheme_window.create_widgets()
-            self.color_scheme_window.window.deiconify()
+        self.color_scheme_window = ShowColorSchemes(self)
+        self.color_scheme_window.window.deiconify()
