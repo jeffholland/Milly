@@ -1,13 +1,17 @@
 import json
 
+from constants import SAVE_DATA_PATH
+
 entries = []
 
 last_filepath = ""
 
 def get_last_filepath(short=False):
     if short:
-        # strip "json/" and ".json"
-        return last_filepath[5:-5]
+        # strip the folder path and the .json extension
+        index = len(SAVE_DATA_PATH)
+        shortened = last_filepath[index:-5]
+        return shortened
     return last_filepath
 
 def change_detected():

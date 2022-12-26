@@ -16,6 +16,7 @@ JSON_PATH = "json/"
 EXPORT_PATH = "export/"
 
 COLOR_SCHEME_PATH = JSON_PATH + "color_schemes/"
+SAVE_DATA_PATH = JSON_PATH + "save_data/"
 SETTINGS_PATH = JSON_PATH + "settings.json"
 
 

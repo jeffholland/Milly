@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 
-from os import path
+from os import path, listdir
 
 from constants import *
 from data import get_last_filepath
@@ -14,7 +14,7 @@ class InputPath(tk.Frame):
         self.mode = mode
 
         # Dimensions
-        self.width = 220
+        self.width = 240
         self.height = 80
 
         self.buttons = []
@@ -33,7 +33,8 @@ class InputPath(tk.Frame):
         self.entry = tk.Entry(
             self.window,
             takefocus=1,
-            textvariable=self.entry_var
+            textvariable=self.entry_var,
+            width=14
         )
         self.entry.grid(
             row=0, 
@@ -42,6 +43,18 @@ class InputPath(tk.Frame):
             padx=PADDING,
             pady=PADDING
         )
+
+        self.browse_button = tk.Button(
+            self.window,
+            width=3,
+            text="Browse",
+            command=self.show_browser
+        )
+        self.browse_button.grid(
+            row=0,
+            column=2
+        )
+        self.buttons.append(self.browse_button)
 
         self.entry_var.set(get_last_filepath(short=True))
 
@@ -57,7 +70,7 @@ class InputPath(tk.Frame):
             command=self.cancel
         )
         self.cancel_button.grid(
-            row=1,
+            row=2,
             column=0
         )
         self.buttons.append(self.cancel_button)
@@ -68,7 +81,7 @@ class InputPath(tk.Frame):
             command=self.submit
         )
         self.ok_button.grid(
-            row=1,
+            row=2,
             column=1
         )
         self.buttons.append(self.ok_button)
@@ -80,6 +93,14 @@ class InputPath(tk.Frame):
             self.ok_button.configure(width=1)
             self.cancel_button.configure(width=2)
 
+
+        # File browser - only shows when Browse button is pressed
+        self.browser_var = tk.StringVar()
+        self.browser = tk.Listbox(
+            self.window,
+            listvariable=self.browser_var
+        )
+        self.browser.bind("<<ListboxSelect>>", self.browser_callback)
 
 
     def refresh_colors(self, colors):
@@ -124,8 +145,8 @@ class InputPath(tk.Frame):
     def submit(self):
         input_string = self.entry.get()
 
-        if input_string[:5] != JSON_PATH:
-            input_string = JSON_PATH + input_string
+        if SAVE_DATA_PATH not in input_string:
+            input_string = SAVE_DATA_PATH + input_string
 
         if input_string[-5:] != ".json":
             input_string = input_string + ".json"
@@ -145,3 +166,38 @@ class InputPath(tk.Frame):
         self.window.update()
         self.master.winfo_toplevel().deiconify()
         self.master.input.focus_set()
+
+
+    def show_browser(self):
+        # Filter .json files
+        files = []
+        for file in listdir(SAVE_DATA_PATH):
+            # json file - remove .json extension
+            if file[-5:] == ".json":
+                files.append(file[:-5])
+            # directory - add a > symbol
+            else:
+                files.append(file + "/")
+
+        self.browser_var.set(files)
+
+        self.browser.grid(
+            row=1,
+            column=0,
+            columnspan=2,
+            padx=PADDING,
+            pady=PADDING
+        )
+
+        self.window.geometry("280x300")
+
+
+    def browser_callback(self, event):
+        w = event.widget
+        try:
+            index = int(w.curselection()[0])
+            value = w.get(index)
+            self.entry_var.set(value)
+        except IndexError:
+            # no selection, nothing to do
+            return
