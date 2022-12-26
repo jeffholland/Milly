@@ -19,6 +19,8 @@ class InputPath(tk.Frame):
 
         self.buttons = []
 
+        self.load_path = SAVE_DATA_PATH
+
         self.create_widgets()
 
 
@@ -148,8 +150,8 @@ class InputPath(tk.Frame):
     def submit(self):
         input_string = self.entry.get()
 
-        if SAVE_DATA_PATH not in input_string:
-            input_string = SAVE_DATA_PATH + input_string
+        if self.load_path not in input_string:
+            input_string = self.load_path + input_string
 
         if input_string[-5:] != ".json":
             input_string = input_string + ".json"
@@ -222,12 +224,14 @@ class InputPath(tk.Frame):
             # Select directory
             if value[-1] == "/":
                 # List files in this directory (back button at the top)
-                values = self.list_files(SAVE_DATA_PATH + value)
+                self.load_path = self.load_path + value
+                values = self.list_files(self.load_path)
                 values.insert(0, "(back)")
                 self.browser_var.set(values)
             # Select back button
             if value == "(back)":
-                self.browser_var.set(self.list_files(SAVE_DATA_PATH))
+                self.load_path = SAVE_DATA_PATH
+                self.browser_var.set(self.list_files(self.load_path))
             # Select file (not directory or back button)
             if value[-1] != "/" and value != "(back)":
                 # File already selected in entry box, so we can just submit
