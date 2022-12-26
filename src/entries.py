@@ -85,25 +85,11 @@ class Entries(tk.Frame):
 
     def create_widgets(self):
         self.canvas = tk.Canvas(self)
-        self.scrollbar = tk.Scrollbar(self,
-            orient="vertical",
-            command=self.canvas.yview,
-            width=20,
-            takefocus=0
-        )
-        self.canvas.configure(
-            yscrollcommand=self.scrollbar.set
-        )
         self.container = tk.Frame(
             self.canvas
         )
         self.canvas.grid(row=0, column=0)
         self.scroll_config()
-        self.scrollbar.grid(
-            row=0, 
-            column=1, 
-            sticky="ns"
-        )
 
         self.canvas_object_ids.append(
             self.canvas.create_window(
@@ -143,7 +129,10 @@ class Entries(tk.Frame):
 
     
     def on_mouse_wheel(self, event):
-        self.canvas.yview_scroll(-1*(event.delta), "units")
+        if PLATFORM == "Windows":
+            self.canvas.yview_scroll(-1*(event.delta/120), "units")
+        else:
+            self.canvas.yview_scroll(-1*(event.delta), "units")
 
 
     def scroll_config(self, event=None):
@@ -161,12 +150,6 @@ class Entries(tk.Frame):
         self.container.configure(bg=self.colors["HL1"])
 
         self.canvas.configure(bg=self.colors["HL1"])
-
-        self.scrollbar.configure(
-            bg=self.colors["BG2"],
-            highlightbackground=self.colors["HL1"],
-            highlightcolor=self.colors["HL1"]
-        )
 
         for entry in self.entries:
             entry.refresh_colors(colors)
