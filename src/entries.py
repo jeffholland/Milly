@@ -137,6 +137,15 @@ class Entries(tk.Frame):
         self.export_window.window.withdraw()
 
 
+        # Scroll with mouse wheel
+
+        self.canvas.bind_all("<MouseWheel>", self.on_mouse_wheel)
+
+    
+    def on_mouse_wheel(self, event):
+        self.canvas.yview_scroll(-1*(event.delta), "units")
+
+
     def scroll_config(self, event=None):
         self.canvas.configure(
             scrollregion=self.canvas.bbox("all"),
