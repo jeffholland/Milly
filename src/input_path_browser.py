@@ -35,21 +35,24 @@ class InputPathBrowser(tk.Frame):
         self.new_folder_button = tk.Button(
             self.master.window,
             text="New folder",
-            width=5
+            width=5,
+            command=self.new_folder
         )
         self.buttons.append(self.new_folder_button)
 
         self.rename_button = tk.Button(
             self.master.window,
             text="Rename",
-            width=3
+            width=3,
+            command=self.rename
         )
         self.buttons.append(self.rename_button)
 
         self.delete_button = tk.Button(
             self.master.window,
             text="Delete",
-            width=3
+            width=3,
+            command=self.delete
         )
         self.buttons.append(self.delete_button)
 
@@ -99,7 +102,7 @@ class InputPathBrowser(tk.Frame):
             value = w.get(index)
             # If not a directory (therefore a json file)
             if value[-1] != "/":
-                self.entry_var.set(value)
+                self.master.entry_var.set(value)
         except IndexError:
             # no selection, nothing to do
             return
@@ -113,18 +116,18 @@ class InputPathBrowser(tk.Frame):
             # Select directory
             if value[-1] == "/":
                 # List files in this directory (back button at the top)
-                self.load_path = self.load_path + value
-                values = self.list_files(self.load_path)
+                self.master.load_path = self.master.load_path + value
+                values = self.list_files(self.master.load_path)
                 values.insert(0, "(back)")
                 self.browser_var.set(values)
             # Select back button
             if value == "(back)":
-                self.load_path = SAVE_DATA_PATH
-                self.browser_var.set(self.list_files(self.load_path))
+                self.master.load_path = SAVE_DATA_PATH
+                self.browser_var.set(self.list_files(self.master.load_path))
             # Select file (not directory or back button)
             if value[-1] != "/" and value != "(back)":
                 # File already selected in entry box, so we can just submit
-                self.submit()
+                self.master.submit()
         except IndexError:
             # no selection, nothing to do
             return
@@ -147,3 +150,27 @@ class InputPathBrowser(tk.Frame):
 
         files.sort()
         return files
+
+
+    # Button handlers
+
+    def new_folder(self):
+        print("new folder")
+
+    def rename(self):
+        try:
+            index = self.browser.curselection()[0]
+            print(self.browser.get(index))
+        except IndexError:
+            print("nothing to rename")
+            # no selection, nothing to do
+            return
+
+    def delete(self):
+        try:
+            index = self.browser.curselection()[0]
+            print(self.browser.get(index))
+        except IndexError:
+            print("nothing to delete")
+            # no selection, nothing to do
+            return

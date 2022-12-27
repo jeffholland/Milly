@@ -19,10 +19,10 @@ class InputPath(tk.Frame):
         self.height = 80
 
         self.buttons = []
-
-        self.load_path = SAVE_DATA_PATH
         
         self.cmd_key_pressed = False
+
+        self.load_path = SAVE_DATA_PATH
 
         self.create_widgets()
 
