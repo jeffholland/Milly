@@ -1,10 +1,11 @@
 import tkinter as tk
 from tkinter import messagebox
 
-from os import path, listdir
+from os import path
 
 from constants import *
 from data import get_last_filepath
+from input_path_browser import InputPathBrowser
 
 class InputPath(tk.Frame):
     def __init__(self, master, mode):
@@ -20,6 +21,8 @@ class InputPath(tk.Frame):
         self.buttons = []
 
         self.load_path = SAVE_DATA_PATH
+        
+        self.cmd_key_pressed = False
 
         self.create_widgets()
 
@@ -60,7 +63,7 @@ class InputPath(tk.Frame):
             command=self.cancel
         )
         self.cancel_button.grid(
-            row=2,
+            row=6,
             column=0
         )
         self.buttons.append(self.cancel_button)
@@ -71,7 +74,7 @@ class InputPath(tk.Frame):
             command=self.submit
         )
         self.ok_button.grid(
-            row=2,
+            row=6,
             column=1
         )
         self.buttons.append(self.ok_button)
@@ -85,27 +88,19 @@ class InputPath(tk.Frame):
 
 
         if self.mode == "load":
+            self.browser = InputPathBrowser(self)
 
-            self.browse_button = tk.Button(
-                self.window,
-                width=3,
-                text="Browse",
-                command=self.show_browser
-            )
-            self.browse_button.grid(
-                row=0,
-                column=2
-            )
-            self.buttons.append(self.browse_button)
-
-            # File browser - only shows when Browse button is pressed
-            self.browser_var = tk.StringVar()
-            self.browser = tk.Listbox(
-                self.window,
-                listvariable=self.browser_var
-            )
-            self.browser.bind("<<ListboxSelect>>", self.browser_callback)
-            self.browser.bind("<Double-1>", self.browser_doubleclick)
+        self.browse_button = tk.Button(
+            self.window,
+            width=3,
+            text="Browse",
+            command=self.browser.show_browser
+        )
+        self.browse_button.grid(
+            row=0,
+            column=2
+        )
+        self.buttons.append(self.browse_button)
 
 
     def refresh_colors(self, colors):
@@ -134,17 +129,31 @@ class InputPath(tk.Frame):
     
 
     def key_press(self, event):
-        if (event.keysym == "Return"):
+        if event.keysym == "Return":
             self.submit()
+
+        if PLATFORM == "Windows":
+            if "Control" in event.keysym:
+                self.cmd_key_pressed = True
+        else:
+            if "Meta" in event.keysym:
+                self.cmd_key_pressed = True
+
+        if self.cmd_key_pressed:
+            if event.keysym.lower() == "b":
+                self.browser.show_browser()
+                
 
     def key_release(self, event):
         # Release command key while in other window
         if PLATFORM == "Windows":
             if "Control" in event.keysym:
                 self.master.key.keys_pressed["cmd"] = False
+                self.cmd_key_pressed = False
         else:
             if "Meta" in event.keysym:
                 self.master.key.keys_pressed["cmd"] = False
+                self.cmd_key_pressed = False
                 
 
     def submit(self):
@@ -172,70 +181,10 @@ class InputPath(tk.Frame):
         self.master.winfo_toplevel().deiconify()
         self.master.input.focus_set()
 
+    
+    # Utility for getting the window back to normal size
+    def reset_window(self):
+        self.window.geometry(f"{self.width}x{self.height}")
 
-    # Utility for getting a list of files in a path,
-    # formatted to my liking
-    def list_files(self, path):
-        # Filter .json files
-        files = []
-        for file in listdir(path):
-            # json file - remove .json extension
-            if file[-5:] == ".json":
-                files.append(file[:-5])
-            # directory - add a > symbol
-            else:
-                files.append(file + "/")
-        return files
-
-
-    def show_browser(self):
-        self.browser_var.set(self.list_files(SAVE_DATA_PATH))
-
-        self.browser.grid(
-            row=1,
-            column=0,
-            columnspan=2,
-            padx=PADDING,
-            pady=PADDING
-        )
-
-        self.window.geometry("280x300")
-
-
-    # Single click to select a json file
-    def browser_callback(self, event):
-        w = event.widget
-        try:
-            index = int(w.curselection()[0])
-            value = w.get(index)
-            # If not a directory (therefore a json file)
-            if value[-1] != "/":
-                self.entry_var.set(value)
-        except IndexError:
-            # no selection, nothing to do
-            return
-
-    # Double click to select file or enter directory
-    def browser_doubleclick(self, event):
-        w = event.widget
-        try:
-            index = int(w.curselection()[0])
-            value = w.get(index)
-            # Select directory
-            if value[-1] == "/":
-                # List files in this directory (back button at the top)
-                self.load_path = self.load_path + value
-                values = self.list_files(self.load_path)
-                values.insert(0, "(back)")
-                self.browser_var.set(values)
-            # Select back button
-            if value == "(back)":
-                self.load_path = SAVE_DATA_PATH
-                self.browser_var.set(self.list_files(self.load_path))
-            # Select file (not directory or back button)
-            if value[-1] != "/" and value != "(back)":
-                # File already selected in entry box, so we can just submit
-                self.submit()
-        except IndexError:
-            # no selection, nothing to do
-            return
+    def test(self):
+        print("hello...")
