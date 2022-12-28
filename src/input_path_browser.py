@@ -1,6 +1,7 @@
 import tkinter as tk
 
-from os import listdir, mkdir, rename
+from os import listdir, mkdir, rename, rmdir, remove
+from shutil import rmtree
 
 from constants import *
 
@@ -201,14 +202,33 @@ class InputPathBrowser(tk.Frame):
 
         self.hide_name_window()
 
+
+
     def delete(self):
         try:
             index = self.browser.curselection()[0]
-            print(self.browser.get(index))
+            self.selected = self.browser.get(index)
+            path = self.master.load_path + self.selected
+
+            if path[-1] == "/":
+                # Remove directory
+                if len(listdir(path)) == 0:
+                    # Remove empty directory
+                    rmdir(path)
+                else:
+                    # Remove directory with files
+                    rmtree(path)
+            else:
+                # Remove json file
+                remove(path + ".json")
+
         except IndexError:
             print("nothing to delete")
             # no selection, nothing to do
             return
+
+        self.show_browser(override=True)
+
 
 
     # Name window, used for creating and renaming files and folders
