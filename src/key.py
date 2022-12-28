@@ -51,6 +51,10 @@ class Key:
             if event.keysym.lower() == "c":
                 self.master.clear()
 
+            if event.keysym.lower() == "b":
+                self.master.load()
+                self.master.input_path.browser.show_browser()
+
             if event.keysym == "BackSpace":
                 if self.keys_pressed["shift"] == True:
                     self.master.remove_last_entry()
