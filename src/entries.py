@@ -4,6 +4,7 @@ import tkinter.font as tkFont
 from constants import *
 from data import get_entries
 from entry import Entry
+from entry_group import EntryGroup
 from export import ExportWindow
 
 class Entries(tk.Frame):
@@ -38,12 +39,36 @@ class Entries(tk.Frame):
     # put on the screen.
 
     def refresh_entries(self):
-        self.entries_data = get_entries()
+
+        # Clear entries
 
         for entry in self.entries:
             entry.grid_forget()
 
         self.entries.clear()
+
+        # Get data
+
+        self.entries_data = get_entries()
+
+        # Entry group (experimental)
+        
+        self.group = EntryGroup(
+            self.container,
+            width=self.entry_width,
+            entry_height=ENTRY_HEIGHT,
+            entries_data=self.entries_data,
+            name="My Group"
+        )
+        self.group.grid_propagate(0)
+        self.group.grid(
+            row=0, 
+            column=0,
+            padx=PADDING,
+            pady=PADDING
+        )
+
+        # Show entries
 
         for count in range(len(self.entries_data)):
             try:
@@ -73,7 +98,7 @@ class Entries(tk.Frame):
             ))
             self.entries[count].grid_propagate(0)
             self.entries[count].grid(
-                row=count, 
+                row=count + 1, 
                 column=0,
                 padx=PADDING, 
                 pady=PADDING
@@ -150,6 +175,8 @@ class Entries(tk.Frame):
         self.container.configure(bg=self.colors["HL1"])
 
         self.canvas.configure(bg=self.colors["HL1"])
+
+        self.group.refresh_colors(colors)
 
         for entry in self.entries:
             entry.refresh_colors(colors)

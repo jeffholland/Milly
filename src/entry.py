@@ -30,13 +30,6 @@ class Entry(tk.Frame):
         length = len(self.text)
         newline_count = self.text.count('\n')
 
-        # To make sure the Entry is tall enough if there are a 
-        # lot of line breaks
-        if newline_count > 0:
-            avg_line_length = len(self.text) / newline_count
-        else:
-            avg_line_length = len(self.text)
-
         # include a checkbox or not
         self.check_bool = checkbox
         # checkbox is checked or not
@@ -53,6 +46,13 @@ class Entry(tk.Frame):
         }
 
         # Variable height
+
+        # To make sure the Entry is tall enough if there are a 
+        # lot of line breaks
+        if newline_count > 0:
+            avg_line_length = len(self.text) / newline_count
+        else:
+            avg_line_length = len(self.text)
 
         if MODE == "fullscreen":
             vh_constant = 9.0
