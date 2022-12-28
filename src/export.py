@@ -230,12 +230,16 @@ class ExportWindow(tk.Frame):
                 row += self.master.entries[count].time + " - "
             row += self.master.entries[count].text
 
+            fill = False
+            if self.colors_var.get() == 1:
+                fill = True
+
             pdf.multi_cell(
                 w=180,
                 h=floor(self.master.entries[count].height / 4),
                 txt=row,
                 border=1,
-                fill=True
+                fill=fill
             )
 
         pdf.output(filename)

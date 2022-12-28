@@ -90,17 +90,17 @@ class InputPath(tk.Frame):
         if self.mode == "load":
             self.browser = InputPathBrowser(self)
 
-        self.browse_button = tk.Button(
-            self.window,
-            width=3,
-            text="Browse",
-            command=self.browser.show_browser
-        )
-        self.browse_button.grid(
-            row=0,
-            column=2
-        )
-        self.buttons.append(self.browse_button)
+            self.browse_button = tk.Button(
+                self.window,
+                width=3,
+                text="Browse",
+                command=self.browser.show_browser
+            )
+            self.browse_button.grid(
+                row=0,
+                column=2
+            )
+            self.buttons.append(self.browse_button)
 
 
     def refresh_colors(self, colors):
