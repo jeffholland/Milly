@@ -46,3 +46,19 @@ class InsertPrompt(tk.Frame):
         else:
             if "Meta" in event.keysym:
                 self.master.key.keys_pressed["cmd"] = False
+
+
+
+    def refresh_colors(self, colors):
+        self.colors = colors
+
+        self.window.configure(
+            bg=self.colors["BG2"]
+        )
+
+        self.spinbox.configure(
+            bg=self.colors["BG1"],
+            fg=self.colors["HL2"],
+            highlightbackground=self.colors["HL1"],
+            highlightcolor=self.colors["HL2"]
+        )

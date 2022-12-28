@@ -143,6 +143,7 @@ class Input(tk.Frame):
             self.submit()
         else:
             self.insert_prompt = InsertPrompt(self)
+            self.insert_prompt.refresh_colors(self.colors)
 
     def save(self, and_exit=False):
         self.input_path = InputPath(self, "save")
