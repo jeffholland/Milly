@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from os import listdir
+from os import listdir, mkdir, rename
 
 from constants import *
 
@@ -14,6 +14,10 @@ class InputPathBrowser(tk.Frame):
         self.buttons = []
 
         self.browser_shown = False
+
+        self.name_window = None
+
+        self.selected = None
         
         self.create_widgets()
 
@@ -61,9 +65,9 @@ class InputPathBrowser(tk.Frame):
 
 
 
-    def show_browser(self):
+    def show_browser(self, override=False):
 
-        if not self.browser_shown:
+        if (not self.browser_shown or override):
             self.browser_var.set(self.list_files(SAVE_DATA_PATH))
 
             self.browser.grid(
@@ -99,10 +103,12 @@ class InputPathBrowser(tk.Frame):
         w = event.widget
         try:
             index = int(w.curselection()[0])
-            value = w.get(index)
+            self.selected = w.get(index)
+
             # If not a directory (therefore a json file)
-            if value[-1] != "/":
-                self.master.entry_var.set(value)
+            # and also not the back button
+            if self.selected[-1] != "/" and self.selected != "(back)":
+                self.master.entry_var.set(self.selected)
         except IndexError:
             # no selection, nothing to do
             return
@@ -112,20 +118,20 @@ class InputPathBrowser(tk.Frame):
         w = event.widget
         try:
             index = int(w.curselection()[0])
-            value = w.get(index)
+            self.selected = w.get(index)
             # Select directory
-            if value[-1] == "/":
+            if self.selected[-1] == "/":
                 # List files in this directory (back button at the top)
-                self.master.load_path = self.master.load_path + value
-                values = self.list_files(self.master.load_path)
-                values.insert(0, "(back)")
-                self.browser_var.set(values)
+                self.master.load_path = self.master.load_path + self.selected
+                self.selecteds = self.list_files(self.master.load_path)
+                self.selecteds.insert(0, "(back)")
+                self.browser_var.set(self.selecteds)
             # Select back button
-            if value == "(back)":
+            if self.selected == "(back)":
                 self.master.load_path = SAVE_DATA_PATH
                 self.browser_var.set(self.list_files(self.master.load_path))
             # Select file (not directory or back button)
-            if value[-1] != "/" and value != "(back)":
+            if self.selected[-1] != "/" and self.selected != "(back)":
                 # File already selected in entry box, so we can just submit
                 self.master.submit()
         except IndexError:
@@ -155,16 +161,45 @@ class InputPathBrowser(tk.Frame):
     # Button handlers
 
     def new_folder(self):
-        print("new folder")
+        self.show_name_window(mode="new_folder")
+
+    def new_folder_submit(self):
+        path = self.master.load_path + self.name_entry.get()
+
+        try:
+            mkdir(path)
+        except FileExistsError:
+            # if the folder already exists, just close and do nothing
+            pass
+
+        self.hide_name_window()
+
+
 
     def rename(self):
         try:
             index = self.browser.curselection()[0]
-            print(self.browser.get(index))
+            self.selected = self.browser.get(index)
         except IndexError:
-            print("nothing to rename")
             # no selection, nothing to do
             return
+        self.show_name_window(mode="rename")
+
+    def rename_submit(self):
+
+        if self.selected[-1] == "/":
+            # rename directory
+            old_path = self.master.load_path + self.selected
+            new_path = self.master.load_path + self.name_entry.get()
+        else:
+            # rename json file
+            old_path = self.master.load_path + self.selected + ".json"
+            new_path = self.master.load_path + self.name_entry.get() + ".json"
+            self.master.entry_var.set(self.name_entry.get())
+
+        rename(old_path, new_path)
+
+        self.hide_name_window()
 
     def delete(self):
         try:
@@ -174,3 +209,39 @@ class InputPathBrowser(tk.Frame):
             print("nothing to delete")
             # no selection, nothing to do
             return
+
+
+    # Name window, used for creating and renaming files and folders
+
+    def show_name_window(self, mode):
+        self.name_window_mode = mode
+
+        self.name_window = tk.Toplevel(self)
+        self.name_window.geometry("100x50")
+
+        self.name_entry = tk.Entry(
+            self.name_window, 
+            width=8
+        )
+        self.name_entry.grid(
+            row=0, 
+            column=0, 
+            padx=PADDING, 
+            pady=PADDING
+        )
+        self.name_entry.bind("<KeyPress>", self.name_entry_key_pressed)
+        self.name_entry.focus_set()
+
+    def hide_name_window(self):
+        self.name_window.destroy()
+        self.name_window = None
+
+        self.show_browser(override=True)
+        self.master.window.deiconify()
+
+    def name_entry_key_pressed(self, event):
+        if event.keysym == "Return":
+            if self.name_window_mode == "new_folder":
+                self.new_folder_submit()
+            elif self.name_window_mode == "rename":
+                self.rename_submit()

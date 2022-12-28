@@ -185,6 +185,3 @@ class InputPath(tk.Frame):
     # Utility for getting the window back to normal size
     def reset_window(self):
         self.window.geometry(f"{self.width}x{self.height}")
-
-    def test(self):
-        print("hello...")
