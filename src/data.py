@@ -76,6 +76,18 @@ def get_entries():
 def get_num_entries():
     return len(entries)
 
+def get_num_unchecked_entries():
+    num_unchecked_entries = 0
+
+    for entry in entries:
+        try:
+            if entry["checked"] == False:
+                num_unchecked_entries += 1
+        except KeyError:
+            num_unchecked_entries += 1
+
+    return num_unchecked_entries
+
 def create_entry(text):
     return {
         "date": date.strftime(date.today(), "%A") + " " + str(date.today()),

@@ -154,6 +154,7 @@ class Input(tk.Frame):
 
     def load(self):
         self.input_path = InputPath(self, "load")
+        self.input_path.refresh_colors(self.colors)
 
     def save_submit(self, filepath):
         save_entries(filepath)

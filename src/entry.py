@@ -315,7 +315,7 @@ class Entry(tk.Frame):
 
     def bottom_pressed(self):
         if self.index < get_num_entries() - 1:
-            move_entry(self.index, get_num_entries() - 1)
+            move_entry(self.index, get_num_unchecked_entries() - 1)
             self.master.master.master.refresh_entries()
 
     def checkbox_pressed(self):

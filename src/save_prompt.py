@@ -78,6 +78,8 @@ class SavePrompt(tk.Frame):
         )
         self.buttons.append(self.cancel_button)
 
+        self.bind_all("<KeyRelease>", self.key_released)
+
 
 
     def refresh_colors(self, colors):
@@ -111,3 +113,14 @@ class SavePrompt(tk.Frame):
 
     def cancel_pressed(self):
         self.window.destroy()
+
+
+
+    def key_released(self, event):
+        # Release command key while in other window
+        if PLATFORM == "Windows":
+            if "Control" in event.keysym:
+                self.master.key.keys_pressed["cmd"] = False
+        else:
+            if "Meta" in event.keysym:
+                self.master.key.keys_pressed["cmd"] = False
