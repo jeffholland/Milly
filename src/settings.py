@@ -29,8 +29,6 @@ class Settings(tk.Frame):
         self.load_settings()
 
         self.cmd_pressed = False
-        # self.bind_all("<KeyPress>", self.key_pressed)
-        # self.bind_all("<KeyRelease>", self.key_released)
 
         self.create_widgets()
 
