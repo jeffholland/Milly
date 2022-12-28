@@ -79,7 +79,13 @@ class InputPathBrowser(tk.Frame):
     def show_browser(self, override=False):
 
         if (not self.browser_shown or override):
-            self.browser_var.set(self.list_files(SAVE_DATA_PATH))
+            files = self.list_files(self.master.load_path)
+
+            # Add a back button if we are not at root save folder
+            if self.master.load_path != SAVE_DATA_PATH:
+                files.insert(0, "(back)")
+
+            self.browser_var.set(files)
 
             self.browser.grid(
                 row=1,
