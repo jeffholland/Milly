@@ -1,6 +1,8 @@
 import tkinter as tk
+from tkinter import messagebox
 
 from os import listdir, mkdir, rename, rmdir, remove
+from os.path import isfile
 from shutil import rmtree
 
 from constants import *
@@ -44,6 +46,14 @@ class InputPathBrowser(tk.Frame):
             command=self.new_folder
         )
         self.buttons.append(self.new_folder_button)
+
+        self.new_file_button = tk.Button(
+            self.master.window,
+            text="New file",
+            width=4,
+            command=self.new_file
+        )
+        self.buttons.append(self.new_file_button)
 
         self.rename_button = tk.Button(
             self.master.window,
@@ -111,7 +121,8 @@ class InputPathBrowser(tk.Frame):
             if self.selected[-1] != "/" and self.selected != "(back)":
                 self.master.entry_var.set(self.selected)
         except IndexError:
-            # no selection, nothing to do
+            # somehow this function was called with no selection
+            # ignore it and do nothing
             return
 
     # Double click to select file or enter directory
@@ -136,7 +147,8 @@ class InputPathBrowser(tk.Frame):
                 # File already selected in entry box, so we can just submit
                 self.master.submit()
         except IndexError:
-            # no selection, nothing to do
+            # somehow this function was called with no selection
+            # ignore it and do nothing
             return
 
 
@@ -170,8 +182,25 @@ class InputPathBrowser(tk.Frame):
         try:
             mkdir(path)
         except FileExistsError:
-            # if the folder already exists, just close and do nothing
+            messagebox.showinfo("folder already exists",
+                "The folder you tried to create already exists.")
             pass
+
+        self.hide_name_window()
+
+
+
+    def new_file(self):
+        self.show_name_window(mode="new_file")
+
+    def new_file_submit(self):
+        path = self.master.load_path + self.name_entry.get()
+
+        if isfile(path):
+            messagebox.showerror("file already exists",
+                "The file you tried to create already exists")
+        else:
+            open(path + ".json", "w")
 
         self.hide_name_window()
 
@@ -182,7 +211,8 @@ class InputPathBrowser(tk.Frame):
             index = self.browser.curselection()[0]
             self.selected = self.browser.get(index)
         except IndexError:
-            # no selection, nothing to do
+            messagebox.showinfo("rename without selection",
+                "Please select a folder or file to rename.")
             return
         self.show_name_window(mode="rename")
 
@@ -223,8 +253,8 @@ class InputPathBrowser(tk.Frame):
                 remove(path + ".json")
 
         except IndexError:
-            print("nothing to delete")
-            # no selection, nothing to do
+            messagebox.showinfo("delete without selection",
+                "Please select a folder or file to delete.")
             return
 
         self.show_browser(override=True)
@@ -263,5 +293,7 @@ class InputPathBrowser(tk.Frame):
         if event.keysym == "Return":
             if self.name_window_mode == "new_folder":
                 self.new_folder_submit()
+            elif self.name_window_mode == "new_file":
+                self.new_file_submit()
             elif self.name_window_mode == "rename":
                 self.rename_submit()
