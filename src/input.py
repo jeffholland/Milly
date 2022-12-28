@@ -125,6 +125,7 @@ class Input(tk.Frame):
     def destroy(self, event=None):
         if change_detected():
             self.save_prompt = SavePrompt(self)
+            self.save_prompt.refresh_colors(self.colors)
         else:
             exit()
 
@@ -145,6 +146,7 @@ class Input(tk.Frame):
 
     def save(self, and_exit=False):
         self.input_path = InputPath(self, "save")
+        self.input_path.refresh_colors(self.colors)
 
         if and_exit:
             self.exit_after_saving = True
