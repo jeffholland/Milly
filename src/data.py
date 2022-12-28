@@ -49,7 +49,13 @@ def load_entries(filepath):
 
     with f:
         global entries
-        entries = json.load(f)
+        try:
+            entries = json.load(f)
+        except json.decoder.JSONDecodeError:
+            # File is empty, ignore.
+            # (it will look to the user like an empty file was just opened,
+            # which is fine because that's apparently what they wanted!)
+            return
 
     global last_filepath
     last_filepath = filepath
