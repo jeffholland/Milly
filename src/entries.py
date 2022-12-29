@@ -52,7 +52,7 @@ class Entries(tk.Frame):
         self.entries_data = get_entries()
 
 
-        # Entry group (experimental)
+        # Entry group
 
         self.group_data = []
         group_name = "My Group"
@@ -97,26 +97,33 @@ class Entries(tk.Frame):
             if self.show_times:
                 entry_time = self.entries_data[count]["time"]
 
-            self.entries.append(Entry(
-                self.container,
-                date=entry_date,
-                time=entry_time,
-                menu=self.show_menu,
-                text=self.entries_data[count]["text"],
-                width=self.entry_width,
-                height=ENTRY_HEIGHT,
-                index=count,
-                font=self.font,
-                checkbox=self.show_checkboxes,
-                checked=checked_bool
-            ))
-            self.entries[count].grid_propagate(0)
-            self.entries[count].grid(
-                row=count + 1, 
-                column=0,
-                padx=PADDING, 
-                pady=PADDING
-            )
+            try:
+                if self.entries_data[count]["group"] == group_name:
+                    pass
+            except KeyError:
+                self.entries_data[count]["group"] = "None"
+
+            if self.entries_data[count]["group"] == "None":
+                self.entries.append(Entry(
+                    self.container,
+                    date=entry_date,
+                    time=entry_time,
+                    menu=self.show_menu,
+                    text=self.entries_data[count]["text"],
+                    width=self.entry_width,
+                    height=ENTRY_HEIGHT,
+                    index=count,
+                    font=self.font,
+                    checkbox=self.show_checkboxes,
+                    checked=checked_bool
+                ))
+                self.entries[count - len(self.group_data)].grid_propagate(0)
+                self.entries[count - len(self.group_data)].grid(
+                    row=count + 1, 
+                    column=0,
+                    padx=PADDING, 
+                    pady=PADDING
+                )
         if self.colors:
             self.refresh_colors(self.colors)
 
