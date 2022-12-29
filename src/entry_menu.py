@@ -129,6 +129,18 @@ class EntryMenu(tk.Frame):
         )
         self.buttons.append(self.copy_button)
 
+        self.group_button = tk.Button(
+            self,
+            text="group",
+            width=self.button_width,
+            command=self.master.group_pressed
+        )
+        self.group_button.grid(
+            row=0,
+            column=9
+        )
+        self.buttons.append(self.group_button)
+
         if PLATFORM != "Windows":
             self.copy_button.configure(width=self.button_width * 2)
 
@@ -140,7 +152,7 @@ class EntryMenu(tk.Frame):
         )
         self.x_button.grid(
             row=0,
-            column=9
+            column=10
         )
         self.buttons.append(self.x_button)
         if PLATFORM == "Windows":

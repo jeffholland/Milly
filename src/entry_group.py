@@ -99,4 +99,6 @@ class EntryGroup(tk.Frame):
         for entry in self.entries:
             self.height += entry.height + PADDING * 2
 
+        self.height += 80
+
         self.configure(height=self.height)

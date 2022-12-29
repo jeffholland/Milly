@@ -318,6 +318,11 @@ class Entry(tk.Frame):
             move_entry(self.index, get_num_unchecked_entries())
             self.master.master.master.refresh_entries()
 
+    def group_pressed(self):
+        self.master.master.master.entries_data[self.index]["group"] = "My Group"
+        self.master.master.master.refresh_entries()
+
+
     def checkbox_pressed(self):
         # Move entries to bottom when checked
         if self.checkbox_var.get() == 1:
