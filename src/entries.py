@@ -51,14 +51,28 @@ class Entries(tk.Frame):
 
         self.entries_data = get_entries()
 
+
         # Entry group (experimental)
+
+        self.group_data = []
+        group_name = "My Group"
+
+        # if len(self.entries_data) > 0:
+        #     self.entries_data[0]["group"] = group_name
+
+        for entry in self.entries_data:
+            try:
+                if entry["group"] == group_name:
+                    self.group_data.append(entry)
+            except KeyError:
+                pass
         
         self.group = EntryGroup(
             self.container,
             width=self.entry_width,
             entry_height=ENTRY_HEIGHT,
-            entries_data=self.entries_data,
-            name="My Group"
+            entries_data=self.group_data,
+            name=group_name
         )
         self.group.grid_propagate(0)
         self.group.grid(

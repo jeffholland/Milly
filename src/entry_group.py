@@ -38,6 +38,13 @@ class EntryGroup(tk.Frame):
             self,
             text=self.name
         )
+        self.name_label.grid(
+            row=0,
+            column=0,
+            columnspan=5,
+            padx=PADDING,
+            pady=PADDING
+        )
 
         # Show entries
 
@@ -69,7 +76,7 @@ class EntryGroup(tk.Frame):
             ))
             self.entries[count].grid_propagate(0)
             self.entries[count].grid(
-                row=count, 
+                row=count + 1, 
                 column=0,
                 padx=PADDING, 
                 pady=PADDING
@@ -80,6 +87,11 @@ class EntryGroup(tk.Frame):
         self.colors = colors
 
         self.configure(bg=self.colors["BG2"])
+
+        self.name_label.configure(
+            bg=self.colors["BG2"],
+            fg=self.colors["HL2"]
+        )
 
     def calculate_height(self):
         self.height = 0
