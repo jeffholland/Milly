@@ -31,6 +31,27 @@ class Entries(tk.Frame):
 
         self.font = tkFont.Font(self, family="Helvetica", size=14)
 
+
+        # Array initialization
+
+        # Contains a list of all Entry objects
+        self.entries = []
+
+        # Contains a list of dicts containing all Entry data
+        self.entries_data = []
+
+        # Contains a list of Entry groups
+        self.entry_groups = []
+
+        # Contains a list of ungrouped Entry objects
+        self.ungrouped_entries = []
+
+        # Contains a filtered list of Entry objects (for cmd+f search)
+        self.filtered_entries = []
+
+        # Contains a filtered list of dicts (for cmd+f search)
+        self.filtered_entries_data = []
+
         self.create_widgets()
 
 
@@ -38,49 +59,70 @@ class Entries(tk.Frame):
     # IMPORTANT: this is the function where the entries get
     # put on the screen.
 
-    def refresh_entries(self):
+    def refresh_entries(self, refresh_data=True):
 
         # Clear entries
 
         for entry in self.entries:
             entry.grid_forget()
+        for group in self.entry_groups:
+            group.grid_forget()
 
         self.entries.clear()
+        self.entry_groups.clear()
 
         # Get data
 
-        self.entries_data = get_entries()
+        if refresh_data:
+            self.entries_data = get_entries()
 
+        # Get all groups from self.entries_data
 
-        # Entry group
-
-        self.group_data = []
-        group_name = "My Group"
-
-        # if len(self.entries_data) > 0:
-        #     self.entries_data[0]["group"] = group_name
+        group_names = set()
 
         for entry in self.entries_data:
             try:
-                if entry["group"] == group_name:
-                    self.group_data.append(entry)
+                if (entry["group"] not in group_names
+                    and entry["group"] != "None"):
+
+                    group_names.add(entry["group"])
             except KeyError:
                 pass
+
+        # Iterate over all entry groups
+
+        count = 0
+        self.num_grouped_entries = 0
+
+        for group in group_names:
+
+            group_data = []
+            group_name = "My Group"
+
+            for entry in self.entries_data:
+                try:
+                    if entry["group"] == group_name:
+                        group_data.append(entry)
+                except KeyError:
+                    pass
+            
+            self.num_grouped_entries += len(group_data)
         
-        self.group = EntryGroup(
-            self.container,
-            width=self.entry_width,
-            entry_height=ENTRY_HEIGHT,
-            entries_data=self.group_data,
-            name=group_name
-        )
-        self.group.grid_propagate(0)
-        self.group.grid(
-            row=0, 
-            column=0,
-            padx=PADDING,
-            pady=PADDING
-        )
+            self.entry_groups.append(EntryGroup(
+                self.container,
+                width=self.entry_width,
+                entry_height=ENTRY_HEIGHT,
+                entries_data=group_data,
+                name=group_name
+            ))
+            self.entry_groups[count].grid_propagate(0)
+            self.entry_groups[count].grid(
+                row=0, 
+                column=0,
+                padx=PADDING,
+                pady=PADDING
+            )
+            count += 1
 
         # Show entries
 
@@ -117,8 +159,8 @@ class Entries(tk.Frame):
                     checkbox=self.show_checkboxes,
                     checked=checked_bool
                 ))
-                self.entries[count - len(self.group_data)].grid_propagate(0)
-                self.entries[count - len(self.group_data)].grid(
+                self.entries[count - self.num_grouped_entries].grid_propagate(0)
+                self.entries[count - self.num_grouped_entries].grid(
                     row=count + 1, 
                     column=0,
                     padx=PADDING, 
@@ -147,18 +189,6 @@ class Entries(tk.Frame):
 
         self.container.bind("<Configure>", self.scroll_config)
         self.container.bind("<Motion>", self.scroll_config)
-
-        # Contains a list of Entry objects
-        self.entries = []
-
-        # Contains a list of dicts sourced from data.py
-        self.entries_data = []
-
-        # Contains a filtered list of Entry objects
-        self.filtered_entries = []
-
-        # Contains a filtered list of dicts
-        self.filtered_entries_data = []
         
         self.refresh_entries()
 
@@ -197,7 +227,8 @@ class Entries(tk.Frame):
 
         self.canvas.configure(bg=self.colors["HL1"])
 
-        self.group.refresh_colors(colors)
+        for group in self.entry_groups:
+            group.refresh_colors(colors)
 
         for entry in self.entries:
             entry.refresh_colors(colors)
