@@ -24,6 +24,8 @@ class InputPath(tk.Frame):
 
         self.load_path = SAVE_DATA_PATH
 
+        self.browser = None
+
         self.create_widgets()
 
 
@@ -116,6 +118,9 @@ class InputPath(tk.Frame):
             highlightbackground=self.colors["HL1"],
             highlightcolor=self.colors["HL2"]
         )
+
+        if self.browser:
+            self.browser.refresh_colors(colors)
 
         for button in self.buttons:
             button.configure(

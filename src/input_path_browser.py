@@ -303,3 +303,11 @@ class InputPathBrowser(tk.Frame):
                 self.new_file_submit()
             elif self.name_window_mode == "rename":
                 self.rename_submit()
+
+    def refresh_colors(self, colors):
+        self.colors = colors
+
+        for button in self.buttons:
+            button.configure(
+                highlightbackground=self.colors["BG1"]
+            )
