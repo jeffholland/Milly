@@ -327,3 +327,8 @@ class Entries(tk.Frame):
                 entry["group"] = "None"
 
         self.refresh_entries()
+
+    def get_group(self, name):
+        for group in self.groups:
+            if group.name == name:
+                return group

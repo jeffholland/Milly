@@ -355,11 +355,13 @@ class Entry(tk.Frame):
 
     def move_to_group(self, group_name):
         if self.group:
-            self.master.master.master.master.entries_data[self.index]["group"] = group_name
-            self.master.master.master.master.refresh_entries()
+            entries = self.master.master.master.master
         else:
-            self.master.master.master.entries_data[self.index]["group"] = group_name
-            self.master.master.master.refresh_entries()
+            entries = self.master.master.master
+
+        entries.entries_data[self.index]["group"] = group_name
+        entries.refresh_entries()
+        self.master = entries.get_group(group_name)
 
         self.group = group_name
         self.group_window = None

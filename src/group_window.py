@@ -115,15 +115,18 @@ class GroupWindow(tk.Frame):
 
         self.master.add_group(name)
 
-        self.list_var.set(
-            self.master.get_group_names()
-        )
-
         self.add_entry.delete(0, tk.END)
+        self.refresh_groups()
 
     def delete_group(self):
         if self.selected:
             self.master.delete_group(self.selected)
+        self.refresh_groups()
+
+    def refresh_groups(self):
+        self.list_var.set(
+            self.master.get_group_names()
+        )
 
 
 
