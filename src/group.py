@@ -72,7 +72,8 @@ class Group(tk.Frame):
                 index=count,
                 font=tkFont.Font(self, family="Helvetica", size="12"),
                 checkbox=True,
-                checked=checked_bool
+                checked=checked_bool,
+                group=self.name
             ))
             self.entries[count].grid_propagate(0)
             self.entries[count].grid(

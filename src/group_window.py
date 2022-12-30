@@ -70,13 +70,14 @@ class GroupWindow(tk.Frame):
     def add_group(self):
         name = self.add_entry_var.get()
 
-        self.master.master.master.master.add_group(name)
+        self.master.add_group(name)
 
         self.list_var.set(
-            self.master.master.master.master.get_group_names()
+            self.master.get_group_names()
         )
 
         self.add_entry.delete(0, tk.END)
+
 
 
     def refresh_colors(self, colors):

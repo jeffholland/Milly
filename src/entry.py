@@ -9,7 +9,7 @@ from group_window import GroupWindow
 
 class Entry(tk.Frame):
     def __init__(self, master, date, time, menu, text, width, height, index, font,
-        checkbox=False, checked=False):
+        checkbox=False, checked=False, group=None):
 
         tk.Frame.__init__(
             self,
@@ -27,6 +27,7 @@ class Entry(tk.Frame):
         self.width = width
         self.height = height
         self.font = font
+        self.group = group
 
         length = len(self.text)
         newline_count = self.text.count('\n')
@@ -322,7 +323,7 @@ class Entry(tk.Frame):
             self.master.master.master.refresh_entries()
 
     def group_pressed(self):
-        group_names = self.master.master.master.get_group_names()
+        group_names = self.get_group_names()
         self.group_window = GroupWindow(self, group_names)
 
     def checkbox_pressed(self):
@@ -335,3 +336,19 @@ class Entry(tk.Frame):
         else:
             self.master.master.master.entries_data[self.index]["checked"] = False
             self.top_pressed()
+
+    
+
+    # Group utility functions
+
+    def add_group(self, name):
+        if self.group:
+            self.master.master.master.master.add_group(name)
+        else:
+            self.master.master.master.add_group(name)
+
+    def get_group_names(self):
+        if self.group:
+            return self.master.master.master.master.get_group_names()
+        else:
+            return self.master.master.master.get_group_names()
