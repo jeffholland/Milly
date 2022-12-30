@@ -5,6 +5,7 @@ from math import floor
 from constants import *
 from data import *
 from entry_menu import EntryMenu
+from group_window import GroupWindow
 
 class Entry(tk.Frame):
     def __init__(self, master, date, time, menu, text, width, height, index, font,
@@ -29,6 +30,8 @@ class Entry(tk.Frame):
 
         length = len(self.text)
         newline_count = self.text.count('\n')
+
+        self.group_window = None
 
         # include a checkbox or not
         self.check_bool = checkbox
@@ -319,7 +322,8 @@ class Entry(tk.Frame):
             self.master.master.master.refresh_entries()
 
     def group_pressed(self):
-        print("open group window")
+        group_names = self.master.master.master.get_group_names()
+        self.group_window = GroupWindow(self, group_names)
 
 
     def checkbox_pressed(self):

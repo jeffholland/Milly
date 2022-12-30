@@ -75,25 +75,27 @@ class Entries(tk.Frame):
 
         self.entries_data = get_entries()
 
-        # Get all groups from self.entries_data
+        # Get all group names from entries_data
 
-        group_names = set()
+        self.group_names = []
 
         for entry in self.entries_data:
             try:
-                if (entry["group"] not in group_names
+                if (entry["group"] not in self.group_names
                     and entry["group"] != "None"):
 
-                    group_names.add(entry["group"])
+                    self.group_names.append(entry["group"])
             except KeyError:
                 entry["group"] = "None"
+
+        self.group_names.sort()
 
         # Iterate over all entry groups
 
         count = 0
         self.num_grouped_entries = 0
 
-        for group in group_names:
+        for group in self.group_names:
 
             group_data = []
 
@@ -306,3 +308,7 @@ class Entries(tk.Frame):
                 state=tk.DISABLED
             )
         self.refresh_entries()
+
+
+    def get_group_names(self):
+        return self.group_names
