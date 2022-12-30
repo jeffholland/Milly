@@ -43,6 +43,9 @@ class GroupWindow(tk.Frame):
             pady=PADDING
         )
 
+        # self.group_list.bind("<<ListboxSelect>>", self.on_click)
+        self.group_list.bind("<Double-1>", self.on_doubleclick)
+
         self.add_button = tk.Button(
             self.window,
             width=1,
@@ -64,6 +67,23 @@ class GroupWindow(tk.Frame):
             row=1,
             column=1
         )
+
+
+    # def on_click(self, event):
+    #     pass
+
+    def on_doubleclick(self, event):
+        w = event.widget
+        try:
+            index = int(w.curselection()[0])
+            self.selected = w.get(index)
+            self.master.move_to_group(self.selected)
+            self.window.destroy()
+
+        except IndexError:
+            # somehow this function was called with no selection
+            # ignore it and do nothing
+            return
 
 
 

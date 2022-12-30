@@ -339,7 +339,7 @@ class Entry(tk.Frame):
 
     
 
-    # Group utility functions
+    # Group functions
 
     def add_group(self, name):
         if self.group:
@@ -352,3 +352,14 @@ class Entry(tk.Frame):
             return self.master.master.master.master.get_group_names()
         else:
             return self.master.master.master.get_group_names()
+
+    def move_to_group(self, group_name):
+        if self.group:
+            self.master.master.master.master.entries_data[self.index]["group"] = group_name
+            self.master.master.master.master.refresh_entries()
+        else:
+            self.master.master.master.entries_data[self.index]["group"] = group_name
+            self.master.master.master.refresh_entries()
+
+        self.group = group_name
+        self.group_window = None
