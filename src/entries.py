@@ -4,8 +4,8 @@ import tkinter.font as tkFont
 from constants import *
 from data import get_entries
 from entry import Entry
-from group import Group
 from export import ExportWindow
+from group import Group
 
 class Entries(tk.Frame):
     def __init__(self, width, height, master=None):
@@ -43,6 +43,9 @@ class Entries(tk.Frame):
         # Contains a list of Entry groups
         self.groups = []
 
+        # List of group names
+        self.group_names = []
+
         # Contains a list of ungrouped Entry objects
         self.ungrouped_entries = []
 
@@ -61,8 +64,22 @@ class Entries(tk.Frame):
 
     def refresh_entries(self, refresh_data=True):
 
-        # Clear entries
+        self.clear_entries()
 
+        if refresh_data:
+            self.entries_data = get_entries()
+
+        self.set_group_names()
+
+        self.create_groups()
+
+        self.create_ungrouped_entries()
+
+        if self.colors:
+            self.refresh_colors(self.colors)
+
+
+    def clear_entries(self):
         for entry in self.entries:
             entry.grid_forget()
         for group in self.groups:
@@ -71,14 +88,7 @@ class Entries(tk.Frame):
         self.entries.clear()
         self.groups.clear()
 
-        # Get data
-
-        if refresh_data:
-            self.entries_data = get_entries()
-
-        # Get all group names from entries_data
-
-        self.group_names = []
+    def set_group_names(self):
 
         for entry in self.entries_data:
             try:
@@ -91,7 +101,7 @@ class Entries(tk.Frame):
 
         self.group_names.sort()
 
-        # Iterate over all entry groups
+    def create_groups(self):
 
         count = 0
 
@@ -119,7 +129,7 @@ class Entries(tk.Frame):
             )
             count += 1
 
-        # Show entries
+    def create_ungrouped_entries(self):
 
         ungrouped_entries_count = 0
         count = 0
@@ -128,7 +138,8 @@ class Entries(tk.Frame):
             try:
                 checked_bool = self.entries_data[count]["checked"]
             except KeyError:
-                checked_bool = False
+                self.entries_data[count]["checked"] = False
+                checked_bool = self.entries_data[count]["checked"]
 
             entry_date = None
             if self.show_dates:
@@ -160,10 +171,8 @@ class Entries(tk.Frame):
                     pady=PADDING
                 )
                 ungrouped_entries_count += 1
-        if self.colors:
-            self.refresh_colors(self.colors)
         
-        count += 1
+            count += 1
 
 
 
@@ -347,5 +356,4 @@ class Entries(tk.Frame):
                 data_index = count
                 break
             count += 1
-        # print(f"Hi, I'm the Entries object.\nAt index {data_index}, I have an entry with text: {text}.\nI am going to put this entry in group {name}.\n")
         self.entries_data[data_index]["group"] = name
