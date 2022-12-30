@@ -363,3 +363,9 @@ class Entry(tk.Frame):
 
         self.group = group_name
         self.group_window = None
+
+    def delete_group(self, group_name):
+        if self.group:
+            self.master.master.master.master.delete_group(group_name)
+        else:
+            self.master.master.master.delete_group(group_name)

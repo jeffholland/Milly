@@ -103,3 +103,7 @@ class Group(tk.Frame):
         self.height += 80
 
         self.configure(height=self.height)
+
+    def delete(self):
+        for entry in self.entries:
+            entry.group = None

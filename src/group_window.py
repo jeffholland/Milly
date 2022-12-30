@@ -21,6 +21,8 @@ class GroupWindow(tk.Frame):
         self.labels = []
         self.buttons = []
 
+        self.selected = None
+
         self.create_widgets()
 
 
@@ -43,7 +45,7 @@ class GroupWindow(tk.Frame):
             pady=PADDING
         )
 
-        # self.group_list.bind("<<ListboxSelect>>", self.on_click)
+        self.group_list.bind("<<ListboxSelect>>", self.on_click)
         self.group_list.bind("<Double-1>", self.on_doubleclick)
 
         self.add_button = tk.Button(
@@ -56,6 +58,19 @@ class GroupWindow(tk.Frame):
             row=1,
             column=0
         )
+        self.buttons.append(self.add_button)
+
+        self.delete_button = tk.Button(
+            self.window,
+            width=1,
+            text="-",
+            command=self.delete_group
+        )
+        self.delete_button.grid(
+            row=1,
+            column=1
+        )
+        self.buttons.append(self.delete_button)
 
         self.add_entry_var = tk.StringVar()
         self.add_entry = tk.Entry(
@@ -65,12 +80,20 @@ class GroupWindow(tk.Frame):
         )
         self.add_entry.grid(
             row=1,
-            column=1
+            column=2
         )
 
 
-    # def on_click(self, event):
-    #     pass
+    def on_click(self, event):
+        w = event.widget
+        try:
+            index = int(w.curselection()[0])
+            self.selected = w.get(index)
+
+        except IndexError:
+            # somehow this function was called with no selection
+            # ignore it and do nothing
+            return
 
     def on_doubleclick(self, event):
         w = event.widget
@@ -97,6 +120,10 @@ class GroupWindow(tk.Frame):
         )
 
         self.add_entry.delete(0, tk.END)
+
+    def delete_group(self):
+        if self.selected:
+            self.master.delete_group(self.selected)
 
 
 

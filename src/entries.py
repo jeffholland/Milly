@@ -93,20 +93,14 @@ class Entries(tk.Frame):
         # Iterate over all entry groups
 
         count = 0
-        self.num_grouped_entries = 0
 
         for group in self.group_names:
 
             group_data = []
 
             for entry in self.entries_data:
-                try:
-                    if entry["group"] == group:
-                        group_data.append(entry)
-                except KeyError:
-                    pass
-            
-            self.num_grouped_entries += len(group_data)
+                if entry["group"] == group:
+                    group_data.append(entry)
         
             self.groups.append(Group(
                 self.container,
@@ -125,6 +119,8 @@ class Entries(tk.Frame):
             count += 1
 
         # Show entries
+
+        ungrouped_entries_count = 0
 
         for count in range(len(self.entries_data)):
             try:
@@ -153,13 +149,14 @@ class Entries(tk.Frame):
                     checkbox=self.show_checkboxes,
                     checked=checked_bool
                 ))
-                self.entries[count - self.num_grouped_entries].grid_propagate(0)
-                self.entries[count - self.num_grouped_entries].grid(
+                self.entries[ungrouped_entries_count].grid_propagate(0)
+                self.entries[ungrouped_entries_count].grid(
                     row=count + 1, 
                     column=0,
                     padx=PADDING, 
                     pady=PADDING
                 )
+                ungrouped_entries_count += 1
         if self.colors:
             self.refresh_colors(self.colors)
 
@@ -311,7 +308,7 @@ class Entries(tk.Frame):
 
 
 
-    # Group utilities
+    # Group functions
 
     def get_group_names(self):
         return self.group_names
@@ -319,3 +316,14 @@ class Entries(tk.Frame):
     def add_group(self, name):
         self.group_names.append(name)
         self.group_names.sort()
+
+    def delete_group(self, name):
+        for group in self.groups:
+            if group.name == name:
+                group.delete()
+
+        for entry in self.entries_data:
+            if entry["group"] == name:
+                entry["group"] = "None"
+
+        self.refresh_entries()
