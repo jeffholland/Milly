@@ -82,7 +82,11 @@ class GroupWindow(tk.Frame):
             row=1,
             column=2
         )
+        self.add_entry.bind("<KeyPress>", self.key_pressed)
 
+
+
+    # Handlers
 
     def on_click(self, event):
         w = event.widget
@@ -107,6 +111,11 @@ class GroupWindow(tk.Frame):
             # somehow this function was called with no selection
             # ignore it and do nothing
             return
+
+    def key_pressed(self, event):
+        if event.keysym == "Return":
+            self.add_group()
+        
 
 
 
