@@ -48,7 +48,7 @@ class Group(tk.Frame):
             padx=PADDING,
             pady=PADDING
         )
-        self.name_label.bind("<Button-1>", self.name_label_click)
+        self.name_label.bind("<Button-1>", self.show_name_entry)
 
         # Name entry - only shows when renaming the group
 
@@ -122,7 +122,7 @@ class Group(tk.Frame):
             entry.master = self.master
 
 
-    def name_label_click(self, event):
+    def show_name_entry(self, event):
         self.name_label.grid_remove()
         self.name_entry.grid(
             row=0,
@@ -133,6 +133,14 @@ class Group(tk.Frame):
         )
         self.name_entry.focus_set()
 
+    def hide_name_entry(self):
+        self.name_entry.grid_remove()
+        self.name_label.grid()
+
     def key_pressed(self, event):
         if event.keysym == "Return":
-            print(self.name_entry.get())
+            new_name = self.name_entry.get()
+            if len(new_name) > 0:
+                self.master.master.master.rename_group(self.name, new_name)
+                self.name_label.configure(text=new_name)
+                self.hide_name_entry()

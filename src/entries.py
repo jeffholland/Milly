@@ -357,3 +357,8 @@ class Entries(tk.Frame):
                 break
             count += 1
         self.entries_data[data_index]["group"] = name
+
+    def rename_group(self, old_name, new_name):
+        for entry in self.entries_data:
+            if entry["group"] == old_name:
+                entry["group"] = new_name
