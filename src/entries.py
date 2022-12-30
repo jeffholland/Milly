@@ -118,7 +118,8 @@ class Entries(tk.Frame):
                 width=self.entry_width,
                 entry_height=ENTRY_HEIGHT,
                 entries_data=group_data,
-                name=group
+                name=group,
+                font=self.font
             ))
             self.groups[count].grid_propagate(0)
             self.groups[count].grid(

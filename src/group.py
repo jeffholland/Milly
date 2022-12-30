@@ -5,7 +5,7 @@ from constants import *
 from entry import Entry
 
 class Group(tk.Frame):
-    def __init__(self, master, width, entry_height, entries_data, name):
+    def __init__(self, master, width, entry_height, entries_data, name, font):
         self.entry_height = entry_height
 
         tk.Frame.__init__(
@@ -20,6 +20,7 @@ class Group(tk.Frame):
         self.name = name
         self.master = master
         self.entries_data = entries_data
+        self.font = font
 
         self.show_dates = True
         self.show_times = True
@@ -82,7 +83,7 @@ class Group(tk.Frame):
                 width=self.width - PADDING * 4,
                 height=self.entry_height,
                 index=count,
-                font=tkFont.Font(self, family="Helvetica", size="12"),
+                font=self.font,
                 checkbox=True,
                 checked=checked_bool,
                 group=self.name
@@ -110,6 +111,9 @@ class Group(tk.Frame):
             bg=self.colors["BG2"],
             fg=self.colors["HL2"]
         )
+
+        for entry in self.entries:
+            entry.refresh_colors(colors)
 
     def calculate_height(self):
         self.height = 0
