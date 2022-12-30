@@ -106,6 +106,11 @@ class Group(tk.Frame):
             fg=self.colors["HL2"]
         )
 
+        self.name_entry.configure(
+            bg=self.colors["BG2"],
+            fg=self.colors["HL2"]
+        )
+
     def calculate_height(self):
         self.height = 0
 
@@ -132,6 +137,9 @@ class Group(tk.Frame):
             pady=PADDING
         )
         self.name_entry.focus_set()
+        self.name_entry.delete(0, tk.END)
+        self.name_entry.insert(0, self.name)
+        self.name_entry.select_range(start=0, end=tk.END)
 
     def hide_name_entry(self):
         self.name_entry.grid_remove()
@@ -142,5 +150,7 @@ class Group(tk.Frame):
             new_name = self.name_entry.get()
             if len(new_name) > 0:
                 self.master.master.master.rename_group(self.name, new_name)
+                self.name = new_name
                 self.name_label.configure(text=new_name)
                 self.hide_name_entry()
+                self.master.master.master.master.bottom_frame.input.focus_set()
