@@ -310,5 +310,12 @@ class Entries(tk.Frame):
         self.refresh_entries()
 
 
+
+    # Group utilities
+
     def get_group_names(self):
         return self.group_names
+
+    def add_group(self, name):
+        self.group_names.append(name)
+        self.group_names.sort()

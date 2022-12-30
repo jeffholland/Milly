@@ -325,7 +325,6 @@ class Entry(tk.Frame):
         group_names = self.master.master.master.get_group_names()
         self.group_window = GroupWindow(self, group_names)
 
-
     def checkbox_pressed(self):
         # Move entries to bottom when checked
         if self.checkbox_var.get() == 1:

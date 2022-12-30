@@ -54,11 +54,29 @@ class GroupWindow(tk.Frame):
             column=0
         )
 
+        self.add_entry_var = tk.StringVar()
+        self.add_entry = tk.Entry(
+            self.window,
+            width=5,
+            textvariable=self.add_entry_var
+        )
+        self.add_entry.grid(
+            row=1,
+            column=1
+        )
+
 
 
     def add_group(self):
-        print("add group")
+        name = self.add_entry_var.get()
 
+        self.master.master.master.master.add_group(name)
+
+        self.list_var.set(
+            self.master.master.master.master.get_group_names()
+        )
+
+        self.add_entry.delete(0, tk.END)
 
 
     def refresh_colors(self, colors):
