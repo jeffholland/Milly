@@ -121,8 +121,9 @@ class Entries(tk.Frame):
         # Show entries
 
         ungrouped_entries_count = 0
+        count = 0
 
-        for count in range(len(self.entries_data)):
+        for entry in self.entries_data:
             try:
                 checked_bool = self.entries_data[count]["checked"]
             except KeyError:
@@ -130,18 +131,18 @@ class Entries(tk.Frame):
 
             entry_date = None
             if self.show_dates:
-                entry_date = self.entries_data[count]["date"]
+                entry_date = entry["date"]
             entry_time = None
             if self.show_times:
-                entry_time = self.entries_data[count]["time"]
+                entry_time = entry["time"]
 
-            if self.entries_data[count]["group"] == "None":
+            if entry["group"] == "None":
                 self.entries.append(Entry(
                     self.container,
                     date=entry_date,
                     time=entry_time,
                     menu=self.show_menu,
-                    text=self.entries_data[count]["text"],
+                    text=entry["text"],
                     width=self.entry_width,
                     height=ENTRY_HEIGHT,
                     index=count,
@@ -150,8 +151,9 @@ class Entries(tk.Frame):
                     checked=checked_bool
                 ))
                 self.entries[ungrouped_entries_count].grid_propagate(0)
+                entry_row = ungrouped_entries_count + len(self.groups)
                 self.entries[ungrouped_entries_count].grid(
-                    row=count + 1, 
+                    row=entry_row, 
                     column=0,
                     padx=PADDING, 
                     pady=PADDING
@@ -159,6 +161,8 @@ class Entries(tk.Frame):
                 ungrouped_entries_count += 1
         if self.colors:
             self.refresh_colors(self.colors)
+        
+        count += 1
 
 
 
