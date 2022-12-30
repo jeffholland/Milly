@@ -26,6 +26,8 @@ class Group(tk.Frame):
 
         self.entries = []
 
+        self.title_font = tkFont.Font(self, family="Helvetica", size=20)
+
         self.create_widgets()
 
 
@@ -36,7 +38,8 @@ class Group(tk.Frame):
 
         self.name_label = tk.Label(
             self,
-            text=self.name
+            text=self.name,
+            font=self.title_font
         )
         self.name_label.grid(
             row=0,

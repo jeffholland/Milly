@@ -263,7 +263,7 @@ class Entry(tk.Frame):
         if self.check_bool:
             self.checkbox.grid()
 
-        self.master.master.master.master.bottom_frame.input.focus_set()
+        self.entries_obj.bottom_frame.input.focus_set()
 
 
 
@@ -300,17 +300,17 @@ class Entry(tk.Frame):
 
     def x_pressed(self):
         remove_entry(self.index)
-        self.master.master.master.refresh_entries()
+        self.entries_obj.refresh_entries()
 
     def up_pressed(self):
         if self.index > 0:
             swap_entry(self.index - 1, self.index)
-            self.master.master.master.refresh_entries()
+            self.entries_obj.refresh_entries()
 
     def down_pressed(self):
         if self.index < get_num_entries() - 1:
             swap_entry(self.index, self.index + 1)
-            self.master.master.master.refresh_entries()
+            self.entries_obj.refresh_entries()
 
     def copy_pressed(self):
         self.clipboard_clear()
@@ -319,12 +319,12 @@ class Entry(tk.Frame):
     def top_pressed(self):
         if self.index > 0:
             move_entry(self.index, 0)
-            self.master.master.master.refresh_entries()
+            self.entries_obj.refresh_entries()
 
     def bottom_pressed(self):
         if self.index < get_num_entries() - 1:
             move_entry(self.index, get_num_unchecked_entries())
-            self.master.master.master.refresh_entries()
+            self.entries_obj.refresh_entries()
 
     def group_pressed(self):
         group_names = self.get_group_names()
@@ -333,7 +333,7 @@ class Entry(tk.Frame):
     def checkbox_pressed(self):
         # Move entries to bottom when checked
         if self.checkbox_var.get() == 1:
-            self.master.master.master.entries_data[self.index]["checked"] = True
+            self.entries_obj.entries_data[self.index]["checked"] = True
             self.bottom_pressed()
 
         # Move back to top when unchecked
