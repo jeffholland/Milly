@@ -115,7 +115,6 @@ class GroupWindow(tk.Frame):
     def key_pressed(self, event):
         if event.keysym == "Return":
             self.add_group()
-        
 
 
 
