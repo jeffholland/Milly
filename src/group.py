@@ -127,7 +127,7 @@ class Group(tk.Frame):
 
     def delete(self):
         for entry in self.entries:
-            entry.group = None
+            entry.group = "None"
             entry.master = self.master
 
 

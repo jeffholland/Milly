@@ -336,6 +336,9 @@ class Entries(tk.Frame):
         for group in self.groups:
             if group.name == name:
                 group.delete()
+                self.group_names.remove(group.name)
+                self.groups.remove(group)
+                break
 
         for entry in self.entries_data:
             if entry["group"] == name:

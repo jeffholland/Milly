@@ -129,6 +129,7 @@ class GroupWindow(tk.Frame):
     def delete_group(self):
         if self.selected:
             self.master.delete_group(self.selected)
+            print(self.selected)
         self.refresh_groups()
 
     def refresh_groups(self):
