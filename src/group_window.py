@@ -32,7 +32,7 @@ class GroupWindow(tk.Frame):
         self.window.geometry(f"{self.width}x{self.height}")
 
         self.list_var = tk.StringVar()
-        self.list_var.set(self.group_names)
+        self.refresh_groups()
         self.group_list = tk.Listbox(
             self.window,
             listvariable=self.list_var
@@ -132,9 +132,8 @@ class GroupWindow(tk.Frame):
         self.refresh_groups()
 
     def refresh_groups(self):
-        self.list_var.set(
-            self.master.get_group_names()
-        )
+        groups = self.master.get_group_names()
+        self.list_var.set(groups)
 
 
 

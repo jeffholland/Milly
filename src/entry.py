@@ -90,6 +90,10 @@ class Entry(tk.Frame):
         self.labels = []
         self.buttons = []
 
+        # Get parent "Entries" object for later use
+
+        self.get_entries_obj()
+
         self.create_widgets()
 
 
@@ -342,32 +346,27 @@ class Entry(tk.Frame):
     # Group functions
 
     def add_group(self, name):
-        if self.group:
-            self.master.master.master.master.add_group(name)
-        else:
-            self.master.master.master.add_group(name)
+        self.entries_obj.add_group(name)
 
     def get_group_names(self):
-        if self.group:
-            return self.master.master.master.master.get_group_names()
-        else:
-            return self.master.master.master.get_group_names()
+        return self.entries_obj.get_group_names()
 
     def move_to_group(self, group_name):
-        if self.group:
-            entries = self.master.master.master.master
-        else:
-            entries = self.master.master.master
-
-        entries.entries_data[self.index]["group"] = group_name
-        entries.refresh_entries()
-        self.master = entries.get_group(group_name)
-
-        self.group = group_name
-        self.group_window = None
+        # print(f"Hi, I'm an entry.\nMy index is {self.index}.\nMy text is: {self.text}.\nI want to join {group_name}.\n")
+        self.entries_obj.set_group(self.index, group_name)
+        self.entries_obj.refresh_entries(refresh_data=False)
 
     def delete_group(self, group_name):
         if self.group:
             self.master.master.master.master.delete_group(group_name)
         else:
             self.master.master.master.delete_group(group_name)
+
+
+    # Utility for getting access to the Entries object through the master chain
+
+    def get_entries_obj(self):
+        if self.group:
+            self.entries_obj = self.master.master.master.master
+        else:
+            self.entries_obj = self.master.master.master

@@ -59,7 +59,7 @@ class Entries(tk.Frame):
     # IMPORTANT: this is the function where the entries get
     # put on the screen.
 
-    def refresh_entries(self):
+    def refresh_entries(self, refresh_data=True):
 
         # Clear entries
 
@@ -73,7 +73,8 @@ class Entries(tk.Frame):
 
         # Get data
 
-        self.entries_data = get_entries()
+        if refresh_data:
+            self.entries_data = get_entries()
 
         # Get all group names from entries_data
 
@@ -336,3 +337,15 @@ class Entries(tk.Frame):
         for group in self.groups:
             if group.name == name:
                 return group
+
+    def set_group(self, index, name):
+        text = self.entries[index].text
+        count = 0
+        data_index = 0
+        for entry in self.entries_data:
+            if entry["text"] == text:
+                data_index = count
+                break
+            count += 1
+        # print(f"Hi, I'm the Entries object.\nAt index {data_index}, I have an entry with text: {text}.\nI am going to put this entry in group {name}.\n")
+        self.entries_data[data_index]["group"] = name
