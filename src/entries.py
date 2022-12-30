@@ -4,7 +4,7 @@ import tkinter.font as tkFont
 from constants import *
 from data import get_entries
 from entry import Entry
-from entry_group import EntryGroup
+from group import Group
 from export import ExportWindow
 
 class Entries(tk.Frame):
@@ -41,7 +41,7 @@ class Entries(tk.Frame):
         self.entries_data = []
 
         # Contains a list of Entry groups
-        self.entry_groups = []
+        self.groups = []
 
         # Contains a list of ungrouped Entry objects
         self.ungrouped_entries = []
@@ -59,22 +59,21 @@ class Entries(tk.Frame):
     # IMPORTANT: this is the function where the entries get
     # put on the screen.
 
-    def refresh_entries(self, refresh_data=True):
+    def refresh_entries(self):
 
         # Clear entries
 
         for entry in self.entries:
             entry.grid_forget()
-        for group in self.entry_groups:
+        for group in self.groups:
             group.grid_forget()
 
         self.entries.clear()
-        self.entry_groups.clear()
+        self.groups.clear()
 
         # Get data
 
-        if refresh_data:
-            self.entries_data = get_entries()
+        self.entries_data = get_entries()
 
         # Get all groups from self.entries_data
 
@@ -87,7 +86,7 @@ class Entries(tk.Frame):
 
                     group_names.add(entry["group"])
             except KeyError:
-                pass
+                entry["group"] = "None"
 
         # Iterate over all entry groups
 
@@ -97,27 +96,26 @@ class Entries(tk.Frame):
         for group in group_names:
 
             group_data = []
-            group_name = "My Group"
 
             for entry in self.entries_data:
                 try:
-                    if entry["group"] == group_name:
+                    if entry["group"] == group:
                         group_data.append(entry)
                 except KeyError:
                     pass
             
             self.num_grouped_entries += len(group_data)
         
-            self.entry_groups.append(EntryGroup(
+            self.groups.append(Group(
                 self.container,
                 width=self.entry_width,
                 entry_height=ENTRY_HEIGHT,
                 entries_data=group_data,
-                name=group_name
+                name=group
             ))
-            self.entry_groups[count].grid_propagate(0)
-            self.entry_groups[count].grid(
-                row=0, 
+            self.groups[count].grid_propagate(0)
+            self.groups[count].grid(
+                row=count, 
                 column=0,
                 padx=PADDING,
                 pady=PADDING
@@ -138,12 +136,6 @@ class Entries(tk.Frame):
             entry_time = None
             if self.show_times:
                 entry_time = self.entries_data[count]["time"]
-
-            try:
-                if self.entries_data[count]["group"] == group_name:
-                    pass
-            except KeyError:
-                self.entries_data[count]["group"] = "None"
 
             if self.entries_data[count]["group"] == "None":
                 self.entries.append(Entry(
@@ -227,7 +219,7 @@ class Entries(tk.Frame):
 
         self.canvas.configure(bg=self.colors["HL1"])
 
-        for group in self.entry_groups:
+        for group in self.groups:
             group.refresh_colors(colors)
 
         for entry in self.entries:

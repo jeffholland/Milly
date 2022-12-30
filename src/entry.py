@@ -319,8 +319,7 @@ class Entry(tk.Frame):
             self.master.master.master.refresh_entries()
 
     def group_pressed(self):
-        self.master.master.master.entries_data[self.index]["group"] = "My Group"
-        self.master.master.master.refresh_entries(refresh_data=False)
+        print("open group window")
 
 
     def checkbox_pressed(self):

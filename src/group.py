@@ -4,7 +4,7 @@ import tkinter.font as tkFont
 from constants import *
 from entry import Entry
 
-class EntryGroup(tk.Frame):
+class Group(tk.Frame):
     def __init__(self, master, width, entry_height, entries_data, name):
         self.entry_height = entry_height
 

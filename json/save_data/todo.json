@@ -4,19 +4,19 @@
         "time": "08:40 PM",
         "text": "Entry groups - expand outward. Groups can have custom names and colors. Group manager window allows you to move entries from group to group. (This would be really helpful for the to-do list. Groups could include Settings, Entry: Debug, Font, Color schemes, Search/filter, Export, Prompts (for journaling), Build/Install). Groups can sort their entries as ordered or unordered lists.",
         "checked": false,
-        "group": "My Group"
+        "group": "Group 1"
     },
     {
         "date": "Friday 2022-12-23",
         "time": "08:41 PM",
         "text": "Entries with countdown dates and times\n",
-        "group": "My Group"
+        "group": "Group 2"
     },
     {
         "date": "Friday 2022-12-23",
         "time": "08:41 PM",
         "text": "Entries with images\n",
-        "group": "My Group"
+        "group": "Group 3"
     },
     {
         "date": "Friday 2022-12-23",
