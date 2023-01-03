@@ -263,7 +263,7 @@ class Entry(tk.Frame):
         if self.check_bool:
             self.checkbox.grid()
 
-        self.entries_obj.bottom_frame.input.focus_set()
+        self.entries_obj.master.bottom_frame.input.focus_set()
 
 
 
@@ -352,7 +352,6 @@ class Entry(tk.Frame):
         return self.entries_obj.get_group_names()
 
     def move_to_group(self, group_name):
-        print(f"About to run Entries::set_group({self.index}, {group_name})")
         self.entries_obj.set_group(self.index, group_name)
         self.entries_obj.refresh_entries(refresh_data=False)
 

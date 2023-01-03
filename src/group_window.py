@@ -53,7 +53,6 @@ class GroupWindow(tk.Frame):
 
         self.group_list.bind("<<ListboxSelect>>", self.on_click)
         if self.entry_parent:
-            print("Hello! The binding statement is about to run (line 57, group_window.py)")
             self.group_list.bind("<Double-1>", self.on_doubleclick)
 
         self.add_button = tk.Button(
@@ -108,17 +107,14 @@ class GroupWindow(tk.Frame):
             return
 
     def on_doubleclick(self, event):
-        print("Hello! The double-click handler is about to run (line 110, group_window.py)")
         w = event.widget
         try:
             index = int(w.curselection()[0])
             self.selected = w.get(index)
-            print(f"About to run Entry::move_to_group({self.selected})")
             self.master.move_to_group(self.selected)
             self.window.destroy()
 
         except IndexError:
-            print("Uh oh! We got an index error (line 120, group_window.py)")
             # somehow this function was called with no selection
             # ignore it and do nothing
             return

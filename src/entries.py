@@ -164,7 +164,6 @@ class Entries(tk.Frame):
                     checkbox=self.show_checkboxes,
                     checked=checked_bool
                 ))
-                print(f"Just created entry with text: {text}\nAt index:{ungrouped_entries_count}")
                 self.entries[ungrouped_entries_count].grid_propagate(0)
                 entry_row = ungrouped_entries_count + len(self.groups)
                 self.entries[ungrouped_entries_count].grid(
@@ -354,7 +353,6 @@ class Entries(tk.Frame):
                 return group
 
     def set_group(self, index, name):
-        print(f"About to index into the entries array at index {index}")
         text = self.entries[index].text
         count = 0
         data_index = 0
