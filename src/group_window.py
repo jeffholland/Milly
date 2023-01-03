@@ -3,10 +3,10 @@ import tkinter as tk
 from constants import *
 
 class GroupWindow(tk.Frame):
-    def __init__(self, master, group_names):
+    def __init__(self, master, group_names, entry_parent=True):
 
-        self.width = 300
-        self.height = 300
+        self.width = 220
+        self.height = 220
 
         tk.Frame.__init__(
             self,
@@ -15,6 +15,12 @@ class GroupWindow(tk.Frame):
             height=self.height
         )
         self.master = master
+
+        # If the "master" is an Entry object
+        # (e.g. if an Entry's "group" button was pressed,
+        # versus the general "Groups" button or cmd+g key shortcut)
+
+        self.entry_parent = entry_parent
 
         self.group_names = group_names
 
@@ -46,7 +52,8 @@ class GroupWindow(tk.Frame):
         )
 
         self.group_list.bind("<<ListboxSelect>>", self.on_click)
-        self.group_list.bind("<Double-1>", self.on_doubleclick)
+        if self.entry_parent:
+            self.group_list.bind("<Double-1>", self.on_doubleclick)
 
         self.add_button = tk.Button(
             self.window,
@@ -121,19 +128,27 @@ class GroupWindow(tk.Frame):
     def add_group(self):
         name = self.add_entry_var.get()
 
-        self.master.add_group(name)
+        if self.entry_parent:
+            self.master.add_group(name)
+        else:
+            self.master.master.top_frame.add_group(name)
 
         self.add_entry.delete(0, tk.END)
         self.refresh_groups()
 
     def delete_group(self):
         if self.selected:
-            self.master.delete_group(self.selected)
-            print(self.selected)
-        self.refresh_groups()
+            if self.entry_parent:
+                self.master.delete_group(self.selected)
+            else:
+                self.master.master.top_frame.delete_group(self.selected)
+            self.refresh_groups()
 
     def refresh_groups(self):
-        groups = self.master.get_group_names()
+        if self.entry_parent:
+            groups = self.master.get_group_names()
+        else:
+            groups = self.master.master.top_frame.get_group_names()
         self.list_var.set(groups)
 
 

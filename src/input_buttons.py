@@ -93,6 +93,14 @@ class InputButtons(tk.Frame):
         self.stats_button.grid(row=3, column=2)
         self.buttons.append(self.stats_button)
 
+        self.groups_button = tk.Button(
+            self,
+            text="Groups",
+            command=self.master.show_groups
+        )
+        self.groups_button.grid(row=4, column=2)
+        self.buttons.append(self.groups_button)
+
 
         # Configure all buttons
 

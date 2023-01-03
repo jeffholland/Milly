@@ -6,6 +6,7 @@ from sys import exit
 from constants import *
 from data import *
 from find import FindWindow
+from group_window import GroupWindow
 from key import Key
 from input_buttons import InputButtons
 from input_path import InputPath
@@ -186,3 +187,7 @@ class Input(tk.Frame):
 
     def show_stats(self):
         self.stats.window.deiconify()
+
+    def show_groups(self):
+        group_names = self.master.top_frame.get_group_names()
+        self.group_window = GroupWindow(self, group_names, entry_parent=False)
