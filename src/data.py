@@ -99,7 +99,9 @@ def add_entry(text):
     entries.append(create_entry(text))
 
 def remove_entry(index):
-    entries.pop(index)
+    for i in range(len(entries)):
+        if int(entries[i]["index"]) == index:
+            entries.pop(i)
 
 def swap_entry(index1, index2):
     tmp = entries[index1]

@@ -51,6 +51,18 @@ class Group(tk.Frame):
         )
         self.name_label.bind("<Button-1>", self.show_name_entry)
 
+        # X button
+        self.x_button = tk.Button(
+            self,
+            text="x",
+            width=1
+        )
+        self.x_button.grid(
+            row=0,
+            column=1,
+            sticky=tk.NE
+        )
+
         # Name entry - only shows when renaming the group
 
         self.name_entry = tk.Entry(
@@ -82,7 +94,7 @@ class Group(tk.Frame):
                 text=self.entries_data[count]["text"],
                 width=self.width - PADDING * 4,
                 height=self.entry_height,
-                index=count,
+                index=self.entries_data[count]["index"],
                 font=self.font,
                 checkbox=True,
                 checked=checked_bool,
@@ -93,7 +105,8 @@ class Group(tk.Frame):
                 row=count + 1, 
                 column=0,
                 padx=PADDING, 
-                pady=PADDING
+                pady=PADDING,
+                columnspan=2
             )
         self.calculate_height()
 
@@ -110,6 +123,10 @@ class Group(tk.Frame):
         self.name_entry.configure(
             bg=self.colors["BG2"],
             fg=self.colors["HL2"]
+        )
+
+        self.x_button.configure(
+            highlightbackground=self.colors["BG2"]
         )
 
         for entry in self.entries:

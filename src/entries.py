@@ -32,7 +32,7 @@ class Entries(tk.Frame):
         self.font = tkFont.Font(self, family="Helvetica", size=14)
 
 
-        # Array initialization
+        # Initialization
 
         # Contains a list of all Entry objects
         self.entries = []
@@ -55,6 +55,9 @@ class Entries(tk.Frame):
         # Contains a filtered list of dicts (for cmd+f search)
         self.filtered_entries_data = []
 
+        # Indexes every entry
+        self.index_count = 0
+
         self.create_widgets()
 
 
@@ -69,7 +72,7 @@ class Entries(tk.Frame):
         if refresh_data:
             self.entries_data = get_entries()
 
-        self.set_group_names()
+        self.set_entry_data()
 
         self.create_groups()
 
@@ -88,7 +91,9 @@ class Entries(tk.Frame):
         self.entries.clear()
         self.groups.clear()
 
-    def set_group_names(self):
+    def set_entry_data(self):
+
+        # Group names
 
         for entry in self.entries_data:
             try:
@@ -100,6 +105,14 @@ class Entries(tk.Frame):
                 entry["group"] = "None"
 
         self.group_names.sort()
+
+        # Entry indices
+
+        self.index_count = 0
+
+        for entry in self.entries_data:
+            entry["index"] = self.index_count
+            self.index_count += 1
 
     def create_groups(self):
 
@@ -142,14 +155,14 @@ class Entries(tk.Frame):
                 self.entries_data[count]["checked"] = False
                 checked_bool = self.entries_data[count]["checked"]
 
-            entry_date = None
-            if self.show_dates:
-                entry_date = entry["date"]
-            entry_time = None
-            if self.show_times:
-                entry_time = entry["time"]
-
             if entry["group"] == "None":
+                entry_date = None
+                if self.show_dates:
+                    entry_date = entry["date"]
+                entry_time = None
+                if self.show_times:
+                    entry_time = entry["time"]
+
                 text=entry["text"]
                 self.entries.append(Entry(
                     self.container,
@@ -159,7 +172,7 @@ class Entries(tk.Frame):
                     text=text,
                     width=self.entry_width,
                     height=ENTRY_HEIGHT,
-                    index=ungrouped_entries_count,
+                    index=entry["index"],
                     font=self.font,
                     checkbox=self.show_checkboxes,
                     checked=checked_bool
