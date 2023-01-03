@@ -150,19 +150,21 @@ class Entries(tk.Frame):
                 entry_time = entry["time"]
 
             if entry["group"] == "None":
+                text=entry["text"]
                 self.entries.append(Entry(
                     self.container,
                     date=entry_date,
                     time=entry_time,
                     menu=self.show_menu,
-                    text=entry["text"],
+                    text=text,
                     width=self.entry_width,
                     height=ENTRY_HEIGHT,
-                    index=count,
+                    index=ungrouped_entries_count,
                     font=self.font,
                     checkbox=self.show_checkboxes,
                     checked=checked_bool
                 ))
+                print(f"Just created entry with text: {text}\nAt index:{ungrouped_entries_count}")
                 self.entries[ungrouped_entries_count].grid_propagate(0)
                 entry_row = ungrouped_entries_count + len(self.groups)
                 self.entries[ungrouped_entries_count].grid(
@@ -352,6 +354,7 @@ class Entries(tk.Frame):
                 return group
 
     def set_group(self, index, name):
+        print(f"About to index into the entries array at index {index}")
         text = self.entries[index].text
         count = 0
         data_index = 0
