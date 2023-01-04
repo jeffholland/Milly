@@ -55,7 +55,8 @@ class Group(tk.Frame):
         self.x_button = tk.Button(
             self,
             text="x",
-            width=1
+            width=1,
+            command=self.delete
         )
         self.x_button.grid(
             row=0,
@@ -143,9 +144,15 @@ class Group(tk.Frame):
         self.configure(height=self.height)
 
     def delete(self):
-        for entry in self.entries:
-            entry.group = "None"
-            entry.master = self.master
+        for entry in self.entries_data:
+            for master_entry in self.master.master.master.entries_data:
+                i1 = master_entry["index"]
+                i2 = entry["index"]
+                if i1 == i2:
+                    master_entry["group"] = "None"
+
+        self.master.master.master.group_names.remove(self.name)
+        self.master.master.master.refresh_entries(refresh_data=False)
 
 
     def show_name_entry(self, event):

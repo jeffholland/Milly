@@ -4,13 +4,15 @@
         "time": "01:52 PM",
         "text": "fix groups\n- if you load \"todo\" and then \"finish\" the groups from \"todo\" currently stick around\n- checkboxes within groups don't currently do anything\n- problems with adding entries to groups - check double click binding",
         "group": "Groups",
-        "checked": false
+        "checked": false,
+        "index": 0
     },
     {
         "date": "Tuesday 2023-01-03",
         "time": "02:17 PM",
         "text": "Hello",
         "group": "Hello",
-        "checked": false
+        "checked": false,
+        "index": 1
     }
 ]
