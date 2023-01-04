@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 from constants import *
 
@@ -51,6 +52,8 @@ class GroupWindow(tk.Frame):
             pady=PADDING
         )
 
+        # Event bindings
+
         self.group_list.bind("<<ListboxSelect>>", self.on_click)
         if self.entry_parent:
             self.group_list.bind("<Double-1>", self.on_doubleclick)
@@ -96,35 +99,16 @@ class GroupWindow(tk.Frame):
     # Handlers
 
     def on_click(self, event):
-        w = event.widget
-        try:
-            index = int(w.curselection()[0])
-            self.selected = w.get(index)
+        self.get_selection()
 
-        except IndexError:
-            # somehow this function was called with no selection
-            # ignore it and do nothing
-            if DEBUG:
-                print("group_window.py on_click caught an IndexError")
-            return
-
-    def on_doubleclick(self, event):
-        w = event.widget
-        try:
-            index = int(w.curselection()[0])
-            self.selected = w.get(index)
-            self.master.move_to_group(self.selected)
-            self.window.destroy()
-
-        except IndexError:
-            # somehow this function was called with no selection
-            # ignore it and do nothing
-            return
+    def on_doubleclick(self, event=None):
+        self.get_selection()
+        self.master.move_to_group(self.selected)
+        self.window.destroy()
 
     def key_pressed(self, event):
         if event.keysym == "Return":
             self.add_group()
-
 
 
     def add_group(self):
@@ -183,3 +167,20 @@ class GroupWindow(tk.Frame):
                     bg=self.colors["BG2"],
                     fg=self.colors["HL2"]
                 )
+
+    # Utility for setting selection
+
+    def get_selection(self):
+        try:
+            index = int(self.group_list.curselection()[0])
+            self.selected = self.group_list.get(index)
+
+        except IndexError:
+            if DEBUG:
+                messagebox.showerror("group_window IndexError", "group_window.py get_selection caught an IndexError")
+            return
+
+        except tk.TclError:
+            if DEBUG:
+                messagebox.showerror("group_window TclError", "group_window caught a TclError")
+            return
