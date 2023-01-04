@@ -119,6 +119,11 @@ class Input(tk.Frame):
 
         self.stats.refresh_colors(colors)
 
+        try:
+            self.group_window.refresh_colors(colors)
+        except AttributeError:
+            pass
+
 
 
     # Button and key shortcut handlers
@@ -191,3 +196,4 @@ class Input(tk.Frame):
     def show_groups(self):
         group_names = self.master.top_frame.get_group_names()
         self.group_window = GroupWindow(self, group_names, entry_parent=False)
+        self.group_window.refresh_colors(self.colors)
