@@ -48,6 +48,7 @@ def load_entries(filepath):
         f = open(filepath, "r")
     except OSError:
         messagebox.showerror("Load error", "Load error: filepath could not be read")
+        return
 
     with f:
         global entries

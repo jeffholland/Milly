@@ -1,5 +1,6 @@
 import json
 from os import scandir
+from sys import exit
 
 from tkinter import messagebox
 
@@ -38,6 +39,7 @@ class Colors:
             except OSError:
                 messagebox.showerror("Settings not found",
                     "Error: settings.json not found. Please make sure it is saved to the correct path.")
+                exit()
 
         else:
             scheme_name = self.color_schemes[self.color_scheme_index]
@@ -50,6 +52,7 @@ class Colors:
         except OSError:
             messagebox.showerror("Default color scheme not found",
                 f"Error: Default color scheme {filepath} not found. \nPlease make sure the default color scheme in settings.json is set to an existing color scheme")
+            exit()
 
 
     def get_colors(self):
