@@ -335,6 +335,10 @@ class Entry(tk.Frame):
         self.group_window = GroupWindow(self, group_names)
         self.group_window.refresh_colors(self.colors)
 
+        # If there's at least one group, select it in the listbox
+        if len(self.group_window.list_var.get()) > 0:
+            self.group_window.group_list.selection_set(0, 0)
+
     def checkbox_pressed(self):
         # Move entries to bottom when checked
         if self.checkbox_var.get() == 1:

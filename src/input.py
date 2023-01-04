@@ -197,3 +197,4 @@ class Input(tk.Frame):
         group_names = self.master.top_frame.get_group_names()
         self.group_window = GroupWindow(self, group_names, entry_parent=False)
         self.group_window.refresh_colors(self.colors)
+        self.group_window.add_entry.focus_set()
