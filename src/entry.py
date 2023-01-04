@@ -357,9 +357,7 @@ class Entry(tk.Frame):
         return self.entries_obj.get_group_names()
 
     def move_to_group(self, group_name):
-        print("line 355 entry.py - move_to_group executed")
         self.entries_obj.set_group(self.index, group_name)
-        print(f"set entry {self.index} to group {group_name}")
         self.entries_obj.refresh_entries(refresh_data=False)
 
     def delete_group(self, group_name):

@@ -104,10 +104,11 @@ class GroupWindow(tk.Frame):
         except IndexError:
             # somehow this function was called with no selection
             # ignore it and do nothing
+            if DEBUG:
+                print("group_window.py on_click caught an IndexError")
             return
 
     def on_doubleclick(self, event):
-        print("line 110 group_window.py: on_doubleclick executed")
         w = event.widget
         try:
             index = int(w.curselection()[0])
@@ -116,7 +117,6 @@ class GroupWindow(tk.Frame):
             self.window.destroy()
 
         except IndexError:
-            print("Oops, index error")
             # somehow this function was called with no selection
             # ignore it and do nothing
             return
@@ -149,10 +149,8 @@ class GroupWindow(tk.Frame):
     def refresh_groups(self):
         if self.entry_parent:
             groups = self.master.get_group_names()
-            print(f"entry parent - groups: {groups}")
         else:
             groups = self.master.master.top_frame.get_group_names()
-            print(f"non entry parent - groups: {groups}")
         self.list_var.set(groups)
 
 

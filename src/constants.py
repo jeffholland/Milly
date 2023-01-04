@@ -12,6 +12,8 @@ MODE = "normal"
 # CONFIG = "build"
 CONFIG = "run"
 
+DEBUG = True
+
 
 
 # file paths
