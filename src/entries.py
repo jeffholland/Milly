@@ -366,11 +366,9 @@ class Entries(tk.Frame):
                 return group
 
     def set_group(self, index, name):
-        text = self.entries[index].text
         count = 0
-        data_index = 0
         for entry in self.entries_data:
-            if entry["text"] == text:
+            if entry["index"] == index:
                 data_index = count
                 break
             count += 1

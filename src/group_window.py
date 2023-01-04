@@ -107,6 +107,7 @@ class GroupWindow(tk.Frame):
             return
 
     def on_doubleclick(self, event):
+        print("line 110 group_window.py: on_doubleclick executed")
         w = event.widget
         try:
             index = int(w.curselection()[0])
@@ -115,6 +116,7 @@ class GroupWindow(tk.Frame):
             self.window.destroy()
 
         except IndexError:
+            print("Oops, index error")
             # somehow this function was called with no selection
             # ignore it and do nothing
             return

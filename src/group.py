@@ -146,10 +146,14 @@ class Group(tk.Frame):
     def delete(self):
         for entry in self.entries_data:
             for master_entry in self.master.master.master.entries_data:
-                i1 = master_entry["index"]
-                i2 = entry["index"]
-                if i1 == i2:
-                    master_entry["group"] = "None"
+                try:
+                    if master_entry["index"] == entry["index"]:
+                        master_entry["group"] = "None"
+                except KeyError:
+                    if master_entry["text"] == entry["text"]:
+                        master_entry["index"] = entry["index"]
+                        master_entry["group"] = "None"
+
 
         self.master.master.master.group_names.remove(self.name)
         self.master.master.master.refresh_entries(refresh_data=False)
