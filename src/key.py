@@ -1,9 +1,13 @@
+from tkinter import messagebox
+
 from data import get_num_entries
 from constants import *
 
 class Key:
     def __init__(self, master):
         self.master = master
+
+        # Booleans
         self.keys_pressed = {
             "cmd": False,
             "shift": False,
@@ -11,6 +15,8 @@ class Key:
         }
         self.just_submitted = False
         self.edit_selection_mode = False
+
+        # Edit selection
         self.edit_selection_index = 0
 
         if PLATFORM == "Windows":
@@ -32,7 +38,20 @@ class Key:
 
         if (event.keysym == "Return" 
             and self.keys_pressed["shift"] == False):
-            self.master.submit()
+            
+            # cmd+return to submit to top group
+            if self.keys_pressed["cmd"]:
+                try:
+                    group = self.master.master.top_frame.get_group_names()[0]
+                except IndexError:
+                    messagebox.showinfo("No groups", 
+                        "There is no group to submit this entry to.")
+                    self.just_submitted = True
+                    return
+            else:
+                group = None
+            
+            self.master.submit(group=group)
             self.just_submitted = True
         
         # cmd key pressed
@@ -147,7 +166,7 @@ class Key:
         if "Alt" in event.keysym:
             self.keys_pressed["alt"] = False
 
-        if self.just_submitted == True:
-            if event.keysym == "Return":
+        if event.keysym == "Return":
+            if self.just_submitted:
                 self.master.input.delete("1.0", "end")
-            self.just_submitted = False
+                self.just_submitted = False

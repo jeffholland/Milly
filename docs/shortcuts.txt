@@ -2,6 +2,7 @@ In the main window's Text widget:
 
 
 return                 submit entry
+cmd+return             submit entry to top group
 shift+return           new line of text
 cmd+i                  insert entry
 cmd+s                  save
@@ -15,8 +16,8 @@ cmd+shift+s            stats
 cmd+shift+h            show/hide checkboxes
 cmd+left               switch color scheme left
 cmd+right              switch color scheme right
-cmd+backspace          delete top
-cmd+shift+backspace    delete bottom
+cmd+backspace          delete top entry
+cmd+shift+backspace    delete bottom entry
 cmd+e                  edit selection mode
 
 
