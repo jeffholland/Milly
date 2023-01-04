@@ -338,12 +338,15 @@ class Entry(tk.Frame):
     def checkbox_pressed(self):
         # Move entries to bottom when checked
         if self.checkbox_var.get() == 1:
-            self.entries_obj.entries_data[self.index]["checked"] = True
+            for entry in self.entries_obj.entries_data:
+                if entry["index"] == self.index:
+                    entry["checked"] = True
+                    break
             self.bottom_pressed()
 
         # Move back to top when unchecked
         else:
-            self.master.master.master.entries_data[self.index]["checked"] = False
+            self.entries_obj.entries_data[self.index]["checked"] = False
             self.top_pressed()
 
     
