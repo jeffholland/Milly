@@ -1,3 +1,5 @@
+from tkinter import messagebox
+
 import json
 
 from constants import SAVE_DATA_PATH
@@ -27,7 +29,7 @@ def change_detected():
     try:
         f = open(last_filepath)
     except OSError:
-        print("Change detection error: Filepath could not be read")
+        messagebox.showerror("Change detection error", "Change detection error: Filepath could not be read")
         return False
 
     with f:
@@ -45,7 +47,7 @@ def load_entries(filepath):
     try:
         f = open(filepath, "r")
     except OSError:
-        print("Load Error: filepath could not be read")
+        messagebox.showerror("Load error", "Load error: filepath could not be read")
 
     with f:
         global entries
@@ -53,7 +55,7 @@ def load_entries(filepath):
             entries = json.load(f)
         except json.decoder.JSONDecodeError:
             # File is empty, ignore.
-            # (it will look to the user like an empty file was just opened,
+            # (to the user, it will look like an empty file was just opened,
             # which is fine because that's apparently what they wanted!)
             return
 
@@ -102,6 +104,7 @@ def remove_entry(index):
     for i in range(len(entries)):
         if int(entries[i]["index"]) == index:
             entries.pop(i)
+            break
 
 def swap_entry(index1, index2):
     tmp = entries[index1]

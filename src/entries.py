@@ -90,6 +90,7 @@ class Entries(tk.Frame):
 
         self.entries.clear()
         self.groups.clear()
+        self.group_names.clear()
 
     def set_entry_data(self):
 
