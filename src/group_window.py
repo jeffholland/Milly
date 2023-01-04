@@ -5,8 +5,8 @@ from constants import *
 class GroupWindow(tk.Frame):
     def __init__(self, master, group_names, entry_parent=True):
 
-        self.width = 220
-        self.height = 220
+        self.width = 200
+        self.height = 240
 
         tk.Frame.__init__(
             self,
@@ -149,8 +149,10 @@ class GroupWindow(tk.Frame):
     def refresh_groups(self):
         if self.entry_parent:
             groups = self.master.get_group_names()
+            print(f"entry parent - groups: {groups}")
         else:
             groups = self.master.master.top_frame.get_group_names()
+            print(f"non entry parent - groups: {groups}")
         self.list_var.set(groups)
 
 
@@ -158,11 +160,21 @@ class GroupWindow(tk.Frame):
     def refresh_colors(self, colors):
         self.colors = colors
 
-        for label in self.labels:
-            label.configure(
-                bg=self.colors["BG1"],
-                fg=self.colors["HL2"]
-            )
+        self.window.configure(
+            bg=self.colors["BG1"]
+        )
+        
+        self.group_list.configure(
+            bg=self.colors["BG2"],
+            fg=self.colors["HL2"]
+        )
+
+        self.add_entry.configure(
+            bg=self.colors["HL1"],
+            fg=self.colors["BG1"],
+            highlightbackground=self.colors["BG2"],
+            highlightcolor=self.colors["HL2"]
+        )
 
         for button in self.buttons:
             button.configure(

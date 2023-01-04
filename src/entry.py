@@ -210,6 +210,10 @@ class Entry(tk.Frame):
             fg=main_fg
         )
 
+        if self.group_window:
+            self.group_window.refresh_colors(colors)
+
+
 
     # Edit mode button pressed
 
@@ -329,6 +333,7 @@ class Entry(tk.Frame):
     def group_pressed(self):
         group_names = self.get_group_names()
         self.group_window = GroupWindow(self, group_names)
+        self.group_window.refresh_colors(self.colors)
 
     def checkbox_pressed(self):
         # Move entries to bottom when checked
