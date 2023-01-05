@@ -107,7 +107,12 @@ class Application(tk.Frame):
         self.top_frame.grid_remove()
         self.bottom_frame.grid_remove()
 
-        # self.settings.show_settings()
+        self.settings.bind_all("<KeyPress>", self.settings.key_pressed)
+        self.settings.bind_all("<KeyRelease>", self.settings.key_released)
+
+        self.bottom_frame.input.unbind("<KeyPress>")
+        self.bottom_frame.input.unbind("<KeyRelease>")
+
         self.settings.grid(row=0, column=0)
 
     def hide_settings(self):
@@ -116,6 +121,14 @@ class Application(tk.Frame):
         self.top_frame.grid()
         self.bottom_frame.grid()
         self.bottom_frame.input.focus_set()
+
+        self.settings.unbind_all("<KeyPress>")
+        self.settings.unbind_all("<KeyRelease>")
+
+        self.bottom_frame.input.bind('<KeyPress>', 
+            self.bottom_frame.key.key_press)
+        self.bottom_frame.input.bind('<KeyRelease>', 
+            self.bottom_frame.key.key_release)
 
         self.refresh_colors()
 
