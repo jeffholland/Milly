@@ -103,9 +103,6 @@ class GroupWindow(tk.Frame):
     def on_click(self, event=None):
         self.get_selection()
 
-        self.add_entry_var.set(self.selected)
-        self.add_entry.select_range(start=0, end=tk.END)
-
     def on_doubleclick(self, event=None):
         self.get_selection()
         self.master.move_to_group(self.selected)
@@ -114,6 +111,23 @@ class GroupWindow(tk.Frame):
     def key_pressed(self, event):
         if event.keysym == "Return":
             self.add_group()
+        if event.keysym == "Up":
+            try:
+                index = self.group_list.curselection()[0]
+                index = index - 1
+                self.group_list.selection_clear(0, tk.END)
+                self.group_list.selection_set(index, index)
+            except IndexError:
+                pass
+        if event.keysym == "Down":
+            try:
+                index = self.group_list.curselection()[0]
+                index = index + 1
+                self.group_list.selection_clear(0, tk.END)
+                self.group_list.selection_set(index, index)
+            except IndexError:
+                print("index error")
+                pass
 
 
     def add_group(self):
@@ -193,3 +207,6 @@ class GroupWindow(tk.Frame):
             if DEBUG:
                 messagebox.showerror("group_window TclError", "group_window caught a TclError")
             return
+
+        self.add_entry_var.set(self.selected)
+        self.add_entry.select_range(start=0, end=tk.END)
