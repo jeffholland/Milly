@@ -339,7 +339,7 @@ class Entry(tk.Frame):
         if len(self.group_window.list_var.get()) > 0:
             self.group_window.group_list.selection_set(0, 0)
             # act as though the selection were "clicked"
-            self.group_window.on_click()
+            # self.group_window.on_click()
 
     def checkbox_pressed(self):
         # Move entries to bottom when checked

@@ -185,8 +185,8 @@ class GroupWindow(tk.Frame):
             self.selected = self.group_list.get(index)
 
         except IndexError:
-            if DEBUG:
-                messagebox.showerror("group_window IndexError", "group_window.py get_selection caught an IndexError")
+            # if DEBUG:
+            #     messagebox.showerror("group_window IndexError", "group_window.py get_selection caught an IndexError")
             return
 
         except tk.TclError:
