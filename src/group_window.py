@@ -93,13 +93,18 @@ class GroupWindow(tk.Frame):
             column=2
         )
         self.add_entry.bind("<KeyPress>", self.key_pressed)
+        self.add_entry.focus_set()
+        self.add_entry.select_range(start=0, end=tk.END)
 
 
 
     # Handlers
 
-    def on_click(self, event):
+    def on_click(self, event=None):
         self.get_selection()
+
+        self.add_entry_var.set(self.selected)
+        self.add_entry.select_range(start=0, end=tk.END)
 
     def on_doubleclick(self, event=None):
         self.get_selection()
@@ -113,6 +118,10 @@ class GroupWindow(tk.Frame):
 
     def add_group(self):
         name = self.add_entry_var.get()
+
+        if name in self.group_names:
+            self.on_doubleclick()
+            return
 
         if self.entry_parent:
             self.master.add_group(name)
