@@ -137,6 +137,9 @@ class InputPath(tk.Frame):
         if event.keysym == "Return":
             self.submit()
 
+        if event.keysym == "Escape":
+            self.cancel()
+
         if PLATFORM == "Windows":
             if "Control" in event.keysym:
                 self.cmd_key_pressed = True
