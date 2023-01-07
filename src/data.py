@@ -91,23 +91,28 @@ def get_num_unchecked_entries():
 
     return num_unchecked_entries
 
-def create_entry(text, group=None):
+def create_entry(text, index=None, group=None):
+    if not index:
+        index = len(entries)
+
     if group:
         return {
             "date": date.strftime(date.today(), "%A") + " " + str(date.today()),
             "time": datetime.now().strftime("%I:%M %p"),
             "text": text,
-            "group": group
+            "group": group,
+            "index": index
         }
     return {
         "date": date.strftime(date.today(), "%A") + " " + str(date.today()),
         "time": datetime.now().strftime("%I:%M %p"),
         "text": text,
-        "group": "None"
+        "group": "None",
+        "index": index
     }
 
 def add_entry(text, group=None):
-    entries.append(create_entry(text, group))
+    entries.append(create_entry(text, group=group))
 
 def remove_entry(index):
     for i in range(len(entries)):
@@ -121,7 +126,7 @@ def swap_entry(index1, index2):
     entries[index2] = tmp
 
 def insert_entry(index, text):
-    entries.insert(index, create_entry(text))
+    entries.insert(index, create_entry(text, index=index))
 
 def move_entry(index1, index2):
     tmp = entries.pop(index1)
