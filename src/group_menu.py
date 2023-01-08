@@ -131,6 +131,7 @@ class GroupMenu(tk.Frame):
             new_name = self.name_entry.get()
             if len(new_name) > 0:
                 self.master.master.master.master.rename_group(self.name, new_name)
+                self.master.name = new_name
                 self.name = new_name
                 self.name_label.configure(text=new_name)
                 self.hide_name_entry()
