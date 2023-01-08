@@ -123,6 +123,8 @@ class Input(tk.Frame):
             self.group_window.refresh_colors(colors)
         except AttributeError:
             pass
+        except tk.TclError:
+            pass
 
 
 
