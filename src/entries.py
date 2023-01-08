@@ -34,13 +34,13 @@ class Entries(tk.Frame):
 
         # Initialization
 
-        # Contains a list of all Entry objects
+        # List of Entry objects
         self.entries = []
 
-        # Contains a list of dicts containing all Entry data
+        # List of dicts containing all Entry data
         self.entries_data = []
 
-        # Contains a list of Entry groups
+        # List of Group objects
         self.groups = []
 
         # List of group names
@@ -67,16 +67,29 @@ class Entries(tk.Frame):
 
     def refresh_entries(self, refresh_data=True):
 
+        # 1. Clear all entries and groups from the screen
+
         self.clear_entries()
+
+        # 2. If called with refresh_data = True,
+        # get data from the global data repository.
 
         if refresh_data:
             self.entries_data = get_entries()
 
+        # 3. Fill variables with entry and group data
+
         self.set_entry_data()
+
+        # 4. Create group objects and display them on the screen
 
         self.create_groups()
 
+        # 5. Create ungrouped entries and display them on the screen
+
         self.create_ungrouped_entries()
+
+        # 6. Refresh colors
 
         if self.colors:
             self.refresh_colors(self.colors)
@@ -110,9 +123,9 @@ class Entries(tk.Frame):
         data = get_data()
 
         # Iterate through group names in save data,
-        # and add any saved groups to the list.
-        # Then add saved group names to the global data repository 
-        # (a dictionary stored in data.py).
+        # and add any saved groups to our list.
+        # Then update the global data repository 
+        # with the newly merged data saved in our list.
         
         try:
             for group in data["groups"]:
@@ -120,13 +133,14 @@ class Entries(tk.Frame):
                     self.group_names.append(group)
             save_groups(self.group_names)
 
-        # If no group names are in the save data, save any found groups
+        # If the data dict does not have a "groups" key, 
+        # save our list of groups to the data to fix that.
 
         except KeyError:
 
             save_groups(self.group_names)
 
-        # Entry indices
+        # Save index of each entry to our entries_data dict
 
         self.index_count = 0
 
