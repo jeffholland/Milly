@@ -11,10 +11,9 @@ class GroupMenu(tk.Frame):
 
         self.name = name
 
-        # Configure column size for grid layout
-        self.columnconfigure(0, minsize=720)
-
         self.title_font = tkFont.Font(self, family="Helvetica", size=20)
+
+        self.buttons = []
 
         self.create_widgets()
 
@@ -35,6 +34,32 @@ class GroupMenu(tk.Frame):
         )
         self.name_label.bind("<Button-1>", self.show_name_entry)
 
+        # Up button
+        self.up_button = tk.Button(
+            self,
+            text="up",
+            width=1
+        )
+        self.up_button.grid(
+            row=0,
+            column=1,
+            sticky=tk.NE
+        )
+        self.buttons.append(self.up_button)
+        
+        # Down button
+        self.down_button = tk.Button(
+            self,
+            text="down",
+            width=1
+        )
+        self.down_button.grid(
+            row=0,
+            column=2,
+            sticky=tk.NE
+        )
+        self.buttons.append(self.down_button)
+
         # X button
         self.x_button = tk.Button(
             self,
@@ -44,9 +69,10 @@ class GroupMenu(tk.Frame):
         )
         self.x_button.grid(
             row=0,
-            column=1,
+            column=3,
             sticky=tk.NE
         )
+        self.buttons.append(self.x_button)
 
         # Name entry - only shows when renaming the group
 
@@ -55,6 +81,10 @@ class GroupMenu(tk.Frame):
             width=5
         )
         self.name_entry.bind("<KeyPress>", self.key_pressed)
+
+        # Configure column size for grid layout
+        min_size = 720 - (30 * len(self.buttons))
+        self.columnconfigure(0, minsize=min_size)
 
     def refresh_colors(self, colors):
 
@@ -67,9 +97,10 @@ class GroupMenu(tk.Frame):
             fg=self.colors["HL2"]
         )
 
-        self.x_button.configure(
-            highlightbackground=self.colors["BG2"]
-        )
+        for button in self.buttons:
+            button.configure(
+                highlightbackground=self.colors["BG2"]
+            )
 
         self.name_entry.configure(
             bg=self.colors["BG2"],
