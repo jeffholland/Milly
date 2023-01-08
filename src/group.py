@@ -19,8 +19,15 @@ class Group(tk.Frame):
         self.height = entry_height
         self.name = name
         self.master = master
-        self.entries_data = entries_data
         self.font = font
+        self.entries_data = entries_data
+
+        # Empty data requires a few formatting adjustments
+        if len(entries_data) == 0:
+            self.x_button_column = 1
+            self.columnconfigure(0, minsize=720)
+        else:
+            self.x_button_column = 1
 
         self.show_dates = True
         self.show_times = True
@@ -60,7 +67,7 @@ class Group(tk.Frame):
         )
         self.x_button.grid(
             row=0,
-            column=1,
+            column=self.x_button_column,
             sticky=tk.NE
         )
 

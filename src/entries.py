@@ -90,7 +90,7 @@ class Entries(tk.Frame):
 
         self.entries.clear()
         self.groups.clear()
-        self.group_names.clear()
+        # self.group_names.clear()
 
     def set_entry_data(self):
 
@@ -365,6 +365,7 @@ class Entries(tk.Frame):
     def add_group(self, name):
         self.group_names.append(name)
         save_groups(self.group_names)
+        self.refresh_entries(refresh_data=False)
 
     def delete_group(self, name):
         for group in self.groups:
