@@ -38,7 +38,8 @@ class GroupMenu(tk.Frame):
         self.up_button = tk.Button(
             self,
             text="up",
-            width=1
+            width=1,
+            command=self.up_pressed
         )
         self.up_button.grid(
             row=0,
@@ -51,7 +52,8 @@ class GroupMenu(tk.Frame):
         self.down_button = tk.Button(
             self,
             text="down",
-            width=1
+            width=1,
+            command=self.down_pressed
         )
         self.down_button.grid(
             row=0,
@@ -136,3 +138,10 @@ class GroupMenu(tk.Frame):
                 self.name_label.configure(text=new_name)
                 self.hide_name_entry()
                 self.master.master.master.master.master.bottom_frame.input.focus_set()
+
+
+    def up_pressed(self):
+        self.master.master.master.master.move_group(self.name, "up")
+
+    def down_pressed(self):
+        self.master.master.master.master.move_group(self.name, "down")

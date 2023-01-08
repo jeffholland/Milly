@@ -46,9 +46,6 @@ class Entries(tk.Frame):
         # List of group names
         self.group_names = []
 
-        # Contains a list of ungrouped Entry objects
-        self.ungrouped_entries = []
-
         # Contains a filtered list of Entry objects (for cmd+f search)
         self.filtered_entries = []
 
@@ -416,3 +413,7 @@ class Entries(tk.Frame):
         for entry in self.entries_data:
             if entry["group"] == old_name:
                 entry["group"] = new_name
+
+    def move_group(self, name, dir):
+        print(name)
+        print(dir)
