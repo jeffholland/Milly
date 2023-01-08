@@ -415,5 +415,21 @@ class Entries(tk.Frame):
                 entry["group"] = new_name
 
     def move_group(self, name, dir):
-        print(name)
-        print(dir)
+        count = 0
+        for group_name in self.group_names:
+            if group_name == name:
+                if dir == "up":
+                    if count > 0:
+                        self.swap_groups(count, count - 1)
+
+                if dir == "down":
+                    if count < len(self.group_names) - 1:
+                        self.swap_groups(count, count + 1)
+                
+                break
+
+            count += 1
+        self.refresh_entries(refresh_data=False)
+
+    def swap_groups(self, pos1, pos2):
+        self.group_names[pos1], self.group_names[pos2] = self.group_names[pos2], self.group_names[pos1]
