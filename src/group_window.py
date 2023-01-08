@@ -134,15 +134,21 @@ class GroupWindow(tk.Frame):
         name = self.add_entry_var.get()
 
         if name in self.group_names:
+            # If group already exists, act as though the group
+            # were double-clicked.
             self.on_doubleclick()
             return
 
+        # Call entries object add group function
         if self.entry_parent:
             self.master.add_group(name)
         else:
             self.master.master.top_frame.add_group(name)
 
+        # Clear all text from the entry
         self.add_entry.delete(0, tk.END)
+
+        # Refresh the displayed list
         self.refresh_groups()
 
     def delete_group(self):

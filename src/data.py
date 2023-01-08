@@ -35,13 +35,15 @@ def change_detected():
         return False
 
     with f:
-        if entries == json.load(f):
+        if data == json.load(f):
             return False
     
     return True
 
 
-# Entry functions
+
+
+# Load / Save / Clears
 
 def load_entries(filepath):
     try:
@@ -67,13 +69,20 @@ def load_entries(filepath):
 
 def save_entries(filepath):
     with open(filepath, "w") as f:
-        json.dump(entries, f)
+        json.dump(data, f)
 
     global last_filepath
     last_filepath = filepath
 
+def save_groups(groups):
+    data["groups"] = groups
+
 def clear_entries():
     entries.clear()
+
+
+
+# Getter functions
 
 def get_data():
     return data
@@ -95,6 +104,10 @@ def get_num_unchecked_entries():
             num_unchecked_entries += 1
 
     return num_unchecked_entries
+
+
+
+# Entry generation function
 
 def create_entry(text, index=None, group=None):
     if not index:

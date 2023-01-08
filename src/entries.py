@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.font as tkFont
 
 from constants import *
-from data import get_entries
+from data import get_entries, get_data, save_groups
 from entry import Entry
 from export import ExportWindow
 from group import Group
@@ -94,7 +94,7 @@ class Entries(tk.Frame):
 
     def set_entry_data(self):
 
-        # Group names
+        # Get the group names from stored entries
 
         for entry in self.entries_data:
             try:
@@ -105,7 +105,26 @@ class Entries(tk.Frame):
             except KeyError:
                 entry["group"] = "None"
 
-        self.group_names.sort()
+        # Get all saved data as a dictionary
+
+        data = get_data()
+
+        # Iterate through group names in save data,
+        # and add any saved groups to the list.
+        # Then add saved group names to the global data repository 
+        # (a dictionary stored in data.py).
+        
+        try:
+            for group in data["groups"]:
+                if group not in self.group_names:
+                    self.group_names.append(group)
+            save_groups(self.group_names)
+
+        # If no group names are in the save data, save any found groups
+
+        except KeyError:
+
+            save_groups(self.group_names)
 
         # Entry indices
 
@@ -345,7 +364,7 @@ class Entries(tk.Frame):
 
     def add_group(self, name):
         self.group_names.append(name)
-        self.group_names.sort()
+        save_groups(self.group_names)
 
     def delete_group(self, name):
         for group in self.groups:
