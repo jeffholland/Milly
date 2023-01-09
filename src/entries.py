@@ -74,20 +74,23 @@ class Entries(tk.Frame):
         if refresh_data:
             self.entries_data = get_entries()
 
-        # 3. Fill variables with entry and group data
-        # (also sort the data)
+        # 3. Get the data from the data.py repo
 
-        self.set_entry_data()
+        self.get_entry_data()
 
-        # 4. Create group objects and display them on the screen
+        # 4. Set indexing information
+
+        self.set_entry_indexes()
+
+        # 5. Create group objects and display them on the screen
 
         self.create_groups()
 
-        # 5. Create ungrouped entries and display them on the screen
+        # 6. Create ungrouped entries and display them on the screen
 
         self.create_ungrouped_entries()
 
-        # 6. Refresh colors
+        # 7. Refresh colors
 
         if self.colors:
             self.refresh_colors(self.colors)
@@ -103,16 +106,17 @@ class Entries(tk.Frame):
         self.groups.clear()
         # self.group_names.clear()
 
-    def set_entry_data(self):
+
+    def get_entry_data(self):
 
         # Get all saved data as a dictionary
 
-        data = get_data()
+        self.data = get_data()
 
         # Get list of groups from data dict
         
         try:
-            self.group_names = data["groups"]
+            self.group_names = self.data["groups"]
 
         # If the data dict does not have a "groups" key,
         # then, NO GROUPS FOR YOU.
@@ -120,19 +124,38 @@ class Entries(tk.Frame):
         except KeyError:
             pass
 
-        # Save index and group_index of each entry 
-        # to our entries_data dict
+        # Break groups into a dict
+
+        self.grouped_entries = {}
+
+        for name in self.group_names:
+            self.grouped_entries[name] = []
+
+            for entry in self.entries_data:
+                if entry["group"] == name:
+                    self.grouped_entries[name].append(entry)
+
+
+    def set_entry_indexes(self):
+
+        # Set the index of each entry
 
         self.index_count = 0
         self.group_index_count = 0
 
-        for entry in self.entries_data:
-            # Index is shows where the entry is "overall"
-            entry["index"] = self.index_count
-            self.index_count += 1
+        for group in self.group_names:
+            for entry in self.grouped_entries[group]:
 
-            # struggling to come up with a way to "group index"
-            # the entries
+                entry["index"] = self.index_count
+                self.index_count += 1
+                entry["group_index"] = self.group_index_count
+                self.group_index_count += 1
+
+                for data_entry in self.entries_data:
+                    if data_entry["text"] == entry["text"]:
+                        data_entry = entry
+
+            self.group_index = 0
 
     def create_groups(self):
 

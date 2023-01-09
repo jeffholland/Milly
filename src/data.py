@@ -127,7 +127,11 @@ def get_num_unchecked_entries():
 
 def create_entry(text, index=None, group=None):
     if not index:
-        index = len(data["entries"])
+        try:
+            index = len(data["entries"])
+        except KeyError:
+            data["entries"] = []
+            index = len(data["entries"])
 
     if group:
         return {
