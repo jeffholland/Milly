@@ -75,6 +75,7 @@ class Entries(tk.Frame):
             self.entries_data = get_entries()
 
         # 3. Fill variables with entry and group data
+        # (also sort the data)
 
         self.set_entry_data()
 
@@ -103,17 +104,6 @@ class Entries(tk.Frame):
         # self.group_names.clear()
 
     def set_entry_data(self):
-
-        # Get the group names from stored entries
-
-        # for entry in self.entries_data:
-        #     try:
-        #         if (entry["group"] not in self.group_names
-        #             and entry["group"] != "None"):
-
-        #             self.group_names.append(entry["group"])
-        #     except KeyError:
-        #         entry["group"] = "None"
 
         # Get all saved data as a dictionary
 
