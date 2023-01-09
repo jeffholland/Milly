@@ -35,7 +35,7 @@ class Entries(tk.Frame):
         # Initialization
 
         # List of Entry objects
-        self.entries = []
+        self.ungrouped_entries = []
 
         # List of dicts containing all Entry data
         self.entries_data = []
@@ -94,12 +94,12 @@ class Entries(tk.Frame):
 
 
     def clear_entries(self):
-        for entry in self.entries:
+        for entry in self.ungrouped_entries:
             entry.grid_forget()
         for group in self.groups:
             group.grid_forget()
 
-        self.entries.clear()
+        self.ungrouped_entries.clear()
         self.groups.clear()
         # self.group_names.clear()
 
@@ -120,13 +120,19 @@ class Entries(tk.Frame):
         except KeyError:
             pass
 
-        # Save index of each entry to our entries_data dict
+        # Save index and group_index of each entry 
+        # to our entries_data dict
 
         self.index_count = 0
+        self.group_index_count = 0
 
         for entry in self.entries_data:
+            # Index is shows where the entry is "overall"
             entry["index"] = self.index_count
             self.index_count += 1
+
+            # struggling to come up with a way to "group index"
+            # the entries
 
     def create_groups(self):
 
@@ -181,7 +187,7 @@ class Entries(tk.Frame):
                     entry_time = entry["time"]
 
                 text=entry["text"]
-                self.entries.append(Entry(
+                self.ungrouped_entries.append(Entry(
                     self.container,
                     date=entry_date,
                     time=entry_time,
@@ -194,9 +200,9 @@ class Entries(tk.Frame):
                     checkbox=self.show_checkboxes,
                     checked=checked_bool
                 ))
-                self.entries[ungrouped_entries_count].grid_propagate(0)
+                self.ungrouped_entries[ungrouped_entries_count].grid_propagate(0)
                 entry_row = ungrouped_entries_count + len(self.groups)
-                self.entries[ungrouped_entries_count].grid(
+                self.ungrouped_entries[ungrouped_entries_count].grid(
                     row=entry_row, 
                     column=0,
                     padx=PADDING, 
@@ -267,7 +273,7 @@ class Entries(tk.Frame):
         for group in self.groups:
             group.refresh_colors(colors)
 
-        for entry in self.entries:
+        for entry in self.ungrouped_entries:
             entry.refresh_colors(colors)
 
         self.export_window.refresh_colors(colors)
@@ -275,7 +281,7 @@ class Entries(tk.Frame):
 
 
     def filter_entries(self, filter, case_sensitive=False):
-        for entry in self.entries:
+        for entry in self.ungrouped_entries:
             entry.grid_forget()
 
         for entry in self.filtered_entries:

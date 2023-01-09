@@ -6,7 +6,6 @@ from constants import SAVE_DATA_PATH
 from datetime import date, datetime
 
 data = {}
-entries = []
 
 last_filepath = ""
 
@@ -20,7 +19,7 @@ def get_last_filepath(short=False):
 
 def change_detected():
     # No entries means no changes
-    if len(entries) == 0:
+    if len(data["entries"]) == 0:
         return False
 
     # Entries and no last filepath 
@@ -41,17 +40,17 @@ def change_detected():
 
         # Uncomment to debug - see what's different
 
-        for entry in loaded["entries"]:
-            print(entry)
-        print("\n")
-        for entry in data["entries"]:
-            print(entry)
-        print("\n")
-        for group in loaded["groups"]:
-            print(group)
-        print("\n")
-        for entry in data["groups"]:
-            print(entry)
+        # for entry in loaded["entries"]:
+        #     print(entry)
+        # print("\n")
+        # for entry in data["entries"]:
+        #     print(entry)
+        # print("\n")
+        # for group in loaded["groups"]:
+        #     print(group)
+        # print("\n")
+        # for entry in data["groups"]:
+        #     print(entry)
 
     
     return True
@@ -70,10 +69,8 @@ def load_entries(filepath):
 
     with f:
         global data
-        global entries
         try:
             data = json.load(f)
-            entries = data["entries"]
         except json.decoder.JSONDecodeError:
             # File is empty, ignore.
             # (to the user, it will look like an empty file was just loaded,
@@ -94,7 +91,7 @@ def save_groups(groups):
     data["groups"] = groups
 
 def clear_entries():
-    entries.clear()
+    data.clear()
 
 
 
@@ -104,15 +101,18 @@ def get_data():
     return data
 
 def get_entries():
-    return entries
+    try:
+        return data["entries"]
+    except KeyError:
+        return []
 
 def get_num_entries():
-    return len(entries)
+    return len(data["entries"])
 
 def get_num_unchecked_entries():
     num_unchecked_entries = 0
 
-    for entry in entries:
+    for entry in data["entries"]:
         try:
             if entry["checked"] == False:
                 num_unchecked_entries += 1
@@ -127,7 +127,7 @@ def get_num_unchecked_entries():
 
 def create_entry(text, index=None, group=None):
     if not index:
-        index = len(entries)
+        index = len(data["entries"])
 
     if group:
         return {
@@ -146,22 +146,31 @@ def create_entry(text, index=None, group=None):
     }
 
 def add_entry(text, group=None):
-    entries.append(create_entry(text, group=group))
+    entry = create_entry(text, group=group)
+    try:
+        data["entries"].append(entry)
+    except KeyError:
+        data["entries"] = []
+        data["entries"].append(entry)
 
 def remove_entry(index):
-    for i in range(len(entries)):
-        if int(entries[i]["index"]) == index:
-            entries.pop(i)
+    for i in range(len(data["entries"])):
+        if int(data["entries"][i]["index"]) == index:
+            data["entries"].pop(i)
             break
 
 def swap_entry(index1, index2):
-    tmp = entries[index1]
-    entries[index1] = entries[index2]
-    entries[index2] = tmp
+    if index1 == index2:
+        return
+    tmp = data["entries"][index1]
+    data["entries"][index1] = data["entries"][index2]
+    data["entries"][index2] = tmp
 
 def insert_entry(index, text):
-    entries.insert(index, create_entry(text, index=index))
+    data["entries"].insert(index, create_entry(text, index=index))
 
 def move_entry(index1, index2):
-    tmp = entries.pop(index1)
-    entries.insert(index2, tmp)
+    if index1 == index2:
+        return
+    tmp = data["entries"].pop(index1)
+    data["entries"].insert(index2, tmp)
