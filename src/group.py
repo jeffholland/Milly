@@ -33,22 +33,10 @@ class Group(tk.Frame):
         self.create_widgets()
 
 
+    # IMPORTANT: This is the function in which the entries get shown
+    # on the screen.
 
-    def create_widgets(self):
-
-        # Group menu - contains name label and buttons
-
-        self.group_menu = GroupMenu(
-            self,
-            self.name,
-            len(self.entries_data)
-        )
-        self.group_menu.grid(
-            row=0,
-            column=0
-        )
-
-        # Show entries
+    def show_entries(self):
 
         for count in range(len(self.entries_data)):
             try:
@@ -85,6 +73,27 @@ class Group(tk.Frame):
                 pady=PADDING,
                 columnspan=2
             )
+
+
+
+    def create_widgets(self):
+
+        # Group menu - contains name label and buttons
+
+        self.group_menu = GroupMenu(
+            self,
+            self.name,
+            len(self.entries_data)
+        )
+        self.group_menu.grid(
+            row=0,
+            column=0
+        )
+
+        # Show entries
+
+        self.show_entries()
+
         self.calculate_height()
 
 
@@ -141,7 +150,3 @@ class Group(tk.Frame):
                 switch = True
 
             count += 1
-
-        for entry in self.entries_data:
-            print(entry)
-        print("\n")
