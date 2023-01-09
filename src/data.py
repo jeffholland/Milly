@@ -35,8 +35,24 @@ def change_detected():
         return False
 
     with f:
-        if data == json.load(f):
+        loaded = json.load(f)
+        if data == loaded:
             return False
+
+        # Uncomment to debug - see what's different
+
+        for entry in loaded["entries"]:
+            print(entry)
+        print("\n")
+        for entry in data["entries"]:
+            print(entry)
+        print("\n")
+        for group in loaded["groups"]:
+            print(group)
+        print("\n")
+        for entry in data["groups"]:
+            print(entry)
+
     
     return True
 

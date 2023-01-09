@@ -357,13 +357,20 @@ class Entry(tk.Frame):
 
     
 
-    # Group functions
+    # Functions that do nothing but pass on to the Entries object
+
+    # (just so I don't have to call 
+    # self.master.master.master.master.master etc etc etc 
+    # from the group window)
 
     def add_group(self, name):
         self.entries_obj.add_group(name)
 
     def get_group_names(self):
         return self.entries_obj.get_group_names()
+
+    def move_group(self, name, dir):
+        self.entries_obj.move_group(name, dir)
 
     def move_to_group(self, group_name):
         self.entries_obj.set_group(self.index, group_name)

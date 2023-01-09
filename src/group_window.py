@@ -7,7 +7,7 @@ class GroupWindow(tk.Frame):
     def __init__(self, master, group_names, entry_parent=True):
 
         self.width = 200
-        self.height = 240
+        self.height = 280
 
         tk.Frame.__init__(
             self,
@@ -81,6 +81,30 @@ class GroupWindow(tk.Frame):
             column=1
         )
         self.buttons.append(self.delete_button)
+
+        self.up_button = tk.Button(
+            self.window,
+            width=1,
+            text="up",
+            command=self.up_pressed
+        )
+        self.up_button.grid(
+            row=2,
+            column=0
+        )
+        self.buttons.append(self.up_button)
+
+        self.down_button = tk.Button(
+            self.window,
+            width=1,
+            text="down",
+            command=self.down_pressed
+        )
+        self.down_button.grid(
+            row=2,
+            column=1
+        )
+        self.buttons.append(self.down_button)
 
         self.add_entry_var = tk.StringVar()
         self.add_entry = tk.Entry(
@@ -165,6 +189,20 @@ class GroupWindow(tk.Frame):
         else:
             groups = self.master.master.top_frame.get_group_names()
         self.list_var.set(groups)
+
+    def up_pressed(self):
+        if self.entry_parent:
+            self.master.move_group(self.selected, "up")
+        else:
+            self.master.master.top_frame.move_group(self.selected, "up")
+        self.refresh_groups()
+
+    def down_pressed(self):
+        if self.entry_parent:
+            self.master.move_group(self.selected, "down")
+        else:
+            self.master.master.top_frame.move_group(self.selected, "down")
+        self.refresh_groups()
 
 
 
