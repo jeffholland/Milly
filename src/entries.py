@@ -106,14 +106,14 @@ class Entries(tk.Frame):
 
         # Get the group names from stored entries
 
-        for entry in self.entries_data:
-            try:
-                if (entry["group"] not in self.group_names
-                    and entry["group"] != "None"):
+        # for entry in self.entries_data:
+        #     try:
+        #         if (entry["group"] not in self.group_names
+        #             and entry["group"] != "None"):
 
-                    self.group_names.append(entry["group"])
-            except KeyError:
-                entry["group"] = "None"
+        #             self.group_names.append(entry["group"])
+        #     except KeyError:
+        #         entry["group"] = "None"
 
         # Get all saved data as a dictionary
 
@@ -125,17 +125,13 @@ class Entries(tk.Frame):
         # with the newly merged data saved in our list.
         
         try:
-            for group in data["groups"]:
-                if group not in self.group_names:
-                    self.group_names.append(group)
-            save_groups(self.group_names)
+            self.group_names = data["groups"]
 
         # If the data dict does not have a "groups" key, 
         # save our list of groups to the data to fix that.
 
         except KeyError:
-
-            save_groups(self.group_names)
+            pass
 
         # Save index of each entry to our entries_data dict
 

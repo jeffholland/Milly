@@ -65,7 +65,7 @@ def load_entries(filepath):
     try:
         f = open(filepath, "r")
     except OSError:
-        messagebox.showerror("Load error", "Load error: filepath could not be read")
+        messagebox.showerror("Load error", f"Load error: filepath {filepath} could not be read")
         return
 
     with f:
