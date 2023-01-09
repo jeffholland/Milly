@@ -322,12 +322,20 @@ class Entry(tk.Frame):
 
     def top_pressed(self):
         if self.index > 0:
-            move_entry(self.index, 0)
+            if self.group:
+                num_entries_in_group = len(self.master.entries_data)
+                move_entry(self.index, num_entries_in_group)
+            else:
+                move_entry(self.index, 0)
             self.entries_obj.refresh_entries()
 
     def bottom_pressed(self):
         if self.index < get_num_entries() - 1:
-            move_entry(self.index, get_num_unchecked_entries())
+            if self.group:
+                num_entries_in_group = len(self.master.entries_data)
+                move_entry(self.index, num_entries_in_group)
+            else:
+                move_entry(self.index, get_num_entries())
             self.entries_obj.refresh_entries()
 
     def group_pressed(self):
