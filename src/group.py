@@ -20,7 +20,10 @@ class Group(tk.Frame):
         self.name = name
         self.master = master
         self.font = font
+
+        # Sort entries data by checked
         self.entries_data = entries_data
+        self.sort_by_checked()
 
         self.show_dates = True
         self.show_times = True
@@ -122,3 +125,23 @@ class Group(tk.Frame):
 
         self.master.master.master.group_names.remove(self.name)
         self.master.master.master.refresh_entries(refresh_data=False)
+
+    def sort_by_checked(self):
+
+        switch = False
+        count = 0
+
+        for entry in list(self.entries_data):
+            checked = entry["checked"]
+            if switch:
+                if not checked:
+                    self.entries_data.pop(count)
+                    self.entries_data.insert(0, entry)
+            if checked:
+                switch = True
+
+            count += 1
+
+        for entry in self.entries_data:
+            print(entry)
+        print("\n")

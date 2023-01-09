@@ -109,16 +109,13 @@ class Entries(tk.Frame):
 
         data = get_data()
 
-        # Iterate through group names in save data,
-        # and add any saved groups to our list.
-        # Then update the global data repository 
-        # with the newly merged data saved in our list.
+        # Get list of groups from data dict
         
         try:
             self.group_names = data["groups"]
 
-        # If the data dict does not have a "groups" key, 
-        # save our list of groups to the data to fix that.
+        # If the data dict does not have a "groups" key,
+        # then, NO GROUPS FOR YOU.
 
         except KeyError:
             pass
@@ -151,6 +148,7 @@ class Entries(tk.Frame):
                 name=group,
                 font=self.font
             ))
+
             self.groups[count].grid_propagate(0)
             self.groups[count].grid(
                 row=count, 
@@ -158,6 +156,8 @@ class Entries(tk.Frame):
                 padx=PADDING,
                 pady=PADDING
             )
+
+            # Update count
             count += 1
 
     def create_ungrouped_entries(self):
