@@ -33,6 +33,17 @@ class Group(tk.Frame):
         self.create_widgets()
 
 
+    # def refresh_entries(self):
+    #     self.clear_entries()
+    #     self.show_entries()
+
+    # def clear_entries(self):
+    #     for entry in self.entries:
+    #         entry.grid_forget()
+
+    #     self.entries.clear()
+
+
     # IMPORTANT: This is the function in which the entries get shown
     # on the screen.
 
@@ -51,28 +62,33 @@ class Group(tk.Frame):
             if self.show_times:
                 entry_time = self.entries_data[count]["time"]
 
-            self.entries.append(Entry(
-                self,
-                date=entry_date,
-                time=entry_time,
-                menu=True,
-                text=self.entries_data[count]["text"],
-                width=self.width - PADDING * 4,
-                height=self.entry_height,
-                index=self.entries_data[count]["index"],
-                font=self.font,
-                checkbox=True,
-                checked=checked_bool,
-                group=self.name
-            ))
-            self.entries[count].grid_propagate(0)
-            self.entries[count].grid(
-                row=count + 1, 
-                column=0,
-                padx=PADDING, 
-                pady=PADDING,
-                columnspan=2
-            )
+            # Arrange by group_index
+            for entry in self.entries_data:
+                if entry["group_index"] == count:
+
+                    self.entries.append(Entry(
+                        self,
+                        date=entry_date,
+                        time=entry_time,
+                        menu=True,
+                        text=self.entries_data[count]["text"],
+                        width=self.width - PADDING * 4,
+                        height=self.entry_height,
+                        index=self.entries_data[count]["index"],
+                        font=self.font,
+                        checkbox=True,
+                        checked=checked_bool,
+                        group=self.name,
+                        group_index=self.entries_data[count]["group_index"]
+                    ))
+                    self.entries[count].grid_propagate(0)
+                    self.entries[count].grid(
+                        row=count + 1, 
+                        column=0,
+                        padx=PADDING, 
+                        pady=PADDING,
+                        columnspan=2
+                    )
 
 
 
@@ -150,3 +166,6 @@ class Group(tk.Frame):
                 switch = True
 
             count += 1
+
+    def get_num_entries(self):
+        return len(self.entries_data)

@@ -62,35 +62,31 @@ class Entries(tk.Frame):
     # IMPORTANT: this is the function where the entries get
     # put on the screen.
 
-    def refresh_entries(self, refresh_data=True):
+    def refresh_entries(self, refresh_data=True, refresh_indexes=True):
 
         # 1. Clear all entries and groups from the screen
 
         self.clear_entries()
 
-        # 2. If called with refresh_data = True,
-        # get data from the global data repository.
+        # 2. Get the data from the data.py repo
 
         if refresh_data:
-            self.entries_data = get_entries()
+            self.get_entry_data()
 
-        # 3. Get the data from the data.py repo
+        # 3. Set indexing (to arrange everything properly on the screen)
 
-        self.get_entry_data()
+        if refresh_indexes:
+            self.set_entry_indexes()
 
-        # 4. Set indexing information
-
-        self.set_entry_indexes()
-
-        # 5. Create group objects and display them on the screen
+        # 4. Create group objects and display them on the screen
 
         self.create_groups()
 
-        # 6. Create ungrouped entries and display them on the screen
+        # 5. Create ungrouped entries and display them on the screen
 
         self.create_ungrouped_entries()
 
-        # 7. Refresh colors
+        # 6. Refresh colors
 
         if self.colors:
             self.refresh_colors(self.colors)
@@ -104,7 +100,6 @@ class Entries(tk.Frame):
 
         self.ungrouped_entries.clear()
         self.groups.clear()
-        # self.group_names.clear()
 
 
     def get_entry_data(self):
@@ -113,16 +108,19 @@ class Entries(tk.Frame):
 
         self.data = get_data()
 
-        # Get list of groups from data dict
+        # Get entries data from the data dict
+
+        try:
+            self.entries_data = self.data["entries"]
+        except KeyError:
+            self.entries_data = []
+
+        # Get list of groups from the data dict
         
         try:
             self.group_names = self.data["groups"]
-
-        # If the data dict does not have a "groups" key,
-        # then, NO GROUPS FOR YOU.
-
         except KeyError:
-            pass
+            self.group_names = []
 
         # Break groups into a dict
 
@@ -143,19 +141,28 @@ class Entries(tk.Frame):
         self.index_count = 0
         self.group_index_count = 0
 
+        # Iterate over each group
+
         for group in self.group_names:
+            
+            # Iterate over each entry in grouped entries
+
             for entry in self.grouped_entries[group]:
 
                 entry["index"] = self.index_count
                 self.index_count += 1
                 entry["group_index"] = self.group_index_count
-                self.group_index_count += 1
+
+                # Transfer the data we've just changed over to
+                # self.entries_data
 
                 for data_entry in self.entries_data:
                     if data_entry["text"] == entry["text"]:
                         data_entry = entry
+                
+                self.group_index_count += 1
 
-            self.group_index = 0
+            self.group_index_count = 0
 
     def create_groups(self):
 
