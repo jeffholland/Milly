@@ -147,7 +147,7 @@ class Input(tk.Frame):
         self.input.delete("1.0", "end")
 
     def insert(self):
-        if len(get_entries()) == 0:
+        if get_num_entries() == 0:
             self.submit()
         else:
             self.insert_prompt = InsertPrompt(self)
@@ -165,7 +165,7 @@ class Input(tk.Frame):
         self.input_path.refresh_colors(self.colors)
 
     def save_submit(self, filepath):
-        save_entries(filepath)
+        save_all(filepath)
 
         if self.exit_after_saving:
             exit()
@@ -183,7 +183,7 @@ class Input(tk.Frame):
         self.master.refresh_entries()
 
     def remove_last_entry(self):
-        remove_entry(len(get_entries()) - 1)
+        remove_entry(get_num_entries() - 1)
         self.master.refresh_entries()
 
     def show_find_window(self):

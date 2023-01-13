@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.font as tkFont
 
 from constants import *
-from data import get_entries, get_data, save_groups
+from data import get_data, save_groups
 from entry import Entry
 from export import ExportWindow
 from group import Group

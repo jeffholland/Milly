@@ -9,6 +9,58 @@ data = {}
 
 last_filepath = ""
 
+#
+# KEEP EDITING THIS UNTIL IT ALL WORKS WITH "test.json"
+# then do entries.py and input.py and anything else that needs editing
+#
+
+
+# Was change detected since the last time the data was saved?
+# Returns a bool answering that question
+
+def change_detected():
+    try:
+        # No groups and no entries means no changes
+        if len(data["groups"]) == 0 and len(data["entries"] == 0):
+            return False
+    except KeyError:
+        # JSON format requirement: 
+        # there must be "groups" and "entries" keys.
+        messagebox.showerror("Incompatible data", 
+            """
+            Error: this save data is in an incompatible format. 
+            Please load a different file.
+            """
+        )
+
+    # If there is data, and there's no last saved filepath,
+    # something definitely changed.
+    if len(last_filepath) == 0:
+        return True
+
+
+    # Get current data to check against
+    try:
+        f = open(last_filepath)
+    except OSError:
+        messagebox.showerror("Change detection error", "Change detection error: Filepath could not be read")
+        return False
+
+    # Load JSON and check current data against 
+    # loaded data to find changes
+    with f:
+        loaded = json.load(f)
+        if data == loaded:
+            return False
+    
+    return True
+
+
+
+# Get the filepath of the last file saved/loaded.
+# the boolean arg determines whether you get the full file path,
+# or just the name.
+
 def get_last_filepath(short=False):
     if short:
         # strip the folder path and the .json extension
@@ -17,54 +69,17 @@ def get_last_filepath(short=False):
         return shortened
     return last_filepath
 
-def change_detected():
-    # No entries means no changes
-    if len(data["entries"]) == 0:
-        return False
-
-    # Entries and no last filepath 
-    # means something changed
-    if len(last_filepath) == 0:
-        return True
-
-    try:
-        f = open(last_filepath)
-    except OSError:
-        messagebox.showerror("Change detection error", "Change detection error: Filepath could not be read")
-        return False
-
-    with f:
-        loaded = json.load(f)
-        if data == loaded:
-            return False
-
-        # Uncomment to debug - see what's different
-
-        # for entry in loaded["entries"]:
-        #     print(entry)
-        # print("\n")
-        # for entry in data["entries"]:
-        #     print(entry)
-        # print("\n")
-        # for group in loaded["groups"]:
-        #     print(group)
-        # print("\n")
-        # for entry in data["groups"]:
-        #     print(entry)
-
-    
-    return True
 
 
-
-
-# Load / Save / Clears
+# Load data
 
 def load_entries(filepath):
+    # Try to open the file
     try:
         f = open(filepath, "r")
     except OSError:
-        messagebox.showerror("Load error", f"Load error: filepath {filepath} could not be read")
+        messagebox.showerror("Load error", 
+            f"Error: filepath {filepath} could not be loaded")
         return
 
     with f:
@@ -80,7 +95,8 @@ def load_entries(filepath):
     global last_filepath
     last_filepath = filepath
 
-def save_entries(filepath):
+def save_all(filepath):
+    # Dump the data dict into the filepath passed as an argument
     with open(filepath, "w") as f:
         json.dump(data, f)
 
@@ -88,6 +104,8 @@ def save_entries(filepath):
     last_filepath = filepath
 
 def save_groups(groups):
+    # Only save the groups
+    # (not sure if this is still needed)
     data["groups"] = groups
 
 def clear_entries():
@@ -100,26 +118,23 @@ def clear_entries():
 def get_data():
     return data
 
-def get_entries():
-    try:
-        return data["entries"]
-    except KeyError:
-        return []
-
 def get_num_entries():
-    return len(data["entries"])
+    count = 0
+    for group in list(data["groups"].keys()):
+        count += len(data["groups"][group])
+    count += len(data["entries"])
 
-def get_num_unchecked_entries():
-    num_unchecked_entries = 0
+# def get_num_unchecked_entries():
+#     num_unchecked_entries = 0
 
-    for entry in data["entries"]:
-        try:
-            if entry["checked"] == False:
-                num_unchecked_entries += 1
-        except KeyError:
-            num_unchecked_entries += 1
+#     for entry in data["entries"]:
+#         try:
+#             if entry["checked"] == False:
+#                 num_unchecked_entries += 1
+#         except KeyError:
+#             num_unchecked_entries += 1
 
-    return num_unchecked_entries
+#     return num_unchecked_entries
 
 
 
@@ -137,16 +152,12 @@ def create_entry(text, index=None, group=None):
         return {
             "date": date.strftime(date.today(), "%A") + " " + str(date.today()),
             "time": datetime.now().strftime("%I:%M %p"),
-            "text": text,
-            "group": group,
-            "index": index
+            "text": text
         }
     return {
         "date": date.strftime(date.today(), "%A") + " " + str(date.today()),
         "time": datetime.now().strftime("%I:%M %p"),
-        "text": text,
-        "group": "None",
-        "index": index
+        "text": text
     }
 
 def add_entry(text, group=None):
@@ -158,10 +169,19 @@ def add_entry(text, group=None):
         data["entries"].append(entry)
 
 def remove_entry(index):
-    for i in range(len(data["entries"])):
-        if int(data["entries"][i]["index"]) == index:
-            data["entries"].pop(i)
-            break
+    comp = 0
+    for group in list(data["groups"].keys()):
+        num_in_group = len(data["groups"][group])
+        comp += num_in_group
+        if comp > index:
+            data["groups"][group].pop(index - (comp - num_in_group))
+            return
+    
+    for entry in data["entries"]:
+        comp += 1
+        if comp == index:
+            data["entries"].pop(index)
+
 
 def swap_entry(index1, index2):
     if index1 == index2:
