@@ -154,7 +154,7 @@ class Stats(tk.Frame):
             )
 
     def refresh_stats(self):
-        entries = get_entries()
+        entries = get_num_entries()
 
         self.num_entries_var.set(len(entries))
         self.num_words_var.set(self.word_count(entries))

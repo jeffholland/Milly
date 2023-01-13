@@ -1,7 +1,7 @@
 import tkinter as tk
 
 from constants import PLATFORM
-from data import get_entries, insert_entry
+from data import insert_entry, get_num_entries
 
 class InsertPrompt(tk.Frame):
     def __init__(self, master):
@@ -9,7 +9,7 @@ class InsertPrompt(tk.Frame):
         self.window = tk.Toplevel(master)
         self.window.resizable(False, False)
 
-        self.max_val = len(get_entries())
+        self.max_val = get_num_entries
 
         self.create_widgets()
 
@@ -17,7 +17,7 @@ class InsertPrompt(tk.Frame):
         self.spinbox = tk.Spinbox(
             self.window,
             from_=0,
-            to_=len(get_entries())
+            to_=get_num_entries()
         )
         self.spinbox.grid(row=0, column=0)
         self.spinbox.focus_set()

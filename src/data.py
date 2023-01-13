@@ -120,7 +120,8 @@ def get_data():
 
 def get_num_entries():
     count = 0
-    for group in list(data["groups"].keys()):
+    # fix this!!!
+    for group in data["groups"]:
         count += len(data["groups"][group])
     count += len(data["entries"])
 
