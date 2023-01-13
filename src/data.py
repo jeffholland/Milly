@@ -176,5 +176,16 @@ def insert_entry(index, text):
 def move_entry(index1, index2):
     if index1 == index2:
         return
+
     tmp = data["entries"].pop(index1)
     data["entries"].insert(index2, tmp)
+
+def move_grouped_entry(group, group_index1, group_index2):
+    if group_index1 == group_index2:
+        return
+
+    for entry in data["entries"]:
+        if entry["group"] == group:
+            if entry["group_index"] == group_index1:
+                entry["group_index"] = group_index2
+                return

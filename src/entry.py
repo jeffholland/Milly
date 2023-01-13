@@ -326,17 +326,28 @@ class Entry(tk.Frame):
     def move_self(self, dir):
         if self.group:
             if dir == "up":
-                # if self.group_index > 0:
-                print(self.group_index)
+                if self.group_index > 0:
+                    move_grouped_entry(
+                        self.master.name,
+                        self.group_index, 
+                        self.group_index - 1)
             if dir == "down":
-                # if self.group_index < self.master.get_num_entries():
-                print(self.group_index)
+                if self.group_index < self.master.get_num_entries():
+                    move_grouped_entry(
+                        self.master.name,
+                        self.group_index,
+                        self.group_index + 1)
             if dir == "top":
                 if self.group_index > 0:
-                    print(self.master.master.master.master)
+                    move_grouped_entry(
+                        self.master.name,
+                        self.group_index, 0)
             if dir == "bottom":
-                if self.group_index < self.master.get_num_entries():
-                    print(self.master.master.master.master)
+                num_entries = self.master.get_num_entries()
+                if self.group_index < num_entries:
+                    move_grouped_entry(
+                        self.master.name,
+                        self.group_index, num_entries-1)
         else:
             if dir == "up":
                 if self.index > 0:
@@ -350,7 +361,8 @@ class Entry(tk.Frame):
             if dir == "bottom":
                 if self.index < get_num_entries() - 1:
                     print(self.master.master.master)
-            self.entries_obj.refresh_entries()
+
+        self.entries_obj.refresh_entries(refresh_indexes=False)
 
 
     def group_pressed(self):

@@ -62,33 +62,43 @@ class Group(tk.Frame):
             if self.show_times:
                 entry_time = self.entries_data[count]["time"]
 
-            # Arrange by group_index
-            for entry in self.entries_data:
-                if entry["group_index"] == count:
+            # Arrange Entry objects by group_index
 
-                    self.entries.append(Entry(
+            for entry in self.entries_data:
+                index = entry["group_index"]
+                text = entry["text"]
+
+                if index == count:
+
+                    self.entries.insert(index, Entry(
                         self,
                         date=entry_date,
                         time=entry_time,
                         menu=True,
-                        text=self.entries_data[count]["text"],
+                        text=text,
                         width=self.width - PADDING * 4,
                         height=self.entry_height,
-                        index=self.entries_data[count]["index"],
+                        index=entry["index"],
                         font=self.font,
                         checkbox=True,
                         checked=checked_bool,
                         group=self.name,
-                        group_index=self.entries_data[count]["group_index"]
+                        group_index=index
                     ))
-                    self.entries[count].grid_propagate(0)
-                    self.entries[count].grid(
-                        row=count + 1, 
-                        column=0,
-                        padx=PADDING, 
-                        pady=PADDING,
-                        columnspan=2
-                    )
+
+        # Now actually grid them in order
+        row_count = 1
+
+        for entry in self.entries:
+            entry.grid_propagate(0)
+            entry.grid(
+                row=row_count, 
+                column=0,
+                padx=PADDING, 
+                pady=PADDING,
+                columnspan=2
+            )
+            row_count += 1
 
 
 
