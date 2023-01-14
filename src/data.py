@@ -192,12 +192,39 @@ def swap_entry(index1, index2):
 def insert_entry(index, text):
     data["entries"].insert(index, create_entry(text, index=index))
 
-def move_entry(index1, index2):
-    if index1 == index2:
+def move_entry(group, text, dir):
+    if group == None:
+        print("no group")
         return
 
-    tmp = data["entries"].pop(index1)
-    data["entries"].insert(index2, tmp)
+    count = 0
+    num_entries = len(data["groups"][group])
+
+    for entry in data["groups"][group]:
+
+        if entry["text"] == text:
+
+            data["groups"][group].pop(count)
+            
+            if dir == "top":
+                index = 0
+            elif dir == "bottom":
+                index = num_entries - 1
+            elif dir == "up":
+                if count > 0:
+                    index = count - 1
+                else:
+                    index = count
+            elif dir == "down":
+                if count < num_entries - 1:
+                    index = count + 1
+                else:
+                    index = count
+            data["groups"][group].insert(index, entry)
+            return
+        
+        count += 1
+            
 
 def move_grouped_entry(group, group_index1, group_index2):
     if group_index1 == group_index2:

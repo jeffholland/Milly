@@ -307,61 +307,24 @@ class Entry(tk.Frame):
         self.entries_obj.refresh_entries()
 
     def up_pressed(self):
-        self.move_self("up")
+        move_entry(self.group, self.text, dir="up")
+        self.entries_obj.refresh_entries()
 
     def down_pressed(self):
-        self.move_self("down")
+        move_entry(self.group, self.text, dir="down")
+        self.entries_obj.refresh_entries()
 
     def copy_pressed(self):
         self.clipboard_clear()
         self.clipboard_append(self.text)
 
     def top_pressed(self):
-        self.move_self("top")
+        move_entry(self.group, self.text, dir="top")
+        self.entries_obj.refresh_entries()
 
     def bottom_pressed(self):
-        self.move_self("bottom")
-
-    # def move_self(self, dir):
-    #     if self.group:
-    #         if dir == "up":
-    #             if self.group_index > 0:
-    #                 move_grouped_entry(
-    #                     self.master.name,
-    #                     self.group_index, 
-    #                     self.group_index - 1)
-    #         if dir == "down":
-    #             if self.group_index < self.master.get_num_entries():
-    #                 move_grouped_entry(
-    #                     self.master.name,
-    #                     self.group_index,
-    #                     self.group_index + 1)
-    #         if dir == "top":
-    #             if self.group_index > 0:
-    #                 move_grouped_entry(
-    #                     self.master.name,
-    #                     self.group_index, 0)
-    #         if dir == "bottom":
-    #             num_entries = self.master.get_num_entries()
-    #             if self.group_index < num_entries:
-    #                 move_grouped_entry(
-    #                     self.master.name,
-    #                     self.group_index, num_entries-1)
-    #     else:
-    #         if dir == "up":
-    #             if self.index > 0:
-    #                 print(self.master.master.master)
-    #         if dir == "down":
-    #             if self.index < get_num_entries() - 1:
-    #                 print(self.master.master.master)
-    #         if dir == "top":
-    #             if self.index > 0:
-    #                 print(self.master.master.master)
-    #         if dir == "bottom":
-    #             if self.index < get_num_entries() - 1:
-    #                 print(self.master.master.master)
-
-    #     self.entries_obj.refresh_entries(refresh_indexes=False)
+        move_entry(self.group, self.text, dir="bottom")
+        self.entries_obj.refresh_entries()
 
 
     def group_pressed(self):
