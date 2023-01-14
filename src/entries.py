@@ -38,10 +38,13 @@ class Entries(tk.Frame):
         self.ungrouped_entries = []
 
         # List of dicts containing all Entry data
-        self.entries_data = []
+        self.ungrouped_entries_data = []
 
         # List of Group objects
         self.groups = []
+
+        # List of dicts containing all Group data
+        self.groups_data = []
 
         # List of group names
         self.group_names = []
@@ -50,7 +53,7 @@ class Entries(tk.Frame):
         self.filtered_entries = []
 
         # Contains a filtered list of dicts (for cmd+f search)
-        self.filtered_entries_data = []
+        self.filtered_ungrouped_entries_data = []
 
         # Indexes every entry
         self.index_count = 0
@@ -62,7 +65,7 @@ class Entries(tk.Frame):
     # IMPORTANT: this is the function where the entries get
     # put on the screen.
 
-    def refresh_entries(self, refresh_data=True, refresh_indexes=True):
+    def refresh_entries(self, refresh_data=True):
 
         # 1. Clear all entries and groups from the screen
 
@@ -72,11 +75,6 @@ class Entries(tk.Frame):
 
         if refresh_data:
             self.get_entry_data()
-
-        # 3. Set indexing (to arrange everything properly on the screen)
-
-        if refresh_indexes:
-            self.set_entry_indexes()
 
         # 4. Create group objects and display them on the screen
 
@@ -108,71 +106,35 @@ class Entries(tk.Frame):
 
         self.data = get_data()
 
-        # Get entries data from the data dict
+        # Get all group data into an array of dicts
 
         try:
-            self.entries_data = self.data["entries"]
+            for group in self.data["groups"]:
+                self.groups_data.append(self.data["groups"][group])
+                self.group_names.append(group)
+            print(f"group: {self.groups_data}\n")
+            print(f"group names: {self.group_names}\n")
         except KeyError:
-            self.entries_data = []
+            self.groups_data = []
 
-        # Get list of groups from the data dict
-        
+        # Get all ungrouped entries data into an array of dicts
+
         try:
-            self.group_names = self.data["groups"]
+            self.ungrouped_entries_data = self.data["entries"]
+            print(f"ungrouped: {self.ungrouped_entries_data}\n")
         except KeyError:
-            self.group_names = []
-
-        # Break groups into a dict
-
-        self.grouped_entries = {}
-
-        for name in self.group_names:
-            self.grouped_entries[name] = []
-
-            for entry in self.entries_data:
-                if entry["group"] == name:
-                    self.grouped_entries[name].append(entry)
+            self.ungrouped_entries_data = []
 
 
-    def set_entry_indexes(self):
-
-        # Set the index of each entry
-
-        self.index_count = 0
-        self.group_index_count = 0
-
-        # Iterate over each group
-
-        for group in self.group_names:
-            
-            # Iterate over each entry in grouped entries
-
-            for entry in self.grouped_entries[group]:
-
-                entry["index"] = self.index_count
-                self.index_count += 1
-                entry["group_index"] = self.group_index_count
-
-                # Transfer the data we've just changed over to
-                # self.entries_data
-
-                for data_entry in self.entries_data:
-                    if data_entry["text"] == entry["text"]:
-                        data_entry = entry
-                
-                self.group_index_count += 1
-
-            self.group_index_count = 0
 
     def create_groups(self):
-
         count = 0
 
         for group in self.group_names:
 
             group_data = []
 
-            for entry in self.entries_data:
+            for entry in self.ungrouped_entries_data:
                 if entry["group"] == group:
                     group_data.append(entry)
         
@@ -180,7 +142,7 @@ class Entries(tk.Frame):
                 self.container,
                 width=self.entry_width,
                 entry_height=ENTRY_HEIGHT,
-                entries_data=group_data,
+                ungrouped_entries_data=group_data,
                 name=group,
                 font=self.font
             ))
@@ -201,12 +163,12 @@ class Entries(tk.Frame):
         ungrouped_entries_count = 0
         count = 0
 
-        for entry in self.entries_data:
+        for entry in self.ungrouped_entries_data:
             try:
-                checked_bool = self.entries_data[count]["checked"]
+                checked_bool = self.ungrouped_entries_data[count]["checked"]
             except KeyError:
-                self.entries_data[count]["checked"] = False
-                checked_bool = self.entries_data[count]["checked"]
+                self.ungrouped_entries_data[count]["checked"] = False
+                checked_bool = self.ungrouped_entries_data[count]["checked"]
 
             if entry["group"] == "None":
                 entry_date = None
@@ -318,22 +280,22 @@ class Entries(tk.Frame):
             entry.grid_forget()
 
         self.filtered_entries.clear()
-        self.filtered_entries_data.clear()
+        self.filtered_ungrouped_entries_data.clear()
 
-        for data in self.entries_data:
+        for data in self.ungrouped_entries_data:
             if case_sensitive:
                 if filter in data["text"]:
-                    self.filtered_entries_data.append(data)
+                    self.filtered_ungrouped_entries_data.append(data)
             else:
                 if filter.lower() in data["text"].lower():
-                    self.filtered_entries_data.append(data)
+                    self.filtered_ungrouped_entries_data.append(data)
         
-        for count in range(len(self.filtered_entries_data)):
+        for count in range(len(self.filtered_ungrouped_entries_data)):
             self.filtered_entries.append(
                 Entry(
-                    date=self.filtered_entries_data[count]["date"],
-                    time=self.filtered_entries_data[count]["time"],
-                    text=self.filtered_entries_data[count]["text"],
+                    date=self.filtered_ungrouped_entries_data[count]["date"],
+                    time=self.filtered_ungrouped_entries_data[count]["time"],
+                    text=self.filtered_ungrouped_entries_data[count]["text"],
                     width=self.entry_width,
                     height=ENTRY_HEIGHT,
                     master=self.container,
@@ -411,7 +373,7 @@ class Entries(tk.Frame):
                     pass
                 break
 
-        for entry in self.entries_data:
+        for entry in self.ungrouped_entries_data:
             if entry["group"] == name:
                 entry["group"] = "None"
 
@@ -424,15 +386,15 @@ class Entries(tk.Frame):
 
     def set_group(self, index, name):
         count = 0
-        for entry in self.entries_data:
+        for entry in self.ungrouped_entries_data:
             if entry["index"] == index:
                 data_index = count
                 break
             count += 1
-        self.entries_data[data_index]["group"] = name
+        self.ungrouped_entries_data[data_index]["group"] = name
 
     def rename_group(self, old_name, new_name):
-        for entry in self.entries_data:
+        for entry in self.ungrouped_entries_data:
             if entry["group"] == old_name:
                 entry["group"] = new_name
 
