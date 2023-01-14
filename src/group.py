@@ -38,11 +38,18 @@ class Group(tk.Frame):
 
     def show_entries(self):
 
-        for count in range(len(self.entries_data)):
+        count = 0
+
+        for entry in self.entries_data:
+
+            # Show checkboxes
+
             try:
                 checked_bool = self.entries_data[count]["checked"]
             except KeyError:
                 checked_bool = False
+
+            # Show dates and times
 
             entry_date = None
             if self.show_dates:
@@ -51,38 +58,34 @@ class Group(tk.Frame):
             if self.show_times:
                 entry_time = self.entries_data[count]["time"]
 
-            for entry in self.entries_data:
-                text = entry["text"]
+            # Show entries
 
-                self.entries.append(Entry(
-                    self,
-                    date=entry_date,
-                    time=entry_time,
-                    menu=True,
-                    text=text,
-                    width=self.width - PADDING * 4,
-                    height=self.entry_height,
-                    index=count,
-                    font=self.font,
-                    checkbox=True,
-                    checked=checked_bool,
-                    group=self.name
-                ))
+            text = entry["text"]
 
-        # Now actually grid them in order
-        row_count = 1
-
-        for entry in self.entries:
-            entry.grid_propagate(0)
-            entry.grid(
-                row=row_count, 
+            self.entries.append(Entry(
+                self,
+                date=entry_date,
+                time=entry_time,
+                menu=True,
+                text=text,
+                width=self.width - PADDING * 4,
+                height=self.entry_height,
+                index=count,
+                font=self.font,
+                checkbox=True,
+                checked=checked_bool,
+                group=self.name
+            ))
+            self.entries[count].grid_propagate(0)
+            self.entries[count].grid(
+                row=count + 1, 
                 column=0,
                 padx=PADDING, 
                 pady=PADDING,
                 columnspan=2
             )
-            row_count += 1
 
+            count += 1
 
 
     def create_widgets(self):

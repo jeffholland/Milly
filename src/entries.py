@@ -112,8 +112,8 @@ class Entries(tk.Frame):
             self.groups_data = data["groups"]
             for group in data["groups"]:
                 self.group_names.append(group)
-            print(f"group: {self.groups_data}\n")
-            print(f"group names: {self.group_names}\n")
+            # print(f"group: {self.groups_data}\n")
+            # print(f"group names: {self.group_names}\n")
         except KeyError:
             self.groups_data = []
 
@@ -121,7 +121,7 @@ class Entries(tk.Frame):
 
         try:
             self.ungrouped_entries_data = data["entries"]
-            print(f"ungrouped: {self.ungrouped_entries_data}\n")
+            # print(f"ungrouped: {self.ungrouped_entries_data}\n")
         except KeyError:
             self.ungrouped_entries_data = []
 
@@ -139,7 +139,7 @@ class Entries(tk.Frame):
                 width=self.entry_width,
                 entry_height=ENTRY_HEIGHT,
                 entries_data=group_data,
-                name="placeholder",
+                name=name,
                 font=self.font
             ))
 
