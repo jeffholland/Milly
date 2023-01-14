@@ -103,11 +103,6 @@ def save_all(filepath):
     global last_filepath
     last_filepath = filepath
 
-def save_groups(groups):
-    # Only save the groups
-    # (not sure if this is still needed)
-    data["groups"] = groups
-
 def clear_entries():
     data.clear()
 
@@ -168,6 +163,9 @@ def add_entry(text, group=None):
     except KeyError:
         data["entries"] = []
         data["entries"].append(entry)
+
+def add_group(name):
+    data["groups"]["name"] = []
 
 def remove_entry(index):
     comp = 0

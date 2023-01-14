@@ -33,17 +33,6 @@ class Group(tk.Frame):
         self.create_widgets()
 
 
-    # def refresh_entries(self):
-    #     self.clear_entries()
-    #     self.show_entries()
-
-    # def clear_entries(self):
-    #     for entry in self.entries:
-    #         entry.grid_forget()
-
-    #     self.entries.clear()
-
-
     # IMPORTANT: This is the function in which the entries get shown
     # on the screen.
 
@@ -62,29 +51,23 @@ class Group(tk.Frame):
             if self.show_times:
                 entry_time = self.entries_data[count]["time"]
 
-            # Arrange Entry objects by group_index
-
             for entry in self.entries_data:
-                index = entry["group_index"]
                 text = entry["text"]
 
-                if index == count:
-
-                    self.entries.insert(index, Entry(
-                        self,
-                        date=entry_date,
-                        time=entry_time,
-                        menu=True,
-                        text=text,
-                        width=self.width - PADDING * 4,
-                        height=self.entry_height,
-                        index=entry["index"],
-                        font=self.font,
-                        checkbox=True,
-                        checked=checked_bool,
-                        group=self.name,
-                        group_index=index
-                    ))
+                self.entries.append(Entry(
+                    self,
+                    date=entry_date,
+                    time=entry_time,
+                    menu=True,
+                    text=text,
+                    width=self.width - PADDING * 4,
+                    height=self.entry_height,
+                    index=count,
+                    font=self.font,
+                    checkbox=True,
+                    checked=checked_bool,
+                    group=self.name
+                ))
 
         # Now actually grid them in order
         row_count = 1
