@@ -98,6 +98,7 @@ class Entries(tk.Frame):
 
         self.ungrouped_entries.clear()
         self.groups.clear()
+        self.group_names.clear()
 
 
     def get_entry_data(self):

@@ -193,19 +193,23 @@ def insert_entry(index, text):
     data["entries"].insert(index, create_entry(text, index=index))
 
 def move_entry(group, text, dir):
+    data_array = []
+
     if group == None:
-        print("no group")
-        return
+        data_array = data["entries"]
+
+    else:
+        data_array = data["groups"][group]
 
     count = 0
-    num_entries = len(data["groups"][group])
+    num_entries = len(data_array)
 
-    for entry in data["groups"][group]:
+    for entry in data_array:
 
         if entry["text"] == text:
 
-            data["groups"][group].pop(count)
-            
+            data_array.pop(count)
+
             if dir == "top":
                 index = 0
             elif dir == "bottom":
@@ -220,7 +224,7 @@ def move_entry(group, text, dir):
                     index = count + 1
                 else:
                     index = count
-            data["groups"][group].insert(index, entry)
+            data_array.insert(index, entry)
             return
         
         count += 1
