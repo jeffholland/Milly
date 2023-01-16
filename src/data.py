@@ -118,7 +118,7 @@ def get_num_entries():
         for group in data["groups"]:
             count += len(data["groups"][group])
     except KeyError:
-        data["groups"] = []
+        data["groups"] = {}
 
     try:
         count += len(data["entries"])

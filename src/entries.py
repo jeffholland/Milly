@@ -173,13 +173,14 @@ class Entries(tk.Frame):
             if self.show_times:
                 entry_time = entry["time"]
 
+            text = entry["text"]
+
             try:
                 entry_id = entry["id"]
             except KeyError:
                 entry["id"] = hashlib.sha256(str.encode(text)).hexdigest()
                 entry_id = entry["id"]
 
-            text=entry["text"]
             self.ungrouped_entries.append(Entry(
                 self.container,
                 date=entry_date,

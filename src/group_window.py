@@ -163,12 +163,16 @@ class GroupWindow(tk.Frame):
         # Release command key while in other window
         if PLATFORM == "Windows":
             if "Control" in event.keysym:
-                self.master.key.keys_pressed["cmd"] = False
-                self.cmd_key_pressed = False
+                if self.entry_parent:
+                    self.master.master.master.master.master.bottom_frame.key.keys_pressed["cmd"] = False
+                else:
+                    self.master.key.keys_pressed["cmd"] = False
         else:
             if "Meta" in event.keysym:
-                self.master.key.keys_pressed["cmd"] = False
-                self.cmd_key_pressed = False
+                if self.entry_parent:
+                    self.master.master.master.master.master.bottom_frame.key.keys_pressed["cmd"] = False
+                else:
+                    self.master.key.keys_pressed["cmd"] = False
 
 
     def add_group(self):
