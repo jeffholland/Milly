@@ -8,7 +8,8 @@ from entry_menu import EntryMenu
 from group_window import GroupWindow
 
 class Entry(tk.Frame):
-    def __init__(self, master, date, time, menu, text, width, height, index, font,
+    def __init__(self, master, date, time, menu, text, 
+        width, height, index, font,
         checkbox=False, checked=False, group=None):
 
         tk.Frame.__init__(
@@ -34,14 +35,14 @@ class Entry(tk.Frame):
 
         self.group_window = None
 
-        # include a checkbox or not
+        # show a checkbox or not
         self.check_bool = checkbox
         # checkbox is checked or not
         self.checked_bool = checked
         # the checkbox object itself
         self.checkbox = None
 
-        # include the menu or not
+        # show the menu or not
         self.menu_bool = menu
 
         self.keys_pressed = {
@@ -370,8 +371,8 @@ class Entry(tk.Frame):
         self.entries_obj.move_group(name, dir)
 
     def move_to_group(self, group_name):
-        self.entries_obj.set_group(self.index, group_name)
-        self.entries_obj.refresh_entries(refresh_data=False)
+        move_entry_to_group(self.index, self.group, group_name)
+        self.entries_obj.refresh_entries()
 
     def delete_group(self, group_name):
         if self.group:

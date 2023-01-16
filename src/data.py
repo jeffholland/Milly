@@ -1,6 +1,7 @@
 from tkinter import messagebox
 
 import json
+import hashlib
 
 from constants import SAVE_DATA_PATH
 from datetime import date, datetime
@@ -21,7 +22,7 @@ last_filepath = ""
 def change_detected():
     try:
         # No groups and no entries means no changes
-        if len(data["groups"]) == 0 and len(data["entries"] == 0):
+        if len(data["groups"]) == 0 and len(data["entries"]) == 0:
             return False
     except KeyError:
         # JSON format requirement: 
@@ -116,27 +117,22 @@ def get_data():
 def get_num_entries():
     count = 0
     # fix this!!!
-    for group in data["groups"]:
-        count += len(data["groups"][group])
-    count += len(data["entries"])
+    try:
+        for group in data["groups"]:
+            count += len(data["groups"][group])
+    except KeyError:
+        data["groups"] = []
 
-# def get_num_unchecked_entries():
-#     num_unchecked_entries = 0
-
-#     for entry in data["entries"]:
-#         try:
-#             if entry["checked"] == False:
-#                 num_unchecked_entries += 1
-#         except KeyError:
-#             num_unchecked_entries += 1
-
-#     return num_unchecked_entries
+    try:
+        count += len(data["entries"])
+    except KeyError:
+        data["entries"] = []
 
 
 
 # Entry generation function
 
-def create_entry(text, index=None, group=None):
+def create_entry(text, index=None):
     if not index:
         try:
             index = len(data["entries"])
@@ -144,20 +140,22 @@ def create_entry(text, index=None, group=None):
             data["entries"] = []
             index = len(data["entries"])
 
-    if group:
-        return {
-            "date": date.strftime(date.today(), "%A") + " " + str(date.today()),
-            "time": datetime.now().strftime("%I:%M %p"),
-            "text": text
-        }
     return {
         "date": date.strftime(date.today(), "%A") + " " + str(date.today()),
         "time": datetime.now().strftime("%I:%M %p"),
-        "text": text
+        "text": text,
+        "id": hashlib.sha256(str.encode(text)).hexdigest()
     }
 
 def add_entry(text, group=None):
-    entry = create_entry(text, group=group)
+    entry = create_entry(text)
+    print(entry)
+    if group:
+        try:
+            data["groups"][group].append(entry)
+        except KeyError:
+            data["groups"][group] = []
+            data["groups"][group].append(entry)
     try:
         data["entries"].append(entry)
     except KeyError:
@@ -165,7 +163,7 @@ def add_entry(text, group=None):
         data["entries"].append(entry)
 
 def add_group(name):
-    data["groups"]["name"] = []
+    data["groups"][name] = []
 
 def remove_entry(index):
     comp = 0
@@ -176,11 +174,9 @@ def remove_entry(index):
             data["groups"][group].pop(index - (comp - num_in_group))
             return
     
-    for entry in data["entries"]:
-        comp += 1
-        if comp == index:
+    for count in range(len(data["entries"])):
+        if count == index:
             data["entries"].pop(index)
-
 
 def swap_entry(index1, index2):
     if index1 == index2:
@@ -228,14 +224,12 @@ def move_entry(group, text, dir):
             return
         
         count += 1
-            
 
-def move_grouped_entry(group, group_index1, group_index2):
-    if group_index1 == group_index2:
-        return
 
-    for entry in data["entries"]:
-        if entry["group"] == group:
-            if entry["group_index"] == group_index1:
-                entry["group_index"] = group_index2
-                return
+def move_entry_to_group(entry_index, entry_group, group):
+    if entry_group:
+        entry = data["groups"][entry_group].pop(entry_index)
+    else:
+        entry = data["entries"].pop(entry_index)
+    
+    data["groups"][group].append(entry)
