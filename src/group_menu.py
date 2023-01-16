@@ -37,7 +37,7 @@ class GroupMenu(tk.Frame):
         # Up button
         self.up_button = tk.Button(
             self,
-            text="up",
+            text="↑",
             width=1,
             command=self.up_pressed
         )
@@ -51,7 +51,7 @@ class GroupMenu(tk.Frame):
         # Down button
         self.down_button = tk.Button(
             self,
-            text="down",
+            text="↓",
             width=1,
             command=self.down_pressed
         )
