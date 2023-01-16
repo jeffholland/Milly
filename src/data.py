@@ -6,14 +6,16 @@ import hashlib
 from constants import SAVE_DATA_PATH
 from datetime import date, datetime
 
+
+# All save data is stored here
+
 data = {}
+
+
+# Last loaded/saved filepath as a string
 
 last_filepath = ""
 
-#
-# KEEP EDITING THIS UNTIL IT ALL WORKS WITH "test.json"
-# then do entries.py and input.py and anything else that needs editing
-#
 
 
 # Was change detected since the last time the data was saved?
@@ -25,17 +27,12 @@ def change_detected():
         if len(data["groups"]) == 0 and len(data["entries"]) == 0:
             return False
     except KeyError:
-        # JSON format requirement: 
-        # there must be "groups" and "entries" keys.
-        messagebox.showerror("Incompatible data", 
-            """
-            Error: this save data is in an incompatible format. 
-            Please load a different file.
-            """
-        )
+        # If the data hasn't even been properly initialized yet,
+        # then we can't say change has been detected.
+        return False
 
     # If there is data, and there's no last saved filepath,
-    # something definitely changed.
+    # something must have changed.
     if len(last_filepath) == 0:
         return True
 
@@ -44,7 +41,8 @@ def change_detected():
     try:
         f = open(last_filepath)
     except OSError:
-        messagebox.showerror("Change detection error", "Change detection error: Filepath could not be read")
+        messagebox.showerror("Change detection error", 
+            "Change detection error: Filepath could not be read")
         return False
 
     # Load JSON and check current data against 
@@ -116,7 +114,6 @@ def get_data():
 
 def get_num_entries():
     count = 0
-    # fix this!!!
     try:
         for group in data["groups"]:
             count += len(data["groups"][group])
@@ -127,19 +124,14 @@ def get_num_entries():
         count += len(data["entries"])
     except KeyError:
         data["entries"] = []
+    
+    return count
 
 
 
 # Entry generation function
 
-def create_entry(text, index=None):
-    if not index:
-        try:
-            index = len(data["entries"])
-        except KeyError:
-            data["entries"] = []
-            index = len(data["entries"])
-
+def create_entry(text):
     return {
         "date": date.strftime(date.today(), "%A") + " " + str(date.today()),
         "time": datetime.now().strftime("%I:%M %p"),
@@ -149,7 +141,6 @@ def create_entry(text, index=None):
 
 def add_entry(text, group=None):
     entry = create_entry(text)
-    print(entry)
     if group:
         try:
             data["groups"][group].append(entry)

@@ -1,8 +1,8 @@
+from tkinter import messagebox
+
 import json
 from os import scandir
 from sys import exit
-
-from tkinter import messagebox
 
 from constants import *
 
