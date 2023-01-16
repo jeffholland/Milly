@@ -9,7 +9,7 @@ from group_window import GroupWindow
 
 class Entry(tk.Frame):
     def __init__(self, master, date, time, menu, text, 
-        width, height, index, font,
+        width, height, index, font, id,
         checkbox=False, checked=False, group=None):
 
         tk.Frame.__init__(
@@ -342,10 +342,10 @@ class Entry(tk.Frame):
     def checkbox_pressed(self):
         # Move entries to bottom when checked
         if self.checkbox_var.get() == 1:
-            for entry in self.entries_obj.entries_data:
-                if entry["index"] == self.index:
-                    entry["checked"] = True
-                    break
+            if self.group:
+                self.entries_obj.groups_data[self.group][self.index]["checked"] = True
+            else:
+                self.entries_obj.ungrouped_entries_data[self.index]["checked"] = True
             self.bottom_pressed()
 
         # Move back to top when unchecked

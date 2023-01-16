@@ -1,5 +1,7 @@
 import tkinter as tk
 
+import hashlib
+
 from constants import *
 from entry import Entry
 from group_menu import GroupMenu
@@ -62,6 +64,12 @@ class Group(tk.Frame):
 
             text = entry["text"]
 
+            try:
+                entry_id = entry["id"]
+            except KeyError:
+                entry["id"] = hashlib.sha256(str.encode(text)).hexdigest()
+                entry_id = entry["id"]
+
             self.entries.append(Entry(
                 self,
                 date=entry_date,
@@ -72,6 +80,7 @@ class Group(tk.Frame):
                 height=self.entry_height,
                 index=count,
                 font=self.font,
+                id=entry_id,
                 checkbox=True,
                 checked=checked_bool,
                 group=self.name
