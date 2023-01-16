@@ -107,22 +107,33 @@ class Entries(tk.Frame):
 
         data = get_data()
 
+        try:
+            tmp = data["group_list"]
+            print(f"entries.py: {tmp}")
+        except KeyError:
+            pass
+
         # Get all group data into an array of dicts
 
         try:
             self.groups_data = data["groups"]
-            for group in data["groups"]:
-                self.group_names.append(group)
-            # print(f"group: {self.groups_data}\n")
-            # print(f"group names: {self.group_names}\n")
+            try:
+                self.group_names = data["group_list"]
+                if len(self.group_names) == 0 and len(data["groups"]) != 0:
+                    for group in data["groups"]:
+                        self.group_names.append(group)
+                    set_group_list(self.group_names)
+            except KeyError:
+                for group in data["groups"]:
+                    self.group_names.append(group)
+                set_group_list(self.group_names)
         except KeyError:
-            self.groups_data = []
+            data["groups"] = {}
 
         # Get all ungrouped entries data into an array of dicts
 
         try:
             self.ungrouped_entries_data = data["entries"]
-            # print(f"ungrouped: {self.ungrouped_entries_data}\n")
         except KeyError:
             self.ungrouped_entries_data = []
 
@@ -394,15 +405,3 @@ class Entries(tk.Frame):
     #             break
     #         count += 1
     #     self.ungrouped_entries_data[data_index]["group"] = name
-
-    #             if dir == "down":
-    #                 if count < len(self.group_names) - 1:
-    #                     self.swap_groups(count, count + 1)
-                
-    #             break
-
-    #         count += 1
-    #     self.refresh_entries(refresh_data=False)
-
-    # def swap_groups(self, pos1, pos2):
-    #     self.group_names[pos1], self.group_names[pos2] = self.group_names[pos2], self.group_names[pos1]

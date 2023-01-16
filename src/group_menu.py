@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.font as tkFont
 
 from constants import *
-from data import rename_group
+from data import *
 
 class GroupMenu(tk.Frame):
     def __init__(self, master, name, num_entries):
@@ -142,7 +142,10 @@ class GroupMenu(tk.Frame):
 
 
     def up_pressed(self):
-        self.master.master.master.master.move_group(self.name, "up")
+        move_group(self.name, "up")
+        self.master.master.master.master.refresh_entries()
+
 
     def down_pressed(self):
-        self.master.master.master.master.move_group(self.name, "down")
+        move_group(self.name, "down")
+        self.master.master.master.master.refresh_entries()

@@ -18,6 +18,49 @@ last_filepath = ""
 
 
 
+# Load data
+
+def load_entries(filepath):
+    # Try to open the file
+    try:
+        f = open(filepath, "r")
+    except OSError:
+        messagebox.showerror("Load error", 
+            f"Error: filepath {filepath} could not be loaded")
+        return
+
+    with f:
+        global data
+        try:
+            data = json.load(f)
+        except json.decoder.JSONDecodeError:
+            # File is empty, ignore.
+            # (to the user, it will look like an empty file was just loaded,
+            # which is fine because that's apparently what they wanted!)
+            return
+
+    global last_filepath
+    last_filepath = filepath
+
+
+# Save data
+
+def save_all(filepath):
+    # Dump the data dict into the filepath passed as an argument
+    with open(filepath, "w") as f:
+        json.dump(data, f)
+
+    global last_filepath
+    last_filepath = filepath
+
+
+# Clear data
+
+def clear_entries():
+    data.clear()
+
+
+
 # Was change detected since the last time the data was saved?
 # Returns a bool answering that question
 
@@ -67,43 +110,6 @@ def get_last_filepath(short=False):
         shortened = last_filepath[index:-5]
         return shortened
     return last_filepath
-
-
-
-# Load data
-
-def load_entries(filepath):
-    # Try to open the file
-    try:
-        f = open(filepath, "r")
-    except OSError:
-        messagebox.showerror("Load error", 
-            f"Error: filepath {filepath} could not be loaded")
-        return
-
-    with f:
-        global data
-        try:
-            data = json.load(f)
-        except json.decoder.JSONDecodeError:
-            # File is empty, ignore.
-            # (to the user, it will look like an empty file was just loaded,
-            # which is fine because that's apparently what they wanted!)
-            return
-
-    global last_filepath
-    last_filepath = filepath
-
-def save_all(filepath):
-    # Dump the data dict into the filepath passed as an argument
-    with open(filepath, "w") as f:
-        json.dump(data, f)
-
-    global last_filepath
-    last_filepath = filepath
-
-def clear_entries():
-    data.clear()
 
 
 
@@ -227,3 +233,35 @@ def move_entry_to_group(entry_index, entry_group, group):
 def rename_group(group, new_name):
     tmp = data["groups"].pop(group)
     data["groups"][new_name] = tmp
+
+def move_group(name, dir):
+    count = 0
+    
+    global data
+    try:
+        group_list = data["group_list"]
+    except KeyError:
+        for group in data["groups"]:
+            group_list.append(group)
+            data["group_list"] = group_list
+
+    for group_name in group_list:
+        if group_name == name:
+            if dir == "up":
+                if count > 0:
+                    swap_groups(count, count - 1)
+            if dir == "down":
+                if count < len(group_list) - 1:
+                    swap_groups(count, count + 1)
+            break
+
+        count += 1
+
+    tmp = data["group_list"]
+    print(f"data.py: {tmp}")
+
+def swap_groups(pos1, pos2):
+    data["group_list"][pos1], data["group_list"][pos2] = data["group_list"][pos2], data["group_list"][pos1]
+
+def set_group_list(group_list):
+    data["group_list"] = group_list
