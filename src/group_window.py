@@ -56,6 +56,7 @@ class GroupWindow(tk.Frame):
 
         self.group_list.bind("<<ListboxSelect>>", self.on_click)
         self.group_list.bind("<Double-1>", self.on_doubleclick)
+        self.bind_all("<KeyRelease>", self.key_release)
 
         self.add_button = tk.Button(
             self.window,
@@ -156,6 +157,18 @@ class GroupWindow(tk.Frame):
             except IndexError:
                 print("index error")
                 pass
+                
+
+    def key_release(self, event):
+        # Release command key while in other window
+        if PLATFORM == "Windows":
+            if "Control" in event.keysym:
+                self.master.key.keys_pressed["cmd"] = False
+                self.cmd_key_pressed = False
+        else:
+            if "Meta" in event.keysym:
+                self.master.key.keys_pressed["cmd"] = False
+                self.cmd_key_pressed = False
 
 
     def add_group(self):
