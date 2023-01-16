@@ -69,66 +69,6 @@ class EntryMenu(tk.Frame):
         )
         self.buttons.append(self.edit_button)
 
-        self.up_button = tk.Button(
-            self,
-            text="up",
-            width=self.button_width,
-            command=self.master.up_pressed
-        )
-        self.up_button.grid(
-            row=0,
-            column=4
-        )
-        self.buttons.append(self.up_button)
-
-        self.down_button = tk.Button(
-            self,
-            text="down",
-            width=self.button_width,
-            command=self.master.down_pressed
-        )
-        self.down_button.grid(
-            row=0,
-            column=5
-        )
-        self.buttons.append(self.down_button)
-
-        self.top_button = tk.Button(
-            self,
-            text="top",
-            width=self.button_width,
-            command=self.master.top_pressed
-        )
-        self.top_button.grid(
-            row=0,
-            column=6
-        )
-        self.buttons.append(self.top_button)
-
-        self.bottom_button = tk.Button(
-            self,
-            text="last",
-            width=self.button_width,
-            command=self.master.bottom_pressed
-        )
-        self.bottom_button.grid(
-            row=0,
-            column=7
-        )
-        self.buttons.append(self.bottom_button)
-
-        self.copy_button = tk.Button(
-            self,
-            text="copy",
-            width=self.button_width,
-            command=self.master.copy_pressed
-        )
-        self.copy_button.grid(
-            row=0,
-            column=8
-        )
-        self.buttons.append(self.copy_button)
-
         self.group_button = tk.Button(
             self,
             text="group",
@@ -137,12 +77,73 @@ class EntryMenu(tk.Frame):
         )
         self.group_button.grid(
             row=0,
-            column=9
+            column=4
         )
         self.buttons.append(self.group_button)
 
+        self.up_button = tk.Button(
+            self,
+            text="↑",
+            width=self.button_width,
+            command=self.master.up_pressed
+        )
+        self.up_button.grid(
+            row=0,
+            column=5
+        )
+        self.buttons.append(self.up_button)
+
+        self.down_button = tk.Button(
+            self,
+            text="↓",
+            width=self.button_width,
+            command=self.master.down_pressed
+        )
+        self.down_button.grid(
+            row=0,
+            column=6
+        )
+        self.buttons.append(self.down_button)
+
+        self.top_button = tk.Button(
+            self,
+            text="↟",
+            width=self.button_width,
+            command=self.master.top_pressed
+        )
+        self.top_button.grid(
+            row=0,
+            column=7
+        )
+        self.buttons.append(self.top_button)
+
+        self.bottom_button = tk.Button(
+            self,
+            text="↡",
+            width=self.button_width,
+            command=self.master.bottom_pressed
+        )
+        self.bottom_button.grid(
+            row=0,
+            column=8
+        )
+        self.buttons.append(self.bottom_button)
+
+        self.copy_button = tk.Button(
+            self,
+            text="©",
+            width=self.button_width,
+            command=self.master.copy_pressed
+        )
+        self.copy_button.grid(
+            row=0,
+            column=9
+        )
+        self.buttons.append(self.copy_button)
+
         if PLATFORM != "Windows":
-            self.copy_button.configure(width=self.button_width * 2)
+            # self.copy_button.configure(width=self.button_width * 2)
+            self.group_button.configure(width=self.button_width * 2)
 
         self.x_button = tk.Button(
             self,
