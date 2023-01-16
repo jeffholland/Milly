@@ -162,7 +162,13 @@ class Group(tk.Frame):
         count = 0
 
         for entry in list(self.entries_data):
-            checked = entry["checked"]
+            
+            try:
+                checked = entry["checked"]
+            except KeyError:
+                entry["checked"] = False
+                checked = entry["checked"]
+
             if switch:
                 if not checked:
                     self.entries_data.pop(count)

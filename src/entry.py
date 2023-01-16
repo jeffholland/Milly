@@ -304,7 +304,7 @@ class Entry(tk.Frame):
     # Other button handlers
 
     def x_pressed(self):
-        remove_entry(self.index)
+        remove_entry(self.index, self.group)
         self.entries_obj.refresh_entries()
 
     def up_pressed(self):

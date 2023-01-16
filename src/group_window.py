@@ -55,8 +55,7 @@ class GroupWindow(tk.Frame):
         # Event bindings
 
         self.group_list.bind("<<ListboxSelect>>", self.on_click)
-        if self.entry_parent:
-            self.group_list.bind("<Double-1>", self.on_doubleclick)
+        self.group_list.bind("<Double-1>", self.on_doubleclick)
 
         self.add_button = tk.Button(
             self.window,
@@ -128,9 +127,14 @@ class GroupWindow(tk.Frame):
         self.get_selection()
 
     def on_doubleclick(self, event=None):
-        self.get_selection()
-        self.master.move_to_group(self.selected)
-        self.window.destroy()
+        if self.entry_parent:
+            self.get_selection()
+            self.master.move_to_group(self.selected)
+            self.window.destroy()
+        else:
+            self.get_selection()
+            self.master.submit(group=self.selected)
+            self.window.destroy()
 
     def key_pressed(self, event):
         if event.keysym == "Return":

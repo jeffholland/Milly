@@ -156,6 +156,7 @@ def add_entry(text, group=None):
         except KeyError:
             data["groups"][group] = []
             data["groups"][group].append(entry)
+        return
     try:
         data["entries"].append(entry)
     except KeyError:
@@ -165,14 +166,9 @@ def add_entry(text, group=None):
 def add_group(name):
     data["groups"][name] = []
 
-def remove_entry(index):
-    comp = 0
-    for group in list(data["groups"].keys()):
-        num_in_group = len(data["groups"][group])
-        comp += num_in_group
-        if comp > index:
-            data["groups"][group].pop(index - (comp - num_in_group))
-            return
+def remove_entry(index, group=None):
+    if group:
+        data["groups"][group].pop(index)
     
     for count in range(len(data["entries"])):
         if count == index:
