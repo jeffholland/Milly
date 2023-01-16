@@ -395,19 +395,6 @@ class Entries(tk.Frame):
     #         count += 1
     #     self.ungrouped_entries_data[data_index]["group"] = name
 
-    # def rename_group(self, old_name, new_name):
-    #     for entry in self.ungrouped_entries_data:
-    #         if entry["group"] == old_name:
-    #             entry["group"] = new_name
-
-    # def move_group(self, name, dir):
-    #     count = 0
-    #     for group_name in self.group_names:
-    #         if group_name == name:
-    #             if dir == "up":
-    #                 if count > 0:
-    #                     self.swap_groups(count, count - 1)
-
     #             if dir == "down":
     #                 if count < len(self.group_names) - 1:
     #                     self.swap_groups(count, count + 1)

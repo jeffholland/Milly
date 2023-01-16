@@ -213,6 +213,9 @@ def move_entry(group, text, dir):
         count += 1
 
 
+
+# Group functions
+
 def move_entry_to_group(entry_index, entry_group, group):
     if entry_group:
         entry = data["groups"][entry_group].pop(entry_index)
@@ -220,3 +223,7 @@ def move_entry_to_group(entry_index, entry_group, group):
         entry = data["entries"].pop(entry_index)
     
     data["groups"][group].append(entry)
+
+def rename_group(group, new_name):
+    tmp = data["groups"].pop(group)
+    data["groups"][new_name] = tmp

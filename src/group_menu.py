@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.font as tkFont
 
 from constants import *
+from data import rename_group
 
 class GroupMenu(tk.Frame):
     def __init__(self, master, name, num_entries):
@@ -132,7 +133,7 @@ class GroupMenu(tk.Frame):
         if event.keysym == "Return":
             new_name = self.name_entry.get()
             if len(new_name) > 0:
-                self.master.master.master.master.rename_group(self.name, new_name)
+                rename_group(self.name, new_name)
                 self.master.name = new_name
                 self.name = new_name
                 self.name_label.configure(text=new_name)
