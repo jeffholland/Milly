@@ -170,7 +170,10 @@ def swap_entry(index1, index2):
     data["entries"][index2] = tmp
 
 def insert_entry(index, text):
-    data["entries"].insert(index, create_entry(text, index=index))
+    if index < len(data["entries"]) - 1:
+        data["entries"].insert(index, create_entry(text))
+    else:
+        add_entry(text)
 
 def move_entry(group, index, dir):
     global data
