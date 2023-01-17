@@ -211,8 +211,8 @@ def move_entry_to_group(entry_index, entry_group, group_index):
         data["groups"][group_index]["entries"].append(entry)
 
 def rename_group(group, new_name):
-    tmp = data["groups"].pop(group)
-    data["groups"][new_name] = tmp
+    index = get_group_index(group)
+    data["groups"][index]["name"] = new_name
 
 def move_group(name, dir):
     global data
