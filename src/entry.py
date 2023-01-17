@@ -380,8 +380,8 @@ class Entry(tk.Frame):
     def move_group(self, name, dir):
         self.entries_obj.move_group(name, dir)
 
-    def move_to_group(self, group_name):
-        move_entry_to_group(self.index, self.group, group_name)
+    def move_to_group(self, group_index):
+        move_entry_to_group(self.index, self.group, group_index)
         self.entries_obj.refresh_entries()
 
     def delete_group(self, group_name):

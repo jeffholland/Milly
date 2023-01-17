@@ -206,13 +206,15 @@ def move_entry(group, text, dir):
 
 # Group functions
 
-def move_entry_to_group(entry_index, entry_group, group):
-    if entry_group:
-        entry = data["groups"][entry_group].pop(entry_index)
-    else:
-        entry = data["entries"].pop(entry_index)
-    
-    data["groups"][group].append(entry)
+def move_entry_to_group(entry_index, entry_group, group_index):
+    entry = None
+
+    for group in data["groups"]:
+        if group["name"] == entry_group:
+            entry = group["entries"].pop(entry_index)
+
+    if entry:
+        data["groups"][group_index]["entries"].append(entry)
 
 def rename_group(group, new_name):
     tmp = data["groups"].pop(group)
