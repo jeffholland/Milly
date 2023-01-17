@@ -309,11 +309,11 @@ class Entry(tk.Frame):
         self.entries_obj.refresh_entries()
 
     def up_pressed(self):
-        move_entry(self.group, self.text, dir="up")
+        move_entry(self.group, self.index, dir="up")
         self.entries_obj.refresh_entries()
 
     def down_pressed(self):
-        move_entry(self.group, self.text, dir="down")
+        move_entry(self.group, self.index, dir="down")
         self.entries_obj.refresh_entries()
 
     def copy_pressed(self):
@@ -321,7 +321,7 @@ class Entry(tk.Frame):
         self.clipboard_append(self.text)
 
     def top_pressed(self):
-        move_entry(self.group, self.text, dir="top")
+        move_entry(self.group, self.index, dir="top")
         self.entries_obj.refresh_entries()
 
     def bottom_pressed(self):
