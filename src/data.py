@@ -225,7 +225,7 @@ def move_group(name, dir):
 
     index = get_group_index(name)
 
-    if index:
+    if index != None:
         if dir == "up":
             if index > 0:
                 group = data["groups"].pop(index)
