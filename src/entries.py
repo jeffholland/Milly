@@ -107,34 +107,20 @@ class Entries(tk.Frame):
 
         data = get_data()
 
-        try:
-            tmp = data["group_list"]
-            print(f"entries.py: {tmp}")
-        except KeyError:
-            pass
-
         # Get all group data into an array of dicts
 
         try:
             self.groups_data = data["groups"]
-            try:
-                self.group_names = data["group_list"]
-                if len(self.group_names) == 0 and len(data["groups"]) != 0:
-                    for group in data["groups"]:
-                        self.group_names.append(group)
-                    set_group_list(self.group_names)
-            except KeyError:
-                for group in data["groups"]:
-                    self.group_names.append(group)
-                set_group_list(self.group_names)
         except KeyError:
-            data["groups"] = {}
+            data["groups"] = []
+            self.groups_data = []
 
         # Get all ungrouped entries data into an array of dicts
 
         try:
             self.ungrouped_entries_data = data["entries"]
         except KeyError:
+            data["entries"] = []
             self.ungrouped_entries_data = []
 
 
@@ -142,15 +128,15 @@ class Entries(tk.Frame):
     def create_groups(self):
         count = 0
 
-        for name in self.group_names:
-
-            group_data = self.groups_data[name]
+        for group in self.groups_data:
+            name = group["name"]
+            entries = group["entries"]
         
             self.groups.append(Group(
                 self.container,
                 width=self.entry_width,
                 entry_height=ENTRY_HEIGHT,
-                entries_data=group_data,
+                entries_data=entries,
                 name=name,
                 font=self.font
             ))

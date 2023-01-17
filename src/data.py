@@ -113,28 +113,6 @@ def get_last_filepath(short=False):
 
 
 
-# Getter functions
-
-def get_data():
-    return data
-
-def get_num_entries():
-    count = 0
-    try:
-        for group in data["groups"]:
-            count += len(data["groups"][group])
-    except KeyError:
-        data["groups"] = {}
-
-    try:
-        count += len(data["entries"])
-    except KeyError:
-        data["entries"] = []
-    
-    return count
-
-
-
 # Entry generation function
 
 def create_entry(text):
@@ -161,7 +139,12 @@ def add_entry(text, group=None):
         data["entries"].append(entry)
 
 def add_group(name):
-    data["groups"][name] = []
+    data["groups"].append(
+        {
+            "name": name,
+            "entries": []
+        }
+    )
 
 def remove_entry(index, group=None):
     if group:
@@ -235,17 +218,25 @@ def rename_group(group, new_name):
     data["groups"][new_name] = tmp
 
 def move_group(name, dir):
+
     count = 0
     
     global data
+
     try:
         group_list = data["group_list"]
     except KeyError:
-        for group in data["groups"]:
-            group_list.append(group)
-            data["group_list"] = group_list
+        data["group_list"] = []
 
-    for group_name in group_list:
+    if len(data["group_list"]) == 0:
+        for group in data["groups"]:
+            data["group_list"].append(group)
+    
+    tmp = data["group_list"]
+        
+    print(f"data.py - move_group - middle of function: {tmp}")
+
+    for group_name in data["group_list"]:
         if group_name == name:
             if dir == "up":
                 if count > 0:
@@ -258,10 +249,38 @@ def move_group(name, dir):
         count += 1
 
     tmp = data["group_list"]
-    print(f"data.py: {tmp}")
+    print(f"data.py - move_group - end of function: {tmp}")
 
 def swap_groups(pos1, pos2):
+    global data
     data["group_list"][pos1], data["group_list"][pos2] = data["group_list"][pos2], data["group_list"][pos1]
 
-def set_group_list(group_list):
-    data["group_list"] = group_list
+# def set_group_list(group_list):
+#     data["group_list"] = group_list
+
+
+
+# Getter functions
+
+def get_data():
+    try:
+        tmp = data["group_list"]
+        print(f"data.py - get_data: {tmp}")
+    except KeyError:
+        pass
+    return data
+
+def get_num_entries():
+    count = 0
+    try:
+        for group in data["groups"]:
+            count += len(group["entries"])
+    except KeyError:
+        data["groups"] = {}
+
+    try:
+        count += len(data["entries"])
+    except KeyError:
+        data["entries"] = []
+    
+    return count

@@ -162,7 +162,7 @@ class Group(tk.Frame):
         count = 0
 
         for entry in list(self.entries_data):
-            
+
             try:
                 checked = entry["checked"]
             except KeyError:
