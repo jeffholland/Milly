@@ -37,13 +37,13 @@ class Entries(tk.Frame):
         # List of Entry objects
         self.ungrouped_entries = []
 
-        # List of dicts containing all Entry data
+        # List containing all ungrouped entry data
         self.ungrouped_entries_data = []
 
         # List of Group objects
         self.groups = []
 
-        # List of dicts containing all Group data
+        # List containing all Group data
         self.groups_data = []
 
         # List of group names
@@ -143,7 +143,9 @@ class Entries(tk.Frame):
                 entry_height=ENTRY_HEIGHT,
                 entries_data=entries,
                 name=name,
-                font=self.font
+                font=self.font,
+                show_dates=self.show_dates,
+                show_times=self.show_times
             ))
 
             self.groups[count].grid_propagate(0)

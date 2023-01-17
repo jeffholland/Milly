@@ -8,7 +8,8 @@ from entry import Entry
 from group_menu import GroupMenu
 
 class Group(tk.Frame):
-    def __init__(self, master, width, entry_height, entries_data, name, font):
+    def __init__(self, master, width, entry_height, 
+        entries_data, name, font, show_dates, show_times):
         self.entry_height = entry_height
 
         tk.Frame.__init__(
@@ -28,8 +29,8 @@ class Group(tk.Frame):
         self.entries_data = entries_data
         self.sort_by_checked()
 
-        self.show_dates = True
-        self.show_times = True
+        self.show_dates = show_dates
+        self.show_times = show_times
 
         self.entries = []
 
