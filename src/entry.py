@@ -330,7 +330,17 @@ class Entry(tk.Frame):
 
     def group_pressed(self):
         group_names = self.get_group_names()
-        self.group_window = GroupWindow(self, group_names)
+        
+        in_group = False
+        if self.group:
+            in_group = True
+
+        self.group_window = GroupWindow(
+            self, 
+            group_names,
+            entry_parent=True,
+            entry_in_group=in_group
+        )
         self.group_window.refresh_colors(self.colors)
 
         # If there's at least one group, select it in the listbox

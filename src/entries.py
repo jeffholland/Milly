@@ -123,6 +123,11 @@ class Entries(tk.Frame):
             data["entries"] = []
             self.ungrouped_entries_data = []
 
+        # Get group names as an array
+
+        for group in self.groups_data:
+            self.group_names.append(group["name"])
+
 
 
     def create_groups(self):

@@ -137,11 +137,11 @@ class Input(tk.Frame):
         else:
             exit()
 
-    def submit(self, group=None):
+    def submit(self, group_index=None):
         text = self.input.get("1.0", "end")
         if text[-1] == '\n':
             text = text[:-1]
-        add_entry(text, group)
+        add_entry(text, group_index)
 
         self.master.refresh_entries()
         self.input.delete("1.0", "end")

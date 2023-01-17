@@ -4,7 +4,7 @@ from tkinter import messagebox
 from constants import *
 
 class GroupWindow(tk.Frame):
-    def __init__(self, master, group_names, entry_parent=True):
+    def __init__(self, master, group_names, entry_parent, entry_in_group=False):
 
         self.width = 200
         self.height = 280
@@ -22,6 +22,11 @@ class GroupWindow(tk.Frame):
         # versus the general "Groups" button or cmd+g key shortcut)
 
         self.entry_parent = entry_parent
+
+        # If entry parent, then is the entry in a group?
+        # (Naturally this will be false if entry_parent is false)
+
+        self.entry_in_group = entry_in_group
 
         self.group_names = group_names
 
@@ -130,11 +135,11 @@ class GroupWindow(tk.Frame):
     def on_doubleclick(self, event=None):
         if self.entry_parent:
             self.get_selection()
-            self.master.move_to_group(self.selected)
+            self.master.move_to_group(self.selected_index)
             self.window.destroy()
         else:
             self.get_selection()
-            self.master.submit(group=self.selected)
+            self.master.submit(group_index=self.selected_index)
             self.window.destroy()
 
     def key_pressed(self, event):
@@ -170,7 +175,10 @@ class GroupWindow(tk.Frame):
         else:
             if "Meta" in event.keysym:
                 if self.entry_parent:
-                    self.master.master.master.master.master.bottom_frame.key.keys_pressed["cmd"] = False
+                    if self.entry_in_group:
+                        self.master.master.master.master.master.master.bottom_frame.key.keys_pressed["cmd"] = False
+                    else:
+                        self.master.master.master.master.master.bottom_frame.key.keys_pressed["cmd"] = False
                 else:
                     self.master.key.keys_pressed["cmd"] = False
 
@@ -262,6 +270,7 @@ class GroupWindow(tk.Frame):
         try:
             index = int(self.group_list.curselection()[0])
             self.selected = self.group_list.get(index)
+            self.selected_index = index
 
         except IndexError:
             # if DEBUG:

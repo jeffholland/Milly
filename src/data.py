@@ -123,14 +123,15 @@ def create_entry(text):
         "id": hashlib.sha256(str.encode(text)).hexdigest()
     }
 
-def add_entry(text, group=None):
+def add_entry(text, group_index=None):
     entry = create_entry(text)
-    if group:
+    print(group_index)
+    if group_index != None:
         try:
-            data["groups"][group].append(entry)
+            data["groups"][group_index]["entries"].append(entry)
         except KeyError:
-            data["groups"][group] = []
-            data["groups"][group].append(entry)
+            data["groups"][group_index]["entries"] = []
+            data["groups"][group_index]["entries"].append(entry)
         return
     try:
         data["entries"].append(entry)
