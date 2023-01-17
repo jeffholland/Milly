@@ -40,18 +40,12 @@ class Key:
             and self.keys_pressed["shift"] == False):
             
             # cmd+return to submit to top group
+            group_index = None
             if self.keys_pressed["cmd"]:
-                try:
-                    group = self.master.master.top_frame.get_group_names()[0]
-                except IndexError:
-                    messagebox.showinfo("No groups", 
-                        "There is no group to submit this entry to.")
-                    self.just_submitted = True
-                    return
-            else:
-                group = None
+                if len(self.master.master.top_frame.get_group_names()) > 0:
+                    group_index = 0
             
-            self.master.submit(group=group)
+            self.master.submit(group_index=group_index)
             self.just_submitted = True
         
         # cmd key pressed
