@@ -82,7 +82,6 @@ class Group(tk.Frame):
                 height=self.entry_height,
                 index=count,
                 font=self.font,
-                id=entry_id,
                 checkbox=True,
                 checked=checked_bool,
                 group=self.name

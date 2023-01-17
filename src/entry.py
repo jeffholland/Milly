@@ -9,7 +9,7 @@ from group_window import GroupWindow
 
 class Entry(tk.Frame):
     def __init__(self, master, date, time, menu, text, 
-        width, height, index, font, id,
+        width, height, index, font,
         checkbox=False, checked=False, group=None):
 
         tk.Frame.__init__(
@@ -29,7 +29,6 @@ class Entry(tk.Frame):
         self.height = height
         self.font = font
         self.group = group
-        self.id = id
 
         length = len(self.text)
         newline_count = self.text.count('\n')

@@ -119,8 +119,7 @@ def create_entry(text):
     return {
         "date": date.strftime(date.today(), "%A") + " " + str(date.today()),
         "time": datetime.now().strftime("%I:%M %p"),
-        "text": text,
-        "id": hashlib.sha256(str.encode(text)).hexdigest()
+        "text": text
     }
 
 def add_entry(text, group_index=None):

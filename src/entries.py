@@ -179,12 +179,6 @@ class Entries(tk.Frame):
 
             text = entry["text"]
 
-            try:
-                entry_id = entry["id"]
-            except KeyError:
-                entry["id"] = hashlib.sha256(str.encode(text)).hexdigest()
-                entry_id = entry["id"]
-
             self.ungrouped_entries.append(Entry(
                 self.container,
                 date=entry_date,
@@ -195,7 +189,6 @@ class Entries(tk.Frame):
                 height=ENTRY_HEIGHT,
                 index=count,
                 font=self.font,
-                id=entry_id,
                 checkbox=self.show_checkboxes,
                 checked=checked_bool
             ))
