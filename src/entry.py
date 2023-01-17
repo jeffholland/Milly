@@ -29,6 +29,7 @@ class Entry(tk.Frame):
         self.height = height
         self.font = font
         self.group = group
+        self.id = id
 
         length = len(self.text)
         newline_count = self.text.count('\n')
@@ -324,7 +325,7 @@ class Entry(tk.Frame):
         self.entries_obj.refresh_entries()
 
     def bottom_pressed(self):
-        move_entry(self.group, self.text, dir="bottom")
+        move_entry(self.group, self.index, dir="bottom")
         self.entries_obj.refresh_entries()
 
 
@@ -353,7 +354,8 @@ class Entry(tk.Frame):
         # Move entries to bottom when checked
         if self.checkbox_var.get() == 1:
             if self.group:
-                self.entries_obj.groups_data[self.group][self.index]["checked"] = True
+                group_index = get_group_index(self.group)
+                self.entries_obj.groups_data[group_index]["entries"][self.index]["checked"] = True
             else:
                 self.entries_obj.ungrouped_entries_data[self.index]["checked"] = True
             self.bottom_pressed()

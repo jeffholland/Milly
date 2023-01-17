@@ -125,7 +125,6 @@ def create_entry(text):
 
 def add_entry(text, group_index=None):
     entry = create_entry(text)
-    print(group_index)
     if group_index != None:
         try:
             data["groups"][group_index]["entries"].append(entry)
@@ -148,12 +147,13 @@ def add_group(name):
     )
 
 def remove_entry(index, group=None):
-    if group:
-        data["groups"][group].pop(index)
-    
-    for count in range(len(data["entries"])):
-        if count == index:
-            data["entries"].pop(index)
+    if group != None:
+        group_index = get_group_index(group)
+        data["groups"][group_index]["entries"].pop(index)
+    else:
+        for count in range(len(data["entries"])):
+            if count == index:
+                data["entries"].pop(index)
 
 def swap_entry(index1, index2):
     if index1 == index2:
@@ -165,42 +165,29 @@ def swap_entry(index1, index2):
 def insert_entry(index, text):
     data["entries"].insert(index, create_entry(text, index=index))
 
-def move_entry(group, text, dir):
+def move_entry(group, index, dir):
+    global data
+    new_index = index
     data_array = []
 
-    if group == None:
+    if group != None:
+        group_index = get_group_index(group)
+        data_array = data["groups"][group_index]["entries"]
+    else:
         data_array = data["entries"]
 
-    else:
-        data_array = data["groups"][group]
+    if dir == "top":
+        new_index = 0
+    if dir == "bottom":
+        new_index = len(data["groups"][group_index]["entries"])
+    if dir == "up":
+        new_index = index - 1
+    if dir == "down":
+        new_index = index + 1
 
-    count = 0
-    num_entries = len(data_array)
-
-    for entry in data_array:
-
-        if entry["text"] == text:
-
-            data_array.pop(count)
-
-            if dir == "top":
-                index = 0
-            elif dir == "bottom":
-                index = num_entries - 1
-            elif dir == "up":
-                if count > 0:
-                    index = count - 1
-                else:
-                    index = count
-            elif dir == "down":
-                if count < num_entries - 1:
-                    index = count + 1
-                else:
-                    index = count
-            data_array.insert(index, entry)
-            return
-        
-        count += 1
+    if new_index != index:
+        entry = data_array.pop(index)
+        data_array.insert(new_index, entry)
 
 
 
@@ -248,11 +235,6 @@ def get_group_index(name):
 # Getter functions
 
 def get_data():
-    try:
-        tmp = data["group_list"]
-        print(f"data.py - get_data: {tmp}")
-    except KeyError:
-        pass
     return data
 
 def get_num_entries():
