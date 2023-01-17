@@ -3,6 +3,7 @@ import tkinter as tk
 import hashlib
 
 from constants import *
+from data import remove_group
 from entry import Entry
 from group_menu import GroupMenu
 
@@ -142,19 +143,8 @@ class Group(tk.Frame):
         self.configure(height=self.height)
 
     def delete(self):
-        for entry in self.entries_data:
-            for master_entry in self.master.master.master.entries_data:
-                try:
-                    if master_entry["index"] == entry["index"]:
-                        master_entry["group"] = "None"
-                except KeyError:
-                    if master_entry["text"] == entry["text"]:
-                        master_entry["index"] = entry["index"]
-                        master_entry["group"] = "None"
-
-
-        self.master.master.master.group_names.remove(self.name)
-        self.master.master.master.refresh_entries(refresh_data=False)
+        remove_group(self.name)
+        self.master.master.master.refresh_entries()
 
     def sort_by_checked(self):
 

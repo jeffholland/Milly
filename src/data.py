@@ -155,6 +155,13 @@ def remove_entry(index, group=None):
             if count == index:
                 data["entries"].pop(index)
 
+def remove_group(group):
+    index = get_group_index(group)
+    group = data["groups"].pop(index)
+
+    for entry in group["entries"]:
+        data["entries"].append(entry)
+
 def swap_entry(index1, index2):
     if index1 == index2:
         return
