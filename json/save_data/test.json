@@ -1,17 +1,1 @@
-{
-    "groups": [
-        {
-            "name": "Groups",
-            "entries": [
-                {
-                    "date": "Monday 2023-01-09",
-                    "time": "02:20 PM",
-                    "text": "2",
-                    "checked": false,
-                    "id": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
-                }
-            ]
-        }
-    ],
-    "entries": []
-}
+{"groups": [{"name": "Groups", "entries": [{"date": "Monday 2023-01-09", "time": "02:20 PM", "text": "2", "checked": false, "id": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"}]}, {"name": "Hello", "entries": []}, {"name": "Nice", "entries": []}, {"name": "Test", "entries": []}], "entries": []}

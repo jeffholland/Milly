@@ -221,45 +221,27 @@ def rename_group(group, new_name):
     data["groups"][new_name] = tmp
 
 def move_group(name, dir):
+    global data
 
+    index = get_group_index(name)
+
+    if index:
+        if dir == "up":
+            if index > 0:
+                group = data["groups"].pop(index)
+                data["groups"].insert(index - 1, group)
+        if dir == "down":
+            if index < len(data["groups"]) - 1:
+                group = data["groups"].pop(index)
+                data["groups"].insert(index + 1, group)
+
+def get_group_index(name):
     count = 0
-    
-    global data
-
-    try:
-        group_list = data["group_list"]
-    except KeyError:
-        data["group_list"] = []
-
-    if len(data["group_list"]) == 0:
-        for group in data["groups"]:
-            data["group_list"].append(group)
-    
-    tmp = data["group_list"]
-        
-    print(f"data.py - move_group - middle of function: {tmp}")
-
-    for group_name in data["group_list"]:
-        if group_name == name:
-            if dir == "up":
-                if count > 0:
-                    swap_groups(count, count - 1)
-            if dir == "down":
-                if count < len(group_list) - 1:
-                    swap_groups(count, count + 1)
-            break
-
+    for group in data["groups"]:
+        if group["name"] == name:
+            return count
         count += 1
-
-    tmp = data["group_list"]
-    print(f"data.py - move_group - end of function: {tmp}")
-
-def swap_groups(pos1, pos2):
-    global data
-    data["group_list"][pos1], data["group_list"][pos2] = data["group_list"][pos2], data["group_list"][pos1]
-
-# def set_group_list(group_list):
-#     data["group_list"] = group_list
+    return None
 
 
 
