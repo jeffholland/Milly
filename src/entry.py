@@ -350,21 +350,26 @@ class Entry(tk.Frame):
             # self.group_window.on_click()
 
     def checkbox_pressed(self):
-        # Move entries to bottom when checked
+        # Checked vs. unchecked
         if self.checkbox_var.get() == 1:
-            if self.group:
-                group_index = get_group_index(self.group)
-                self.entries_obj.groups_data[group_index]["entries"][self.index]["checked"] = True
-            else:
-                self.entries_obj.ungrouped_entries_data[self.index]["checked"] = True
-            self.bottom_pressed()
-
-        # Move back to top when unchecked
+            check_bool = True
         else:
-            self.entries_obj.entries_data[self.index]["checked"] = False
+            check_bool = False
+
+        # Set entry data checked to value of bool
+        if self.group:
+            group_index = get_group_index(self.group)
+            self.entries_obj.groups_data[group_index]["entries"][self.index]["checked"] = check_bool
+        else:
+            self.entries_obj.ungrouped_entries_data[self.index]["checked"] = check_bool
+
+        # Send to bottom if checked, top if unchecked
+        if check_bool:
+            self.bottom_pressed()
+        else:
             self.top_pressed()
 
-    
+            
 
     # Functions that do nothing but pass on to the Entries object
 
