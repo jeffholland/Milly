@@ -41,6 +41,7 @@ class ExportWindow(tk.Frame):
         # checkbuttons
 
         self.csv_var = tk.IntVar()
+        self.csv_var.set(1)
         self.csv_button = tk.Checkbutton(
             self.window,
             text="csv",
@@ -50,6 +51,7 @@ class ExportWindow(tk.Frame):
         self.buttons.append(self.csv_button)
 
         self.txt_var = tk.IntVar()
+        self.txt_var.set(1)
         self.txt_button = tk.Checkbutton(
             self.window,
             text="txt",
@@ -59,6 +61,7 @@ class ExportWindow(tk.Frame):
         self.buttons.append(self.txt_button)
 
         self.pdf_var = tk.IntVar()
+        self.pdf_var.set(1)
         self.pdf_button = tk.Checkbutton(
             self.window,
             text="pdf",
@@ -68,6 +71,7 @@ class ExportWindow(tk.Frame):
         self.buttons.append(self.pdf_button)
 
         self.colors_var = tk.IntVar()
+        self.colors_var.set(1)
         self.colors_button = tk.Checkbutton(
             self.window,
             text="show colors",
@@ -77,6 +81,7 @@ class ExportWindow(tk.Frame):
         self.buttons.append(self.colors_button)
 
         self.dates_var = tk.IntVar()
+        self.dates_var.set(1)
         self.dates_button = tk.Checkbutton(
             self.window,
             text="show dates",
@@ -88,6 +93,7 @@ class ExportWindow(tk.Frame):
             self.dates_button.configure(state=tk.DISABLED)
 
         self.times_var = tk.IntVar()
+        self.times_var.set(1)
         self.times_button = tk.Checkbutton(
             self.window,
             text="show times",
@@ -171,39 +177,67 @@ class ExportWindow(tk.Frame):
         self.master.master.bottom_frame.input.focus_set()
 
 
+
     def export_csv(self, filename):
 
         filename = filename + ".csv"
 
         with open(filename, "w") as csvfile:
             writer = csv.writer(csvfile, delimiter=",")
-            
-            for entry in self.master.entries:
-                row = []
 
-                if self.dates_var.get() == 1:
-                    row.append(entry.date)
-                if self.times_var.get() == 1:
-                    row.append(entry.time)
-                    
-                row.append(entry.text)
-                writer.writerow(row)
+            for group in self.master.groups:
+                for entry in group.entries:
+                    writer.writerow(self.get_csv_row(entry, group))
+            
+            for entry in self.master.ungrouped_entries:
+                writer.writerow(self.get_csv_row(entry))
+
+    def get_csv_row(self, entry, group=None):
+        row = []
+
+        if self.dates_var.get() == 1:
+            row.append(entry.date)
+        if self.times_var.get() == 1:
+            row.append(entry.time)
+
+        if group:
+            row.append(group.name)
+            
+        row.append(entry.text)
+
+        return row
+
                 
 
     def export_txt(self, filename):
         filename = filename + ".txt"
 
         with open(filename, "w") as txtfile:
-            for entry in self.master.entries:
-                row = ""
+            for group in self.master.groups:
+                for entry in group.entries:
+                    txtfile.write(self.get_txt_row(entry, group))
 
-                if self.dates_var.get() == 1:
-                    row += entry.date + " - "
-                if self.times_var.get() == 1:
-                    row += entry.time + " - "
-                row += entry.text
+            for entry in self.master.ungrouped_entries:
+                txtfile.write(self.get_txt_row(entry))
 
-                txtfile.write(row)
+    def get_txt_row(self, entry, group=None):
+        row = ""
+
+        if self.dates_var.get() == 1:
+            row += entry.date + " - "
+        if self.times_var.get() == 1:
+            row += entry.time + " - "
+        row += entry.text
+
+        if group:
+            row += " - " + group.name
+
+        if row[-1] != '\n':
+            row += '\n'
+
+        return row
+
+
 
     def export_pdf(self, filename):
         filename = filename + ".pdf"
@@ -220,26 +254,27 @@ class ExportWindow(tk.Frame):
 
             pdf.set_fill_color(bg[0], bg[1], bg[2])
             pdf.set_text_color(fg[0], fg[1], fg[2])
+
+        for group in self.master.groups:
+            for entry in group.entries:
+                row = self.get_txt_row(entry, group=group)
+                self.write_pdf_row(pdf, row, entry.height)
         
-        for count in range(len(self.master.entries)):
-            row = ""
-
-            if self.dates_var.get() == 1:
-                row += self.master.entries[count].date + " - "
-            if self.times_var.get() == 1:
-                row += self.master.entries[count].time + " - "
-            row += self.master.entries[count].text
-
-            fill = False
-            if self.colors_var.get() == 1:
-                fill = True
-
-            pdf.multi_cell(
-                w=180,
-                h=floor(self.master.entries[count].height / 4),
-                txt=row,
-                border=1,
-                fill=fill
-            )
+        for entry in self.master.ungrouped_entries:
+            row = self.get_txt_row(entry)
+            self.write_pdf_row(pdf, row, entry.height)
 
         pdf.output(filename)
+
+    def write_pdf_row(self, pdf, row, height):
+        fill = False
+        if self.colors_var.get() == 1:
+            fill = True
+
+        pdf.multi_cell(
+            w=180,
+            h=floor(height / 4),
+            txt=row,
+            border=1,
+            fill=fill
+        )
