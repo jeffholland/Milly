@@ -205,9 +205,12 @@ def move_entry(group, index, dir):
 def move_entry_to_group(entry_index, entry_group, group_index):
     entry = None
 
-    for group in data["groups"]:
-        if group["name"] == entry_group:
-            entry = group["entries"].pop(entry_index)
+    if entry_group == None:
+        entry = data["entries"].pop(entry_index)
+    else:
+        for group in data["groups"]:
+            if group["name"] == entry_group:
+                entry = group["entries"].pop(entry_index)
 
     if entry:
         data["groups"][group_index]["entries"].append(entry)
