@@ -296,17 +296,18 @@ class Entries(tk.Frame):
         self.filtered_entries_data.clear()
 
         # Search groups
-        count = 0
+        count = -1
         for group in self.groups_data:
             added_group = False
             for data in group["entries"]:
                 if filter.lower() in data["text"].lower():
                     if added_group:
-                        self.filtered_groups[count]["entries"].append(data)
+                        self.filtered_groups_data[count]["entries"].append(data)
                     else:
-                        self.filtered_groups.append(
+                        name = group["name"]
+                        self.filtered_groups_data.append(
                             {
-                                "name": group["name"],
+                                "name": name,
                                 "entries": [data]
                             }
                         )
@@ -321,13 +322,40 @@ class Entries(tk.Frame):
             else:
                 if filter.lower() in data["text"].lower():
                     self.filtered_entries_data.append(data)
-        
-        for count in range(len(self.filtered_entries_data)):
+
+        # Create and grid filtered group objects
+        count = 0
+        for group in self.filtered_groups_data:
+            self.filtered_groups.append(
+                Group(
+                    self.container,
+                    width=self.entry_width,
+                    entry_height=ENTRY_HEIGHT,
+                    entries_data=group["entries"],
+                    name=group["name"],
+                    font=self.font,
+                    show_dates=self.show_dates,
+                    show_times=self.show_times
+                )
+            )
+            self.filtered_groups[count].grid_propagate(0)
+            self.filtered_groups[count].grid(
+                row=count, 
+                column=0,
+                padx=PADDING, 
+                pady=PADDING
+            )
+            self.filtered_groups[count].refresh_colors(self.colors)
+            count += 1
+
+        # Create and grid filtered ungrouped entry objects
+        count = 0
+        for entry in self.filtered_entries_data:
             self.filtered_entries.append(
                 Entry(
-                    date=self.filtered_entries_data[count]["date"],
-                    time=self.filtered_entries_data[count]["time"],
-                    text=self.filtered_entries_data[count]["text"],
+                    date=entry["date"],
+                    time=entry["time"],
+                    text=entry["text"],
                     width=self.entry_width,
                     height=ENTRY_HEIGHT,
                     master=self.container,
@@ -342,15 +370,11 @@ class Entries(tk.Frame):
                 pady=PADDING
             )
             self.filtered_entries[count].refresh_colors(self.colors)
-
-    # util
-    def group_in_filtered_data(self, name):
-        for group in self.filtered_groups:
-            if group["name"] == name:
-                return True
-        return False
+            count += 1
 
     def remove_filter(self):
+        for group in self.filtered_groups:
+            group.grid_forget()
         for entry in self.filtered_entries:
             entry.grid_forget()
 
