@@ -68,7 +68,7 @@ class FindWindow(tk.Frame):
 
 
     def refresh_colors(self, colors):
-        self.colors = self.master.master.colors_obj.get_colors()
+        self.colors = colors
 
         self.window.configure(
             bg=self.colors["BG1"]

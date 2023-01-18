@@ -49,10 +49,16 @@ class Entries(tk.Frame):
         # List of group names
         self.group_names = []
 
-        # Contains a filtered list of Entry objects (for cmd+f search)
+        # Contains a filtered list of Group objects
+        self.filtered_groups = []
+
+        # Contains a filtered list of Group data
+        self.filtered_groups_data = []
+
+        # Contains a filtered list of Entry objects
         self.filtered_entries = []
 
-        # Contains a filtered list of dicts (for cmd+f search)
+        # Contains a filtered list of Entries data
         self.filtered_entries_data = []
 
         # Indexes every entry
@@ -272,15 +278,42 @@ class Entries(tk.Frame):
 
 
     def filter_entries(self, filter, case_sensitive=False):
+        for group in self.groups:
+            group.grid_remove()
+
+        for group in self.filtered_groups:
+            group.grid_remove()
+
         for entry in self.ungrouped_entries:
-            entry.grid_forget()
+            entry.grid_remove()
 
         for entry in self.filtered_entries:
-            entry.grid_forget()
+            entry.grid_remove()
 
+        self.filtered_groups.clear()
+        self.filtered_groups_data.clear()
         self.filtered_entries.clear()
         self.filtered_entries_data.clear()
 
+        # Search groups
+        count = 0
+        for group in self.groups_data:
+            added_group = False
+            for data in group["entries"]:
+                if filter.lower() in data["text"].lower():
+                    if added_group:
+                        self.filtered_groups[count]["entries"].append(data)
+                    else:
+                        self.filtered_groups.append(
+                            {
+                                "name": group["name"],
+                                "entries": [data]
+                            }
+                        )
+                        added_group = True
+                        count += 1
+
+        # Search ungrouped entries
         for data in self.ungrouped_entries_data:
             if case_sensitive:
                 if filter in data["text"]:
@@ -309,6 +342,13 @@ class Entries(tk.Frame):
                 pady=PADDING
             )
             self.filtered_entries[count].refresh_colors(self.colors)
+
+    # util
+    def group_in_filtered_data(self, name):
+        for group in self.filtered_groups:
+            if group["name"] == name:
+                return True
+        return False
 
     def remove_filter(self):
         for entry in self.filtered_entries:
