@@ -134,9 +134,14 @@ class GroupMenu(tk.Frame):
             new_name = self.name_entry.get()
             if len(new_name) > 0:
                 rename_group(self.name, new_name)
+
                 self.master.name = new_name
                 self.name = new_name
                 self.name_label.configure(text=new_name)
+
+                for entry in self.master.entries:
+                    entry.group = new_name
+
                 self.hide_name_entry()
                 self.master.master.master.master.master.bottom_frame.input.focus_set()
 
