@@ -85,6 +85,11 @@ class InputPathBrowser(tk.Frame):
             if self.master.load_path != SAVE_DATA_PATH:
                 files.insert(0, "(back)")
 
+            for file in list(files):
+                # Remove hidden files
+                if file[0] == ".":
+                    files.remove(file)
+
             self.browser_var.set(files)
 
             self.browser.grid(
