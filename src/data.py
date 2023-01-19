@@ -188,7 +188,7 @@ def move_entry(group, index, dir):
     if dir == "top":
         new_index = 0
     if dir == "bottom":
-        new_index = len(data["groups"][group_index]["entries"])
+        new_index = len(data_array)
     if dir == "up":
         new_index = index - 1
     if dir == "down":
