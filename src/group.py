@@ -66,12 +66,6 @@ class Group(tk.Frame):
 
             text = entry["text"]
 
-            try:
-                entry_id = entry["id"]
-            except KeyError:
-                entry["id"] = hashlib.sha256(str.encode(text)).hexdigest()
-                entry_id = entry["id"]
-
             self.entries.append(Entry(
                 self,
                 date=entry_date,
