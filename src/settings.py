@@ -217,9 +217,11 @@ class Settings(tk.Frame):
         if PLATFORM == "Windows":
             if "Control" in event.keysym:
                 self.cmd_pressed = False
+                self.master.bottom_frame.key.keys_pressed["cmd"] = False
         else:
             if "Meta" in event.keysym:
                 self.cmd_pressed = False
+                self.master.bottom_frame.key.keys_pressed["cmd"] = False
 
 
 
