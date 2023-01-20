@@ -135,7 +135,7 @@ class GroupMenu(tk.Frame):
             if len(new_name) > 0:
                 rename_group(self.name, new_name)
 
-                self.master.name = new_name
+                self.master.set_name(new_name)
                 self.name = new_name
                 self.name_label.configure(text=new_name)
 

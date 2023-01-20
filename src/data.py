@@ -242,6 +242,14 @@ def get_group_index(name):
         count += 1
     return None
 
+def get_group_names():
+    group_names = []
+
+    for group in data["groups"]:
+        group_names.append(group["name"])
+
+    return group_names
+
 
 
 # Getter functions

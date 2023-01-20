@@ -165,6 +165,9 @@ class Entries(tk.Frame):
             # Update count
             count += 1
 
+    def refresh_group_names(self):
+        self.group_names = get_group_names()
+
     def create_ungrouped_entries(self):
 
         count = 0

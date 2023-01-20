@@ -170,3 +170,6 @@ class Group(tk.Frame):
 
     def get_num_entries(self):
         return len(self.entries_data)
+
+    def set_name(self, new_name):
+        self.master.master.master.refresh_group_names()
