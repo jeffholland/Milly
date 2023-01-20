@@ -12,7 +12,8 @@ class GroupMenu(tk.Frame):
 
         self.name = name
 
-        self.title_font = font
+        self.title_font = font.copy()
+        self.title_font.configure(size=20)
 
         self.buttons = []
 
