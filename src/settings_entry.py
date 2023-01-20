@@ -161,3 +161,7 @@ class EntrySettings(tk.Frame):
         else:
             self.master.master.top_frame.show_menu = False
             self.master.master.top_frame.refresh_entries()
+
+    def set_font(self, font):
+        for label in self.labels:
+            label.configure(font=font)

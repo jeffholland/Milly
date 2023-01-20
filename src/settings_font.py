@@ -137,6 +137,7 @@ class FontSettings(tk.Frame):
         )
         self.master.settings_data["font_family"] = self.font_family_var.get()
         self.master.master.top_frame.set_font(font)
+        self.master.set_font(font)
 
 
     def font_selected(self, event=None):
@@ -176,3 +177,7 @@ class FontSettings(tk.Frame):
                     bg=self.colors["BG1"],
                     fg=self.colors["HL2"]
                 )
+
+    def set_font(self, font):
+        for label in self.labels:
+            label.configure(font=font)

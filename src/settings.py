@@ -21,6 +21,7 @@ class Settings(tk.Frame):
 
         self.labels = []
         self.buttons = []
+        self.panels = []
         
         self.settings_data = dict()
         self.color_scheme_settings = None
@@ -57,6 +58,7 @@ class Settings(tk.Frame):
             pady=PADDING_BIG,
             columnspan=3
         )
+        self.panels.append(self.color_scheme_settings)
 
 
         # Entry settings
@@ -70,6 +72,7 @@ class Settings(tk.Frame):
             pady=PADDING_BIG,
             columnspan=3
         )
+        self.panels.append(self.entry_settings)
 
 
         # Font settings
@@ -83,6 +86,7 @@ class Settings(tk.Frame):
             pady=PADDING_BIG,
             columnspan=3
         )
+        self.panels.append(self.font_settings)
 
 
 
@@ -223,7 +227,11 @@ class Settings(tk.Frame):
                 self.cmd_pressed = False
                 self.master.bottom_frame.key.keys_pressed["cmd"] = False
 
-
-
     def back(self):
         self.master.hide_settings()
+
+
+
+    def set_font(self, font):
+        for child in self.panels:
+            child.set_font(font)

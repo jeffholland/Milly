@@ -313,3 +313,7 @@ class ColorSchemeSettings(tk.Frame):
     def show_color_schemes(self):
         self.color_scheme_window = ShowColorSchemes(self)
         self.color_scheme_window.window.deiconify()
+
+    def set_font(self, font):
+        for label in self.labels:
+            label.configure(font=font)
