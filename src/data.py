@@ -224,15 +224,25 @@ def move_group(name, dir):
 
     index = get_group_index(name)
 
+    last_index = len(data["groups"]) - 1
+
     if index != None:
         if dir == "up":
             if index > 0:
                 group = data["groups"].pop(index)
                 data["groups"].insert(index - 1, group)
         if dir == "down":
-            if index < len(data["groups"]) - 1:
+            if index < last_index:
                 group = data["groups"].pop(index)
                 data["groups"].insert(index + 1, group)
+        if dir == "top":
+            if index > 0:
+                group = data["groups"].pop(index)
+                data["groups"].insert(0, group)
+        if dir == "bottom":
+            if index < last_index:
+                group = data["groups"].pop(index)
+                data["groups"].insert(last_index, group)
 
 def get_group_index(name):
     count = 0

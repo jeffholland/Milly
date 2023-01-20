@@ -17,6 +17,8 @@ class GroupMenu(tk.Frame):
 
         self.buttons = []
 
+        self.num_columns = 7
+
         self.create_widgets()
 
     def create_widgets(self):
@@ -31,7 +33,7 @@ class GroupMenu(tk.Frame):
         self.name_label.grid(
             row=0,
             column=0,
-            columnspan=5,
+            columnspan=self.num_columns,
             padx=PADDING,
             pady=PADDING
         )
@@ -65,6 +67,34 @@ class GroupMenu(tk.Frame):
         )
         self.buttons.append(self.down_button)
 
+        # Top button
+        self.top_button = tk.Button(
+            self,
+            text="↟",
+            width=1,
+            command=self.top_pressed
+        )
+        self.top_button.grid(
+            row=0,
+            column=3,
+            sticky=tk.NE
+        )
+        self.buttons.append(self.top_button)
+
+        # Bottom button
+        self.bottom_button = tk.Button(
+            self,
+            text="↡",
+            width=1,
+            command=self.bottom_pressed
+        )
+        self.bottom_button.grid(
+            row=0,
+            column=4,
+            sticky=tk.NE
+        )
+        self.buttons.append(self.bottom_button)
+
         # X button
         self.x_button = tk.Button(
             self,
@@ -74,7 +104,7 @@ class GroupMenu(tk.Frame):
         )
         self.x_button.grid(
             row=0,
-            column=3,
+            column=5,
             sticky=tk.NE
         )
         self.buttons.append(self.x_button)
@@ -83,12 +113,12 @@ class GroupMenu(tk.Frame):
 
         self.name_entry = tk.Entry(
             self,
-            width=5
+            width=10
         )
         self.name_entry.bind("<KeyPress>", self.key_pressed)
 
         # Configure column size for grid layout
-        min_size = 720 - (30 * len(self.buttons))
+        min_size = 720 - (40 * len(self.buttons))
         self.columnconfigure(0, minsize=min_size)
 
     def refresh_colors(self, colors):
@@ -118,7 +148,7 @@ class GroupMenu(tk.Frame):
         self.name_entry.grid(
             row=0,
             column=0,
-            columnspan=5,
+            columnspan=self.num_columns,
             padx=PADDING,
             pady=PADDING
         )
@@ -152,7 +182,14 @@ class GroupMenu(tk.Frame):
         move_group(self.name, "up")
         self.master.master.master.master.refresh_entries()
 
-
     def down_pressed(self):
         move_group(self.name, "down")
+        self.master.master.master.master.refresh_entries()
+
+    def top_pressed(self):
+        move_group(self.name, "top")
+        self.master.master.master.master.refresh_entries()
+
+    def bottom_pressed(self):
+        move_group(self.name, "bottom")
         self.master.master.master.master.refresh_entries()
