@@ -5,14 +5,14 @@ from constants import *
 from data import *
 
 class GroupMenu(tk.Frame):
-    def __init__(self, master, name, num_entries):
+    def __init__(self, master, name, font):
 
         tk.Frame.__init__(self, master)
         self.master = master
 
         self.name = name
 
-        self.title_font = tkFont.Font(self, family="Helvetica", size=20)
+        self.title_font = font
 
         self.buttons = []
 
@@ -30,6 +30,7 @@ class GroupMenu(tk.Frame):
         self.name_label.grid(
             row=0,
             column=0,
+            columnspan=5,
             padx=PADDING,
             pady=PADDING
         )

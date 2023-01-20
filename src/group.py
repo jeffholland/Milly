@@ -105,7 +105,7 @@ class Group(tk.Frame):
         self.group_menu = GroupMenu(
             self,
             self.name,
-            len(self.entries_data)
+            self.font
         )
         self.group_menu.grid(
             row=0,
