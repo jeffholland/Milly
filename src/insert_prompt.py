@@ -1,7 +1,8 @@
 import tkinter as tk
+from tkinter import ttk
 
 from constants import PLATFORM
-from data import insert_entry, get_num_entries
+from data import *
 
 class InsertPrompt(tk.Frame):
     def __init__(self, master):
@@ -13,7 +14,10 @@ class InsertPrompt(tk.Frame):
 
         self.create_widgets()
 
+
+
     def create_widgets(self):
+        # Index to insert at
         self.spinbox = tk.Spinbox(
             self.window,
             from_=0,
@@ -26,11 +30,30 @@ class InsertPrompt(tk.Frame):
         self.spinbox.bind("<KeyPress>", self.key_pressed)
         self.spinbox.bind("<KeyRelease>", self.key_released)
 
+        # Select group to insert into
+        self.group_var = tk.StringVar()
+
+        vals = get_group_names()
+        vals.insert(0, "None")
+        self.group_var.set(vals[0])
+
+        self.group_selector = ttk.Combobox(
+            self.window,
+            values=vals,
+            textvariable=self.group_var,
+            state="readonly",
+            takefocus=0
+        )
+        self.group_selector.grid(row=1, column=0)
+
+
+
     def key_pressed(self, event):
         if event.keysym == "Return":
             insert_entry(
                 int(self.spinbox.get()), 
-                self.master.input.get("1.0", "end")
+                self.master.input.get("1.0", "end"),
+                group=self.group_var.get()
             )
             self.master.input.delete("1.0", "end")
             self.master.master.refresh_entries()
