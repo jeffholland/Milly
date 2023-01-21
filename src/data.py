@@ -1,7 +1,6 @@
 from tkinter import messagebox
 
 import json
-import hashlib
 
 from constants import SAVE_DATA_PATH
 from datetime import date, datetime
@@ -96,20 +95,6 @@ def change_detected():
             return False
     
     return True
-
-
-
-# Get the filepath of the last file saved/loaded.
-# the boolean arg determines whether you get the full file path,
-# or just the name.
-
-def get_last_filepath(short=False):
-    if short:
-        # strip the folder path and the .json extension
-        index = len(SAVE_DATA_PATH)
-        shortened = last_filepath[index:-5]
-        return shortened
-    return last_filepath
 
 
 
@@ -244,22 +229,6 @@ def move_group(name, dir):
                 group = data["groups"].pop(index)
                 data["groups"].insert(last_index, group)
 
-def get_group_index(name):
-    count = 0
-    for group in data["groups"]:
-        if group["name"] == name:
-            return count
-        count += 1
-    return None
-
-def get_group_names():
-    group_names = []
-
-    for group in data["groups"]:
-        group_names.append(group["name"])
-
-    return group_names
-
 
 
 # Getter functions
@@ -281,3 +250,33 @@ def get_num_entries():
         data["entries"] = []
     
     return count
+    
+# Get the filepath of the last file saved/loaded.
+# the boolean arg determines whether you get the full file path,
+# or just the name.
+
+def get_last_filepath(short=False):
+    if short:
+        # strip the folder path and the .json extension
+        index = len(SAVE_DATA_PATH)
+        shortened = last_filepath[index:-5]
+        return shortened
+    return last_filepath
+
+# Group getters
+
+def get_group_index(name):
+    count = 0
+    for group in data["groups"]:
+        if group["name"] == name:
+            return count
+        count += 1
+    return None
+
+def get_group_names():
+    group_names = []
+
+    for group in data["groups"]:
+        group_names.append(group["name"])
+
+    return group_names
