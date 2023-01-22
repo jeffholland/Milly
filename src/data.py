@@ -162,7 +162,6 @@ def insert_entry(index, text, group=None):
             add_entry(text)
     else:
         group_index = get_group_index(group)
-        print(group_index)
         if group_index != None:
             num_entries = len(data["groups"][group_index]["entries"])
             print(num_entries)
