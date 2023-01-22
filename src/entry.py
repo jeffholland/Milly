@@ -6,6 +6,7 @@ from constants import *
 from data import *
 from entry_menu import EntryMenu
 from group_window import GroupWindow
+from widget import Widget
 
 class Entry(tk.Frame):
     def __init__(self, master, date, time, menu, text, 
@@ -304,7 +305,10 @@ class Entry(tk.Frame):
     # Other button handlers
 
     def add_pressed(self):
-        print("add")
+        self.text_label.grid_remove()
+        self.widget = Widget(self, 100, 100)
+        self.widget.grid_propagate(0)
+        self.widget.grid(row=1, column=1)
 
     def x_pressed(self):
         remove_entry(self.index, self.group)
