@@ -154,7 +154,6 @@ def swap_entry(index1, index2):
     data["entries"][index2] = tmp
 
 def insert_entry(index, text, group=None):
-    print(group)
     if group == None or group == "None":
         if index < len(data["entries"]) - 1:
             data["entries"].insert(index, create_entry(text))
@@ -164,12 +163,10 @@ def insert_entry(index, text, group=None):
         group_index = get_group_index(group)
         if group_index != None:
             num_entries = len(data["groups"][group_index]["entries"])
-            print(num_entries)
             if index < num_entries - 1:
                 data["groups"][group_index]["entries"].insert(index, create_entry(text))
             else:
                 data["groups"][group_index]["entries"].append(create_entry(text))
-            print(data["groups"][index])
 
 def move_entry(group, index, dir):
     global data

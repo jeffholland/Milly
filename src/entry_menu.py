@@ -57,6 +57,21 @@ class EntryMenu(tk.Frame):
         if PLATFORM == "Windows":
             self.button_width = 4
 
+        col_num = 3
+
+        self.add_button = tk.Button(
+            self,
+            text="add",
+            width=self.button_width,
+            command=self.master.add_pressed
+        )
+        self.add_button.grid(
+            row=0,
+            column=col_num
+        )
+        col_num += 1
+        self.buttons.append(self.add_button)
+
         self.edit_button = tk.Button(
             self,
             text="edit",
@@ -65,8 +80,9 @@ class EntryMenu(tk.Frame):
         )
         self.edit_button.grid(
             row=0,
-            column=3
+            column=col_num
         )
+        col_num += 1
         self.buttons.append(self.edit_button)
 
         self.group_button = tk.Button(
@@ -77,8 +93,9 @@ class EntryMenu(tk.Frame):
         )
         self.group_button.grid(
             row=0,
-            column=4
+            column=col_num
         )
+        col_num += 1
         self.buttons.append(self.group_button)
 
         self.up_button = tk.Button(
@@ -89,8 +106,9 @@ class EntryMenu(tk.Frame):
         )
         self.up_button.grid(
             row=0,
-            column=5
+            column=col_num
         )
+        col_num += 1
         self.buttons.append(self.up_button)
 
         self.down_button = tk.Button(
@@ -101,8 +119,9 @@ class EntryMenu(tk.Frame):
         )
         self.down_button.grid(
             row=0,
-            column=6
+            column=col_num
         )
+        col_num += 1
         self.buttons.append(self.down_button)
 
         self.top_button = tk.Button(
@@ -113,8 +132,9 @@ class EntryMenu(tk.Frame):
         )
         self.top_button.grid(
             row=0,
-            column=7
+            column=col_num
         )
+        col_num += 1
         self.buttons.append(self.top_button)
 
         self.bottom_button = tk.Button(
@@ -125,8 +145,9 @@ class EntryMenu(tk.Frame):
         )
         self.bottom_button.grid(
             row=0,
-            column=8
+            column=col_num
         )
+        col_num += 1
         self.buttons.append(self.bottom_button)
 
         self.copy_button = tk.Button(
@@ -137,8 +158,9 @@ class EntryMenu(tk.Frame):
         )
         self.copy_button.grid(
             row=0,
-            column=9
+            column=col_num
         )
+        col_num += 1
         self.buttons.append(self.copy_button)
 
         if PLATFORM != "Windows":
@@ -153,8 +175,9 @@ class EntryMenu(tk.Frame):
         )
         self.x_button.grid(
             row=0,
-            column=10
+            column=col_num
         )
+        col_num += 1
         self.buttons.append(self.x_button)
         if PLATFORM == "Windows":
             self.x_button.configure(width=1)
