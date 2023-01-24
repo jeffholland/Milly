@@ -304,12 +304,6 @@ class Entry(tk.Frame):
 
     # Other button handlers
 
-    def add_pressed(self):
-        self.text_label.grid_remove()
-        self.widget = Widget(self, 100, 100)
-        self.widget.grid_propagate(0)
-        self.widget.grid(row=1, column=1)
-
     def x_pressed(self):
         remove_entry(self.index, self.group)
         self.entries_obj.refresh_entries()
@@ -411,3 +405,19 @@ class Entry(tk.Frame):
             self.entries_obj = self.master.master.master.master
         else:
             self.entries_obj = self.master.master.master
+
+
+
+    # Add widget
+
+    def add_pressed(self):
+        # very much under construction - widgets!!!
+
+        # Put widget below text label and checkbox on the screen
+        self.widget = Widget(self, 100, 100)
+        self.widget.grid_propagate(0)
+        self.widget.grid(row=5, column=0)
+
+        # Adjust height
+        self.height += 100
+        self.configure(height=self.height)
