@@ -7,8 +7,7 @@ class Widget(tk.Frame):
             self, 
             master, 
             width=width, 
-            height=height, 
-            bg="green"
+            height=height
         )
 
         self.master = master
@@ -23,3 +22,8 @@ class Widget(tk.Frame):
             text="Widget"
         )
         self.title_label.grid(row=0, column=0)
+
+    def refresh_colors(self, colors):
+        self.colors = colors
+        
+        self.configure(bg=colors["BG2"])

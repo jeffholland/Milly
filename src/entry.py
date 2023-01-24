@@ -416,7 +416,8 @@ class Entry(tk.Frame):
         # Put widget below text label and checkbox on the screen
         self.widget = Widget(self, 100, 100)
         self.widget.grid_propagate(0)
-        self.widget.grid(row=5, column=0)
+        self.widget.grid(row=5, column=0, columnspan=2, padx=PADDING)
+        self.widget.refresh_colors(self.colors)
 
         # Adjust height
         self.height += 100
