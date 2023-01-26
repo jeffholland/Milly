@@ -7,6 +7,7 @@ from data import *
 from entry_menu import EntryMenu
 from group_window import GroupWindow
 from widget_title import Title
+from widget_window import WidgetWindow
 
 class Entry(tk.Frame):
     def __init__(self, master, date, time, menu, text, 
@@ -413,13 +414,17 @@ class Entry(tk.Frame):
     def add_pressed(self):
         # very much under construction - widgets!!!
 
-        # Put widget below text label and checkbox on the screen
-        self.widget = Title(self, 100, 100)
-        self.widget.grid_propagate(0)
-        self.widget.grid(row=5, column=0, columnspan=2, padx=PADDING)
-        self.widget.refresh_colors(self.colors)
-        self.widget.widget_config()
+        # show widget window
 
-        # Adjust height
-        self.height += 100
-        self.configure(height=self.height)
+        self.widget_window = WidgetWindow(self)
+
+        # # Put widget below text label and checkbox on the screen
+        # self.widget = Title(self, 100, 100)
+        # self.widget.grid_propagate(0)
+        # self.widget.grid(row=5, column=0, columnspan=2, padx=PADDING)
+        # self.widget.refresh_colors(self.colors)
+        # self.widget.widget_config()
+
+        # # Adjust height
+        # self.height += 100
+        # self.configure(height=self.height)
