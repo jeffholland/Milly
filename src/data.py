@@ -107,6 +107,10 @@ def create_entry(text):
         "text": text
     }
 
+
+
+# Adding things
+
 def add_entry(text, group_index=None):
     entry = create_entry(text)
     if group_index != None:
@@ -130,6 +134,24 @@ def add_group(name):
         }
     )
 
+def insert_entry(index, text, group=None):
+    if group == None or group == "None":
+        if index < len(data["entries"]) - 1:
+            data["entries"].insert(index, create_entry(text))
+        else:
+            add_entry(text)
+    else:
+        group_index = get_group_index(group)
+        if group_index != None:
+            num_entries = len(data["groups"][group_index]["entries"])
+            if index < num_entries - 1:
+                data["groups"][group_index]["entries"].insert(index, create_entry(text))
+            else:
+                data["groups"][group_index]["entries"].append(create_entry(text))
+
+
+# Removing things
+
 def remove_entry(index, group=None):
     if group != None:
         group_index = get_group_index(group)
@@ -146,27 +168,16 @@ def remove_group(group):
     for entry in group["entries"]:
         data["entries"].append(entry)
 
+
+
+# Rearranging things
+
 def swap_entry(index1, index2):
     if index1 == index2:
         return
     tmp = data["entries"][index1]
     data["entries"][index1] = data["entries"][index2]
     data["entries"][index2] = tmp
-
-def insert_entry(index, text, group=None):
-    if group == None or group == "None":
-        if index < len(data["entries"]) - 1:
-            data["entries"].insert(index, create_entry(text))
-        else:
-            add_entry(text)
-    else:
-        group_index = get_group_index(group)
-        if group_index != None:
-            num_entries = len(data["groups"][group_index]["entries"])
-            if index < num_entries - 1:
-                data["groups"][group_index]["entries"].insert(index, create_entry(text))
-            else:
-                data["groups"][group_index]["entries"].append(create_entry(text))
 
 def move_entry(group, index, dir):
     global data
@@ -193,8 +204,7 @@ def move_entry(group, index, dir):
         data_array.insert(new_index, entry)
 
 
-
-# Group functions
+# Group operations
 
 def move_entry_to_group(entry_index, entry_group, group_index):
     entry = None
@@ -259,10 +269,6 @@ def get_num_entries():
         data["entries"] = []
     
     return count
-    
-# Get the filepath of the last file saved/loaded.
-# the boolean arg determines whether you get the full file path,
-# or just the name.
 
 def get_last_filepath(short=False):
     if short:
@@ -271,8 +277,6 @@ def get_last_filepath(short=False):
         shortened = last_filepath[index:-5]
         return shortened
     return last_filepath
-
-# Group getters
 
 def get_group_index(name):
     count = 0
