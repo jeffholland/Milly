@@ -485,7 +485,6 @@ class Entry(tk.Frame):
         )
         if self.colors:
             self.widgets[index].refresh_colors(self.colors)
-        self.widgets[index].widget_config()
 
         # Adjust height
         self.height += self.widgets[index].height + PADDING
