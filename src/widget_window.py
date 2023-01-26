@@ -27,7 +27,8 @@ class WidgetWindow(tk.Frame):
         for type in self.widget_types:
             self.buttons.append(tk.Button(
                 self.window,
-                text=type
+                text=type,
+                command=self.master.title_pressed
             ))
             self.buttons[count].grid(
                 row=count, 

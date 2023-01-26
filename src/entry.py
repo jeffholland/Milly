@@ -418,13 +418,29 @@ class Entry(tk.Frame):
 
         self.widget_window = WidgetWindow(self)
 
-        # # Put widget below text label and checkbox on the screen
-        # self.widget = Title(self, 100, 100)
-        # self.widget.grid_propagate(0)
-        # self.widget.grid(row=5, column=0, columnspan=2, padx=PADDING)
-        # self.widget.refresh_colors(self.colors)
-        # self.widget.widget_config()
+    def title_pressed(self):
 
-        # # Adjust height
-        # self.height += 100
-        # self.configure(height=self.height)
+        # Put widget below text label and checkbox on the screen
+        self.widget = Title(
+            self, 
+            width=self.width - 100, 
+            height=40, 
+            font=self.font
+        )
+        self.widget.grid_propagate(0)
+        self.widget.grid(
+            row=1, 
+            column=1, 
+            columnspan=2, 
+            padx=PADDING, 
+            pady=PADDING
+        )
+        self.widget.refresh_colors(self.colors)
+        self.widget.widget_config()
+
+        # Move text label down
+        self.text_label.grid_configure(row=2)
+
+        # Adjust height
+        self.height += 50
+        self.configure(height=self.height)
