@@ -183,6 +183,9 @@ class Entry(tk.Frame):
         if self.group_window:
             self.group_window.refresh_colors(colors)
 
+        for widget in self.widgets:
+            widget.refresh_colors(colors)
+
 
 
     def set_height(self):
@@ -440,7 +443,9 @@ class Entry(tk.Frame):
 
         # Add widget to data repository
         add_widget(self.index, self.group, "title", widget_data)
+        self.entries_obj.refresh_entries()
 
+        self.widget_window.window.destroy()
 
 
     # Show widgets
@@ -450,12 +455,10 @@ class Entry(tk.Frame):
         self.widgets.clear()
         count = 0
 
-        print(f"entry.py line 462: show_widgets widgets_data: {self.widgets_data}")
-
         for widget in self.widgets_data:
 
             if widget["name"].lower() == "title":
-                self.show_title_widget(self, widget, count)
+                self.show_title_widget(widget, count)
 
         count += 1
 
@@ -490,4 +493,3 @@ class Entry(tk.Frame):
 
         # Move text label down
         self.text_label.grid_configure(row=2)
-        self.entries_obj.refresh_entries()
