@@ -156,11 +156,6 @@ def insert_entry(index, text, group=None):
                 data["groups"][group_index]["entries"].append(create_entry(text))
 
 def add_widget(entry_index, group_name, widget_name, widget_data):
-    # print(f"entry index: {entry_index}")
-    # print(f"group name: {group_name}")
-    # print(f"widget name: {widget_name}")
-    # print(f"widget data: {widget_data}")
-
     if group_name == None:
         entry = data["entries"][entry_index]
 
@@ -183,7 +178,6 @@ def add_widget(entry_index, group_name, widget_name, widget_data):
         entry["widgets"].append(create_widget(widget_name, widget_data))
 
     last_widget = entry["widgets"][-1]
-    print(last_widget)
 
 
 
