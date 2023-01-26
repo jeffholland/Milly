@@ -1,7 +1,7 @@
 from widget import Widget
 
 class Title(Widget):
-    def __init__(self, master, width, height, font):
+    def __init__(self, master, title, width, height, font):
 
         Widget.__init__(
             self, 
@@ -10,6 +10,9 @@ class Title(Widget):
             height=height
         )
 
+        self.title = title
+        self.type = "Title"
+
         self.font = font.copy()
         self.font.configure(size=20)
 
@@ -17,6 +20,6 @@ class Title(Widget):
 
     def widget_config(self):
         self.title_label.configure(
-            text="Title",
+            text=self.title,
             font=self.font
         )

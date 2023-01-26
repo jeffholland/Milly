@@ -188,6 +188,11 @@ class Entries(tk.Frame):
 
             text = entry["text"]
 
+            try:
+                widgets = entry["widgets"]
+            except KeyError:
+                widgets = []
+
             self.ungrouped_entries.append(Entry(
                 self.container,
                 date=entry_date,
@@ -199,7 +204,8 @@ class Entries(tk.Frame):
                 index=count,
                 font=self.font,
                 checkbox=self.show_checkboxes,
-                checked=checked_bool
+                checked=checked_bool,
+                widgets=widgets
             ))
             self.ungrouped_entries[count].grid_propagate(0)
             entry_row = count + len(self.groups)

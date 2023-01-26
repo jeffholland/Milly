@@ -12,7 +12,7 @@ from widget_window import WidgetWindow
 class Entry(tk.Frame):
     def __init__(self, master, date, time, menu, text, 
         width, height, index, font,
-        checkbox=False, checked=False, group=None):
+        checkbox=False, checked=False, group=None, widgets=None):
 
         tk.Frame.__init__(
             self,
@@ -21,7 +21,7 @@ class Entry(tk.Frame):
             height=height
         )
 
-        # Variables
+        # Data variables
 
         self.date = date
         self.time = time
@@ -32,72 +32,39 @@ class Entry(tk.Frame):
         self.font = font
         self.group = group
 
-        length = len(self.text)
-        newline_count = self.text.count('\n')
+        # Booleans
 
-        self.group_window = None
-
-        # show a checkbox or not
         self.check_bool = checkbox
-        # checkbox is checked or not
         self.checked_bool = checked
-        # the checkbox object itself
-        self.checkbox = None
-
-        # show the menu or not
         self.menu_bool = menu
-
         self.keys_pressed = {
             "cmd": False,
             "shift": False
         }
 
-        # Variable height
+        # Objects initialized to None
 
-        # To make sure the Entry is tall enough if there are a 
-        # lot of line breaks
-        if newline_count > 0:
-            avg_line_length = len(self.text) / newline_count
-        else:
-            avg_line_length = len(self.text)
+        self.group_window = None
+        self.checkbox = None
+        self.colors = None
 
-        if MODE == "fullscreen":
-            vh_constant = 9.0
-        else:
-            vh_constant = 5.6
-
-        if PLATFORM == "Windows":
-            if MODE == "fullscreen":
-                vh_constant = 6.4
-            else:
-                vh_constant = 3.09
-
-        # Variable height kicks in after a "limit" of characters
-        vh_limit = 60
-
-        newline_offset = newline_count * 5
-
-        if len(text) >= vh_limit:
-            # Height is the length of the text divided by a constant
-            self.height = height + (floor((length - vh_limit) / vh_constant))
-            # plus an offset for any new lines
-            self.height += newline_offset
-            # and another offset for if there are multiple newlines that are really short
-            if newline_count > 5:
-                self.height += floor(400 / avg_line_length)
-
-        self.configure(height=self.height)
-
-        # Arrays for easy widget configuration
+        # Objects in lists
 
         self.labels = []
         self.buttons = []
+        self.widgets = []
 
-        # Get parent "Entries" object for later use
+        if widgets == None:
+            self.widgets_data = []
+        else:
+            self.widgets_data = widgets
 
+        # Functions
+
+        self.set_height()
         self.get_entries_obj()
-
         self.create_widgets()
+        self.show_widgets()
 
 
 
@@ -215,6 +182,49 @@ class Entry(tk.Frame):
 
         if self.group_window:
             self.group_window.refresh_colors(colors)
+
+
+
+    def set_height(self):
+        # Set height according to length of text
+
+        length = len(self.text)
+        newline_count = self.text.count('\n')
+
+        # To make sure the Entry is tall enough if there are a 
+        # lot of line breaks
+        if newline_count > 0:
+            avg_line_length = len(self.text) / newline_count
+        else:
+            avg_line_length = len(self.text)
+
+        if MODE == "fullscreen":
+            vh_constant = 9.0
+        else:
+            vh_constant = 5.6
+
+        if PLATFORM == "Windows":
+            if MODE == "fullscreen":
+                vh_constant = 6.4
+            else:
+                vh_constant = 3.09
+
+        # Variable height kicks in after a "limit" of characters
+        vh_limit = 60
+
+        newline_offset = newline_count * 5
+
+        if len(self.text) >= vh_limit:
+            # Height is the length of the text divided by a constant
+            self.height = self.height + (floor((length - vh_limit) / vh_constant))
+            # plus an offset for any new lines
+            self.height += newline_offset
+            # and another offset for if there are multiple newlines that are really short
+            if newline_count > 5:
+                self.height += floor(400 / avg_line_length)
+
+        self.configure(height=self.height)
+
 
 
 
@@ -412,37 +422,72 @@ class Entry(tk.Frame):
     # Add widget
 
     def add_pressed(self):
-        # very much under construction - widgets!!!
-
         # show widget window
-
         self.widget_window = WidgetWindow(self)
 
     def title_pressed(self):
-
-        # Put widget below text label and checkbox on the screen
+        
+        # Widget variables
         widget_height = 50
+        widget_width = self.width - 100
 
-        self.widget = Title(
+        # Set widget data
+        widget_data = {
+            "title": "Untitled",
+            "width": widget_width,
+            "height": widget_height
+        }
+
+        # Add widget to data repository
+        add_widget(self.index, self.group, "title", widget_data)
+
+
+
+    # Show widgets
+
+    def show_widgets(self):
+
+        self.widgets.clear()
+        count = 0
+
+        print(f"entry.py line 462: show_widgets widgets_data: {self.widgets_data}")
+
+        for widget in self.widgets_data:
+
+            if widget["name"].lower() == "title":
+                self.show_title_widget(self, widget, count)
+
+        count += 1
+
+
+
+    # Show title widget
+
+    def show_title_widget(self, widget, index):
+
+        self.widgets.append(Title(
             self, 
-            width=self.width - 100, 
-            height=widget_height, 
+            title=widget["data"]["title"],
+            width=widget["data"]["width"], 
+            height=widget["data"]["height"], 
             font=self.font
-        )
-        self.widget.grid_propagate(0)
-        self.widget.grid(
+        ))
+        self.widgets[index].grid_propagate(0)
+        self.widgets[index].grid(
             row=1, 
             column=1, 
             columnspan=2, 
             padx=PADDING, 
             pady=PADDING
         )
-        self.widget.refresh_colors(self.colors)
-        self.widget.widget_config()
+        if self.colors:
+            self.widgets[index].refresh_colors(self.colors)
+        self.widgets[index].widget_config()
+
+        # Adjust height
+        self.height += self.widgets[index].height + PADDING
+        self.configure(height=self.height)
 
         # Move text label down
         self.text_label.grid_configure(row=2)
-
-        # Adjust height
-        self.height += widget_height + PADDING
-        self.configure(height=self.height)
+        self.entries_obj.refresh_entries()

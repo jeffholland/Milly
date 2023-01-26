@@ -62,9 +62,16 @@ class Group(tk.Frame):
             if self.show_times:
                 entry_time = self.entries_data[count]["time"]
 
-            # Show entries
+            # Show text
 
             text = entry["text"]
+
+            # Show widgets
+
+            try:
+                widgets = entry["widgets"]
+            except KeyError:
+                widgets = []
 
             self.entries.append(Entry(
                 self,
@@ -78,7 +85,8 @@ class Group(tk.Frame):
                 font=self.font,
                 checkbox=True,
                 checked=checked_bool,
-                group=self.name
+                group=self.name,
+                widgets=widgets
             ))
             self.entries[count].grid_propagate(0)
             self.entries[count].grid(
