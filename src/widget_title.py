@@ -12,7 +12,7 @@ class Title(Widget):
 
         self.font = font.copy()
         self.font.configure(size=20)
-        
+
         self.widget_config()
 
     def widget_config(self):

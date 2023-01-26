@@ -421,10 +421,12 @@ class Entry(tk.Frame):
     def title_pressed(self):
 
         # Put widget below text label and checkbox on the screen
+        widget_height = 50
+
         self.widget = Title(
             self, 
             width=self.width - 100, 
-            height=40, 
+            height=widget_height, 
             font=self.font
         )
         self.widget.grid_propagate(0)
@@ -442,5 +444,5 @@ class Entry(tk.Frame):
         self.text_label.grid_configure(row=2)
 
         # Adjust height
-        self.height += 50
+        self.height += widget_height + PADDING
         self.configure(height=self.height)

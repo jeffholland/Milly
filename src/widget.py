@@ -1,5 +1,7 @@
 import tkinter as tk
 
+from constants import *
+
 class Widget(tk.Frame):
     def __init__(self, master, width, height):
 
@@ -21,9 +23,19 @@ class Widget(tk.Frame):
             self,
             text="Widget"
         )
-        self.title_label.grid(row=0, column=0)
+        self.title_label.grid(
+            row=0, 
+            column=0, 
+            padx=PADDING, 
+            pady=PADDING
+        )
 
     def refresh_colors(self, colors):
         self.colors = colors
         
         self.configure(bg=colors["BG2"])
+
+        self.title_label.configure(
+            bg=colors["BG2"],
+            fg=colors["HL2"]
+        )
