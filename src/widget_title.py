@@ -43,6 +43,15 @@ class Title(Widget):
         self.title_entry.bind("<KeyPress>", self.key_pressed)
 
 
+    def refresh_colors(self, colors):
+        self.title_label.configure(
+            bg=colors["BG2"],
+            fg=colors["HL2"]
+        )
+
+        return super().refresh_colors(colors)
+
+
 
     def key_pressed(self, event):
         if event.keysym == "Return":

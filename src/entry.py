@@ -6,7 +6,11 @@ from constants import *
 from data import *
 from entry_menu import EntryMenu
 from group_window import GroupWindow
+
 from widget_title import Title
+from widget_icon import Icon
+from widget_number import Number
+from widget_due import Due
 from widget_window import WidgetWindow
 
 class Entry(tk.Frame):
@@ -33,6 +37,7 @@ class Entry(tk.Frame):
         self.group = group
 
         self.text_row = 1
+        self.text_column = 1
 
         # Booleans
 
@@ -132,7 +137,7 @@ class Entry(tk.Frame):
         self.text_label_var.set(self.text)
         self.text_label.grid(
             row=self.text_row, 
-            column=column_var, 
+            column=self.text_column, 
             padx=PADDING,
             pady=PADDING,
             columnspan=200,
@@ -242,7 +247,7 @@ class Entry(tk.Frame):
 
         self.edit_box.grid(
             row=self.text_row, 
-            column=0, 
+            column=self.text_column, 
             padx=PADDING,
             pady=PADDING,
             columnspan=100
@@ -446,6 +451,64 @@ class Entry(tk.Frame):
 
         self.widget_window.window.destroy()
 
+    def icon_pressed(self):
+        
+        # Widget variables
+        widget_height = 50
+        widget_width = 50
+
+        # Set widget data
+        widget_data = {
+            "icon": None,
+            "width": widget_width,
+            "height": widget_height
+        }
+
+        # Add widget to data repository
+        add_widget(self.index, self.group, "icon", widget_data)
+        self.entries_obj.refresh_entries()
+
+        self.widget_window.window.destroy()
+
+    def number_pressed(self):
+        
+        # Widget variables
+        widget_height = 50
+        widget_width = 50
+
+        # Set widget data
+        widget_data = {
+            "number": 1,
+            "width": widget_width,
+            "height": widget_height
+        }
+
+        # Add widget to data repository
+        add_widget(self.index, self.group, "number", widget_data)
+        self.entries_obj.refresh_entries()
+
+        self.widget_window.window.destroy()
+    
+    def due_pressed(self):
+        
+        # Widget variables
+        widget_height = 50
+        widget_width = self.width - 100
+
+        # Set widget data
+        widget_data = {
+            "due date": None,
+            "due time": None,
+            "width": widget_width,
+            "height": widget_height
+        }
+
+        # Add widget to data repository
+        add_widget(self.index, self.group, "due", widget_data)
+        self.entries_obj.refresh_entries()
+
+        self.widget_window.window.destroy()
+
 
     # Show widgets
 
@@ -455,39 +518,91 @@ class Entry(tk.Frame):
         count = 0
 
         for widget in self.widgets_data:
-
-            if widget["name"].lower() == "title":
-                self.show_title_widget(widget, count)
-
-        count += 1
+            self.show_widget(widget, count)
+            count += 1
 
 
 
     # Show title widget
 
-    def show_title_widget(self, widget, index):
+    def show_widget(self, widget, index):
 
-        self.widgets.append(Title(
-            self, 
-            data=widget["data"],
-            index=index, 
-            font=self.font
-        ))
-        self.widgets[index].grid_propagate(0)
-        self.widgets[index].grid(
-            row=1, 
-            column=1, 
-            columnspan=2, 
-            padx=PADDING, 
-            pady=PADDING
-        )
-        if self.colors:
-            self.widgets[index].refresh_colors(self.colors)
+        if widget["name"].lower() == "title":
 
-        # Adjust height
-        self.height += self.widgets[index].height + PADDING
-        self.configure(height=self.height)
+            self.widgets.append(Title(
+                self, 
+                data=widget["data"],
+                index=index, 
+                font=self.font
+            ))
+            self.widgets[index].grid_propagate(0)
+            self.widgets[index].grid(
+                row=1, 
+                column=1, 
+                columnspan=2, 
+                padx=PADDING, 
+                pady=PADDING
+            )
 
-        # Move text label down
-        self.text_row = 2
-        self.text_label.grid_configure(row=self.text_row)
+            # Adjust height
+            self.height += self.widgets[index].height + PADDING
+            self.configure(height=self.height)
+
+            # Move text label down
+            self.text_row = 2
+            self.text_label.grid_configure(row=self.text_row)
+
+        elif widget["name"].lower() == "icon":
+            self.widgets.append(Icon(
+                self, 
+                data=widget["data"],
+                index=index
+            ))
+            self.widgets[index].grid_propagate(0)
+            self.widgets[index].grid(
+                row=1, 
+                column=1, 
+                columnspan=2, 
+                padx=PADDING, 
+                pady=PADDING
+            )
+
+            # Adjust height
+            self.height += self.widgets[index].height + PADDING
+            self.configure(height=self.height)
+
+            # Move text label to the right
+            self.text_column = 2
+            self.text_label.grid_configure(column=self.text_column)
+
+
+        elif widget["name"].lower() == "number":
+            self.widgets.append(Number(
+                self, 
+                data=widget["data"],
+                index=index
+            ))
+            self.widgets[index].grid_propagate(0)
+            self.widgets[index].grid(
+                row=1, 
+                column=1, 
+                columnspan=2, 
+                padx=PADDING, 
+                pady=PADDING
+            )
+
+        elif widget["name"].lower() == "due":
+            self.widgets.append(Due(
+                self, 
+                data=widget["data"],
+                index=index
+            ))
+            self.widgets[index].grid_propagate(0)
+            self.widgets[index].grid(
+                row=1, 
+                column=1, 
+                columnspan=2, 
+                padx=PADDING, 
+                pady=PADDING
+            )
+            

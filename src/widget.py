@@ -23,8 +23,3 @@ class Widget(tk.Frame):
         self.colors = colors
         
         self.configure(bg=colors["BG2"])
-
-        self.title_label.configure(
-            bg=colors["BG2"],
-            fg=colors["HL2"]
-        )
