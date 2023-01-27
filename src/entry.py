@@ -32,6 +32,8 @@ class Entry(tk.Frame):
         self.font = font
         self.group = group
 
+        self.text_row = 1
+
         # Booleans
 
         self.check_bool = checkbox
@@ -129,7 +131,7 @@ class Entry(tk.Frame):
         )
         self.text_label_var.set(self.text)
         self.text_label.grid(
-            row=1, 
+            row=self.text_row, 
             column=column_var, 
             padx=PADDING,
             pady=PADDING,
@@ -239,7 +241,7 @@ class Entry(tk.Frame):
         self.text_label.grid_remove()
 
         self.edit_box.grid(
-            row=1, 
+            row=self.text_row, 
             column=0, 
             padx=PADDING,
             pady=PADDING,
@@ -263,20 +265,17 @@ class Entry(tk.Frame):
         if self.text[-1] == '\n':
             self.text = self.text[:-1]
 
-        # Change text label
-        self.text_label_var.set(self.text)
+        # Save to the data repository
+        set_entry_text(self.index, self.group, self.text)
         
         # Empty the edit box
         self.edit_box.delete("1.0", "end")
 
-        # Save to the array in data.py
-        remove_entry(self.index)
-        insert_entry(self.index, self.text)
+        # Change text label
+        self.text_label_var.set(self.text)
 
-        # Remove edit box and save button
+        # Return the GUI to previous state
         self.edit_box.grid_remove()
-
-        # Re-grid the usual Entry widgets
         self.text_label.grid()
         self.entry_menu.edit_save()
 
@@ -490,4 +489,5 @@ class Entry(tk.Frame):
         self.configure(height=self.height)
 
         # Move text label down
-        self.text_label.grid_configure(row=2)
+        self.text_row = 2
+        self.text_label.grid_configure(row=self.text_row)

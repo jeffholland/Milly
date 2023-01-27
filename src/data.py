@@ -205,6 +205,13 @@ def widget_configure(entry_index, group_name, widget_index, widget_data):
     
     widget["data"] = widget_data
 
+def set_entry_text(entry_index, group_name, text):
+    if group_name == None:
+        data["entries"][entry_index]["text"] = text
+    else:
+        group_index = get_group_index(group_name)
+        data["groups"][group_index]["entries"][entry_index]["text"] = text
+
 
 
 # Rearranging functions
