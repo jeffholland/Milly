@@ -59,7 +59,7 @@ class Title(Widget):
             self.title_label.configure(text=new_title)
 
             self.hide_title_entry()
-            self.master.master.master.master.master.master.bottom_frame.input.focus_set()
+            self.master.master.master.master.master.bottom_frame.input.focus_set()
 
 
 
