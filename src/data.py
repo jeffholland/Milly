@@ -98,7 +98,7 @@ def change_detected():
 
 
 
-# Creating things
+# Creating functions
 
 def create_entry(text):
     return {
@@ -115,7 +115,7 @@ def create_widget(name, data):
 
 
 
-# Adding things
+# Adding functions
 
 def add_entry(text, group_index=None):
     entry = create_entry(text)
@@ -158,18 +158,9 @@ def insert_entry(index, text, group=None):
 def add_widget(entry_index, group_name, widget_name, widget_data):
     if group_name == None:
         entry = data["entries"][entry_index]
-
-        try:
-            entry["widgets"].append(create_widget(widget_name, widget_data))
-        except KeyError:
-            entry["widgets"] = []
-            entry["widgets"].append(create_widget(widget_name, widget_data))
-
-        return
-
-
-    group_index = get_group_index(group_name)
-    entry = data["groups"][group_index]["entries"][entry_index]
+    else:
+        group_index = get_group_index(group_name)
+        entry = data["groups"][group_index]["entries"][entry_index]
 
     try:
         entry["widgets"].append(create_widget(widget_name, widget_data))
@@ -177,11 +168,9 @@ def add_widget(entry_index, group_name, widget_name, widget_data):
         entry["widgets"] = []
         entry["widgets"].append(create_widget(widget_name, widget_data))
 
-    last_widget = entry["widgets"][-1]
 
 
-
-# Removing things
+# Removing functions
 
 def remove_entry(index, group=None):
     if group != None:
@@ -201,7 +190,24 @@ def remove_group(group):
 
 
 
-# Rearranging things
+# Renaming functions
+
+def rename_group(group, new_name):
+    index = get_group_index(group)
+    data["groups"][index]["name"] = new_name
+
+def widget_configure(entry_index, group_name, widget_index, widget_data):
+    if group_name == None:
+        widget = data["entries"][entry_index]["widgets"][widget_index]
+    else:
+        group_index = get_group_index(group_name)
+        widget = data["groups"][group_index]["entries"][entry_index]["widgets"][widget_index]
+    
+    widget["data"] = widget_data
+
+
+
+# Rearranging functions
 
 def swap_entry(index1, index2):
     if index1 == index2:
@@ -234,9 +240,6 @@ def move_entry(group, index, dir):
         entry = data_array.pop(index)
         data_array.insert(new_index, entry)
 
-
-# Group operations
-
 def move_entry_to_group(entry_index, entry_group, group_index):
     entry = None
 
@@ -249,10 +252,6 @@ def move_entry_to_group(entry_index, entry_group, group_index):
 
     if entry:
         data["groups"][group_index]["entries"].append(entry)
-
-def rename_group(group, new_name):
-    index = get_group_index(group)
-    data["groups"][index]["name"] = new_name
 
 def move_group(name, dir):
     global data

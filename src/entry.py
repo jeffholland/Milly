@@ -470,9 +470,8 @@ class Entry(tk.Frame):
 
         self.widgets.append(Title(
             self, 
-            title=widget["data"]["title"],
-            width=widget["data"]["width"], 
-            height=widget["data"]["height"], 
+            data=widget["data"],
+            index=index, 
             font=self.font
         ))
         self.widgets[index].grid_propagate(0)
