@@ -25,7 +25,7 @@ ABS_PATH = HOME_DIR + "/Dev/Python/tkinter/milly/"
 if CONFIG == "build":
     ABS_PATH = ABS_PATH + "dist/milly/"
 
-JSON_PATH = ABS_PATH + "json/"
+JSON_PATH = ABS_PATH + "data/json/"
 EXPORT_PATH = ABS_PATH + "export/"
 
 COLOR_SCHEME_PATH = JSON_PATH + "color_schemes/"
