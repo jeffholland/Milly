@@ -1,0 +1,28 @@
+In the main window's Text widget:
+
+
+return                 submit entry
+cmd+return             submit entry to top group
+shift+return           new line of text
+cmd+i                  insert entry
+cmd+s                  save
+cmd+l                  load
+cmd+c                  clear
+cmd+,                  settings
+cmd+f                  find
+cmd+shift+f            remove find filter
+cmd+shift+x            export
+cmd+shift+s            stats
+cmd+shift+h            show/hide checkboxes
+cmd+left               switch color scheme left
+cmd+right              switch color scheme right
+cmd+backspace          delete top entry
+cmd+shift+backspace    delete bottom entry
+cmd+e                  edit selection mode
+
+
+
+EDIT SELECTION MODE
+
+Use up and down arrow keys to navigate the edit buttons of all entries.
+Press return to select one.

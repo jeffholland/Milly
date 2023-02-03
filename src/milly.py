@@ -12,12 +12,17 @@ from colors import Colors
 from constants import *
 from entries import Entries
 from input import Input
+from install import install
 from settings import Settings
 
 
 
 class Application(tk.Frame):
     def __init__(self, master=None):
+
+        if CONFIG == "build":
+            # Make sure files are in the right place
+            install()
 
         tk.Frame.__init__(self, master)
         

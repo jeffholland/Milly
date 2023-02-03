@@ -9,8 +9,8 @@ PLATFORM = platform.system()
 MODE = "normal"
 # MODE = "fullscreen"
 
-# CONFIG = "build"
-CONFIG = "run"
+CONFIG = "build"
+# CONFIG = "run"
 
 DEBUG = True
 
@@ -23,9 +23,10 @@ HOME_DIR = path.expanduser("~")
 ABS_PATH = HOME_DIR + "/Dev/Python/tkinter/milly/"
 
 if CONFIG == "build":
-    ABS_PATH = ABS_PATH + "dist/milly/"
+    ABS_PATH = HOME_DIR + "/Documents/milly/"
 
-JSON_PATH = ABS_PATH + "data/json/"
+DATA_PATH = ABS_PATH + "data/"
+JSON_PATH = DATA_PATH + "json/"
 EXPORT_PATH = ABS_PATH + "export/"
 
 COLOR_SCHEME_PATH = JSON_PATH + "color_schemes/"
