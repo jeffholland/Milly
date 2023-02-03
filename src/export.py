@@ -3,7 +3,7 @@ import tkinter as tk
 import csv
 from math import floor
 
-from fpdf import FPDF
+# from fpdf import FPDF
 
 from colors import hex_to_rgb
 from constants import *
@@ -60,15 +60,15 @@ class ExportWindow(tk.Frame):
         self.txt_button.grid(row=1, column=0)
         self.buttons.append(self.txt_button)
 
-        self.pdf_var = tk.IntVar()
-        self.pdf_var.set(1)
-        self.pdf_button = tk.Checkbutton(
-            self.window,
-            text="pdf",
-            variable=self.pdf_var
-        )
-        self.pdf_button.grid(row=2, column=0)
-        self.buttons.append(self.pdf_button)
+        # self.pdf_var = tk.IntVar()
+        # self.pdf_var.set(1)
+        # self.pdf_button = tk.Checkbutton(
+        #     self.window,
+        #     text="pdf",
+        #     variable=self.pdf_var
+        # )
+        # self.pdf_button.grid(row=2, column=0)
+        # self.buttons.append(self.pdf_button)
 
         self.colors_var = tk.IntVar()
         self.colors_var.set(1)
@@ -170,8 +170,8 @@ class ExportWindow(tk.Frame):
         if self.txt_var.get() == 1:
             self.export_txt(filename)
 
-        if self.pdf_var.get() == 1:
-            self.export_pdf(filename)
+        # if self.pdf_var.get() == 1:
+        #     self.export_pdf(filename)
 
         self.window.withdraw()
         self.master.master.bottom_frame.input.focus_set()
@@ -239,42 +239,42 @@ class ExportWindow(tk.Frame):
 
 
 
-    def export_pdf(self, filename):
-        filename = filename + ".pdf"
+    # def export_pdf(self, filename):
+    #     filename = filename + ".pdf"
 
-        pdf = FPDF()
-        pdf.add_page()
-        pdf.set_font(ENTRY_FONT_FAMILY, size=ENTRY_FONT_SIZE)
-        pdf.set_margins(PADDING, PADDING, PADDING)
-        pdf.set_line_width(0.1)
+    #     pdf = FPDF()
+    #     pdf.add_page()
+    #     pdf.set_font(ENTRY_FONT_FAMILY, size=ENTRY_FONT_SIZE)
+    #     pdf.set_margins(PADDING, PADDING, PADDING)
+    #     pdf.set_line_width(0.1)
         
-        if self.colors_var.get() == 1:
-            bg = hex_to_rgb(self.colors["BG2"])
-            fg = hex_to_rgb(self.colors["HL2"])
+    #     if self.colors_var.get() == 1:
+    #         bg = hex_to_rgb(self.colors["BG2"])
+    #         fg = hex_to_rgb(self.colors["HL2"])
 
-            pdf.set_fill_color(bg[0], bg[1], bg[2])
-            pdf.set_text_color(fg[0], fg[1], fg[2])
+    #         pdf.set_fill_color(bg[0], bg[1], bg[2])
+    #         pdf.set_text_color(fg[0], fg[1], fg[2])
 
-        for group in self.master.groups:
-            for entry in group.entries:
-                row = self.get_txt_row(entry, group=group)
-                self.write_pdf_row(pdf, row, entry.height)
+    #     for group in self.master.groups:
+    #         for entry in group.entries:
+    #             row = self.get_txt_row(entry, group=group)
+    #             self.write_pdf_row(pdf, row, entry.height)
         
-        for entry in self.master.ungrouped_entries:
-            row = self.get_txt_row(entry)
-            self.write_pdf_row(pdf, row, entry.height)
+    #     for entry in self.master.ungrouped_entries:
+    #         row = self.get_txt_row(entry)
+    #         self.write_pdf_row(pdf, row, entry.height)
 
-        pdf.output(filename)
+    #     pdf.output(filename)
 
-    def write_pdf_row(self, pdf, row, height):
-        fill = False
-        if self.colors_var.get() == 1:
-            fill = True
+    # def write_pdf_row(self, pdf, row, height):
+    #     fill = False
+    #     if self.colors_var.get() == 1:
+    #         fill = True
 
-        pdf.multi_cell(
-            w=180,
-            h=floor(height / 4),
-            txt=row,
-            border=1,
-            fill=fill
-        )
+    #     pdf.multi_cell(
+    #         w=180,
+    #         h=floor(height / 4),
+    #         txt=row,
+    #         border=1,
+    #         fill=fill
+    #     )
