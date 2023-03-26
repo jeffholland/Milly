@@ -55,12 +55,12 @@ class Application(tk.Frame):
 
         # Top frame is where entries are shown
 
-        self.frame_offset = 105
+        self.frame_offset = 60
         self.top_frame_height = ((self.height // 3) * 2) + self.frame_offset
 
-        self.windows_offset = 110
-        if PLATFORM == "Windows":
-            self.top_frame_height += self.windows_offset
+        # self.windows_offset = 110
+        # if PLATFORM == "Windows":
+        #     self.top_frame_height += self.windows_offset
 
         self.top_frame = Entries(
             width=self.width, 
