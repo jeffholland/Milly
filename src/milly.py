@@ -55,7 +55,7 @@ class Application(tk.Frame):
 
         # Top frame is where entries are shown
 
-        self.frame_offset = 60
+        self.frame_offset = 0
         self.top_frame_height = ((self.height // 3) * 2) + self.frame_offset
 
         # self.windows_offset = 110
