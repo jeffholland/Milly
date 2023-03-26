@@ -5,7 +5,7 @@
 
 """
 
-OFFSET = 100
+OFFSET = 160
 
 import tkinter as tk
 
