@@ -55,7 +55,8 @@ class Application(tk.Frame):
 
         # Top frame is where entries are shown
 
-        self.top_frame_height = (self.height // 3) * 2
+        self.frame_offset = 105
+        self.top_frame_height = ((self.height // 3) * 2) + self.frame_offset
 
         self.windows_offset = 110
         if PLATFORM == "Windows":
@@ -69,7 +70,7 @@ class Application(tk.Frame):
 
         self.top_frame.grid(row=0, column=0)
 
-        self.bottom_frame_height = self.height // 3
+        self.bottom_frame_height = self.height // 3 - self.frame_offset
         if PLATFORM == "Windows":
             self.bottom_frame_height -= self.windows_offset
 
@@ -149,5 +150,6 @@ class Application(tk.Frame):
 
 app = Application()
 app.master.title("Milly")
-app.master.geometry(str(app.width) + "x" + str(app.height))
+app.master.geometry(str(app.width) + "x" + str(app.height) + "+0+0")
+# app.master.geometry(str(app.width) + "x" + str(app.height - 140))
 app.mainloop()
