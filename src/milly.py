@@ -30,7 +30,7 @@ class Application(tk.Frame):
 
         if MODE == "fullscreen":
             self.width = self.winfo_screenwidth()
-            self.height = self.winfo_screenheight()
+            self.height = self.winfo_screenheight() - 80
         else:
             self.width = WIDTH
             self.height = HEIGHT
