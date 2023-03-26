@@ -1,0 +1,5 @@
+work/
+personal/
+__pycache__/
+util/
+.DS_Store
