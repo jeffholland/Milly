@@ -5,8 +5,6 @@
 
 """
 
-OFFSET = 160
-
 import tkinter as tk
 
 from colors import Colors
@@ -16,6 +14,13 @@ from input import Input
 from install import install
 from settings import Settings
 
+
+OFFSET = 160
+BOTTOM_PADDING = 0
+
+if PLATFORM == "Windows":
+    OFFSET = 80
+    BOTTOM_PADDING = 40
 
 
 class Application(tk.Frame):
@@ -59,10 +64,6 @@ class Application(tk.Frame):
         self.frame_offset = 140 - OFFSET
         self.top_frame_height = ((self.height // 3) * 2) + self.frame_offset
 
-        # self.windows_offset = 100
-        # if PLATFORM == "Windows":
-        #     self.top_frame_height += self.windows_offset
-
         self.top_frame = Entries(
             width=self.width, 
             height=self.top_frame_height,
@@ -72,8 +73,6 @@ class Application(tk.Frame):
         self.top_frame.grid(row=0, column=0)
 
         self.bottom_frame_height = self.height // 3 - self.frame_offset
-        if PLATFORM == "Windows":
-            self.bottom_frame_height -= self.windows_offset
 
         # Bottom frame is where entries are input
 
@@ -151,6 +150,6 @@ class Application(tk.Frame):
 
 app = Application()
 app.master.title("Milly")
-app.master.geometry(str(app.width) + "x" + str(app.height - OFFSET) + "+0+0")
+app.master.geometry(str(app.width) + "x" + str(app.height - OFFSET + BOTTOM_PADDING) + "+0+0")
 # app.master.geometry(str(app.width) + "x" + str(app.height - 140))
 app.mainloop()
